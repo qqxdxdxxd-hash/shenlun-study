@@ -569,9 +569,9 @@ function saveSettings() {
 }
 
 function openSettingModal() {
-  document.getElementById('cfg-base-url').value = localStorage.getItem('shenlun_base_url') || 'https://ark.cn-beijing.volces.com/api/v3';
+  document.getElementById('cfg-base-url').value = localStorage.getItem('shenlun_base_url') || 'https://api.deepseek.com/v1';
   document.getElementById('cfg-api-key').value = localStorage.getItem('shenlun_api_key') || '';
-  document.getElementById('cfg-model').value = localStorage.getItem('shenlun_model_id') || 'ep-20250210-xxxx';
+  document.getElementById('cfg-model').value = localStorage.getItem('shenlun_model_id') || 'deepseek-chat';
   document.getElementById('setting-modal').classList.add('show');
 }
 
