@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>申论智能研习台 - 考场级智能学习中枢</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+  <!-- 顶部状态与操作栏 -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon">🏛️</span>
+        <div>
+          <span class="brand-title">申论智能研习台</span>
+          <span style="font-size: 11px; color: var(--text-muted); margin-left: 6px;">Shenlun Exam OS (v2.0)</span>
+        </div>
+      </div>
+      
+      <div class="security-badge">
+        <span>🛡️ 本地隐私沙箱生效：数据 100% 留存浏览器本地 (IndexedDB)</span>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-outline" onclick="window.BackupManager.exportFullBackup()">
+          <span>💾 导出全量备份</span>
+        </button>
+        <button class="btn btn-primary" onclick="openSettingModal()">
+          <span>⚙️ 模型配置 (BYOK)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 导航 Tabs -->
+    <div class="tab-bar">
+      <div class="tab-item active" onclick="switchTab('review')">✏️ 纸面作答与色谱批改</div>
+      <div class="tab-item" onclick="switchTab('memory')">📖 个人申论记忆库 (SM-2)</div>
+      <div class="tab-item" onclick="switchTab('kb')">🏛️ 官方真题与知识库</div>
+      <div class="tab-item" onclick="switchTab('dossier')">🧬 认知病灶图谱</div>
+      <div class="tab-item" onclick="switchTab('workshop')">🛠️ Skill 提炼工坊</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- TAB 1: 纸面作答与色谱批改 -->
+    <div id="tab-review" class="tab-panel active">
+      <div class="grid-2col">
+        
+        <!-- 左栏：线下作答录入 -->
+        <div>
+          <div class="card">
+            <div class="card-title">
+              <span>✍️ 线下作答文本录入</span>
+              <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">字数：<strong id="word-counter" style="color:var(--accent);">1038</strong> 字</span>
+            </div>
+
+            <div class="paper-hint">
+              <span>📝 <strong>考场原则</strong>：请在实体方格纸上手写作答后敲入系统。打字无法培养考场肌肉记忆与时间掌控力。</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">题型与评分基准</label>
+              <select class="form-select" id="q-type" onchange="changeQuestionType()">
+                <option value="essay">材料大作文（1000字 · 35/40分制 · 考场大五段）</option>
+                <option value="doc">公文题（贯彻执行 · 20分制 · 格式与内容三轨）</option>
+                <option value="single">单一题（归纳概括/对策 · 15分制 · 采点给分制）</option>
+              </select>
+            </div>
+
+            <!-- 关联真题与题干资料展开面板 -->
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="form-label" style="margin-bottom: 0;">关联真题与官方采分底稿 (Ground Truth)</label>
+                <button class="materials-toggle-btn" type="button" onclick="toggleCustomPromptMode()" id="btn-custom-prompt">
+                  <span>✏️ 切换为自定义题目与材料</span>
+                </button>
+              </div>
+              <select class="form-select" id="exam-selector" onchange="onExamSelectChange()">
+                <option value="gk2026_essay">2026年国考副省级 · 第五题材料大作文《以绿色发展理念赋能现代化》</option>
+                <option value="js2025_single">2025年江苏省考A类 · 第二题单一对策题《整治形式主义与基层减负》</option>
+                <option value="sydw2025_doc">2025年事业单位联考A类 · 第三题公文写作《关于推进垃圾分类的公开信》</option>
+              </select>
+            </div>
+
+            <!-- 动态展示题干要求与给定资料 -->
+            <div class="exam-display-card" id="exam-display-container">
+              <div class="exam-header-bar">
+                <div class="exam-meta-badge">
+                  <span id="exam-title-badge">🏛️ 2026年国考副省级 · 第五题</span>
+                  <span style="font-size: 11px; background: rgba(56,189,248,0.2); padding: 1px 6px; border-radius: 4px;" id="exam-score-badge">满分 35 分</span>
+                </div>
+                <button class="materials-toggle-btn" type="button" onclick="toggleMaterialsCollapse()" id="btn-toggle-mat">
+                  <span id="mat-toggle-icon">📖 折叠给定资料</span>
+                </button>
+              </div>
+
+              <!-- 题干要求框 -->
+              <div class="prompt-box" id="prompt-box">
+                <div class="prompt-title" id="prompt-text">
+                  “给定资料4”中提到“大鹏之动，非一羽之轻；骐骥之速，非一足之力”。请深入思考这句话的内涵，联系实际，自选角度，自拟题目，写一篇议论文。
+                </div>
+                <div class="prompt-reqs" id="prompt-reqs">
+                  <strong>作答要求：</strong>① 立意明确，见解深刻；② 联系实际，不拘泥于给定资料；③ 思路清晰，语言流畅；④ 参考时限 60 分钟，字数 1000~1200 字。
+                </div>
+              </div>
+
+              <!-- 给定资料阅读区 -->
+              <div class="materials-panel" id="materials-panel">
+                <!-- 由 app.js 动态渲染 -->
+              </div>
+            </div>
+
+            <!-- 自定义题目与材料录入区 (默认隐藏) -->
+            <div id="custom-prompt-container" style="display:none; background:#090d16; border:1px solid var(--card-border); border-radius:8px; padding:12px; margin-bottom:14px;">
+              <div class="form-group">
+                <label class="form-label">自定义题干与作答要求</label>
+                <textarea class="form-textarea" id="custom-prompt-input" style="min-height:70px;" placeholder="在此粘贴你的题目要求，如：请概括材料1中的主要问题..."></textarea>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">自定义给定资料全文</label>
+                <textarea class="form-textarea" id="custom-mat-input" style="min-height:140px;" placeholder="在此粘贴你的给定材料原文..."></textarea>
+              </div>
+            </div>
+
+            <!-- 批改执行专家 / Skill 选择下拉菜单 -->
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="form-label" style="margin-bottom: 0;">批改专家 / Skill 选择 (REVIEW SKILL)</label>
+                <span style="font-size: 11px; color: #4ade80;" id="skill-badge-status">✓ 已根据题型自动适配默认 Skill</span>
+              </div>
+              <select class="form-select" id="skill-selector" onchange="onSkillSelectChange()">
+                <!-- 动态由 app.js 注入 -->
+              </select>
+              <!-- 当前选中 Skill 的阅卷心智描述卡片 -->
+              <div id="skill-desc-badge" style="font-size: 12px; color: #7dd3fc; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); padding: 8px 12px; border-radius: 6px; margin-top: 8px; line-height: 1.5;">
+                💡 <strong>当前选用规范</strong>：材料作文大五段规范专家 · 依据“1+3”严整结构、首段尾句总论点、正文段首分论点与匀称250字段落标准阅卷。
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">作答正文录入框</label>
+              <textarea class="form-textarea" id="user-essay-input" oninput="updateWordCount()">以绿色发展绘就中国式现代化生态底色
+
+大鹏之动，非一羽之轻；骐骥之速，非一足之力。生态文明建设功在当代、利在千秋。面对新时代的高质量发展要求，我们必须协同推进降碳、减污、扩绿、增长，以高品质生态环境支撑高质量发展。
+
+筑牢生态屏障，必须坚持理念先行，推动生产方式绿色转型。发展是硬道理，但绝不能以牺牲环境为代价。某地曾为了眼前的GDP指标，盲目上马高能耗、高污染化工项目，老百姓天天抱怨环境脏乱差。后来痛定思痛，坚决贯彻绿色发展理念，关停落后产能，发展清洁能源，推动传统制造业智能化改造，让昔日黑烟滚滚的厂区变成了绿色低碳产业示范园。这生动证明，理念一变天地宽，只有坚定不移走生态优先之路，才能迎来新动能。
+
+涵养绿色动能，必须强化制度保障，健全生态治理长效机制。制度是管根本、管长远的。上面天天发文件，村里没钱做不了事，必须健全多元化资金投入机制与考核评价体系。全面推行河湖长制、林长制，完善生态补偿与转移支付制度，把生态环保指标作为硬杠杠。
+
+厚植民生福祉，必须动员全社会参与，共建共治共享美丽家园。良好生态环境是最普惠的民生福祉。如果大家都不愿意干这个活儿，生态治理就成了无源之水。要推行居民垃圾分类积分兑换制，将环境治理纳入村规民约，让群众成为生态建设的受益者与监督者。
+
+蓝图已经绘就，奋进正当其时。让我们以久久为功的韧劲，持之以恒抓好生态文明建设，绘就人与自然和谐共生的壮丽画卷！</textarea>
+            </div>
+
+            <button class="btn btn-primary" id="btn-start-review" style="width: 100%; padding: 10px;" onclick="runFullReview()">
+              <span>🚀 开始全真多维色谱穿透批改</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 右栏：多维色谱穿透报告与闭环 -->
+        <div>
+          <div class="card">
+            <div class="card-title">
+              <span>📊 多维色谱穿透报告与考场一类文重塑</span>
+            </div>
+
+            <!-- 顶部总分与定档 -->
+            <div class="score-banner">
+              <div class="score-item">
+                <div class="score-val" id="score-val">31.5</div>
+                <div class="score-lbl">综合评定分 (满分35)</div>
+              </div>
+              <div class="score-item">
+                <div class="score-grade" id="score-grade">一类下 (31~32分档)</div>
+                <div class="score-lbl">考场阅卷初扫档位</div>
+              </div>
+              <div class="score-item">
+                <div style="font-size: 15px; font-weight: 700; color: #38bdf8;">1+3 结构严整</div>
+                <div class="score-lbl">立意与骨架形态</div>
+              </div>
+              <div class="score-item">
+                <div style="font-size: 15px; font-weight: 700; color: #4ade80;" id="copy-ratio-val">14.2% (安全)</div>
+                <div class="score-lbl">材料摘抄率 (未超20%红线)</div>
+              </div>
+            </div>
+
+            <!-- 色谱图例 Legend -->
+            <div class="chroma-legend">
+              <span class="legend-tag tag-hit">🟢 精准命中原词/论点</span>
+              <span class="legend-tag tag-formal">🟡 规范大词同义替换</span>
+              <span class="legend-tag tag-leak">🔴 漏采要点回显</span>
+              <span class="legend-tag tag-fake">🟣 主观臆造删除线</span>
+              <span class="legend-tag tag-story">⚪ 纯叙述流水账 (缺深析)</span>
+              <span class="legend-tag tag-redline">⚠️ 抄材料超标预警</span>
+            </div>
+
+            <!-- 色谱穿透高亮文本展示区 -->
+            <div class="chroma-view" id="chroma-text-container">
+              点击左侧【开始全真多维色谱穿透批改】后，系统将在此处以字符级精准色谱高亮呈现您的作答。
+            </div>
+
+            <!-- 记忆库双向复利审计卡片 -->
+            <div class="memory-audit-card" id="memory-audit-container">
+              <div class="audit-stat">
+                <span>🧠 个人记忆库调用审计</span>
+              </div>
+              <p style="font-size:12px; color:var(--text-muted);">提交批改后，系统将自动核查考生背过的名言对策在作答中的激活转化率。</p>
+            </div>
+
+            <!-- 限制性一类文示范重塑 (带卡片徽章) -->
+            <div style="margin-top: 16px;">
+              <div class="form-label" style="display:flex; justify-content:space-between;">
+                <span>✨ 考场一类文点石成金重塑 (基于你的记忆库素材重构)</span>
+                <span style="color:#4ade80;">100% 考场可复现</span>
+              </div>
+              <div style="background:#090d16; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 6px; padding: 14px; font-size: 13.5px; line-height: 1.8;" id="exemplar-content">
+                示范一类文将在批改完成后自动呈现，并标注所调用的记忆库卡片徽章。
+              </div>
+            </div>
+
+            <!-- 3分钟靶向微练习补丁 -->
+            <div class="drill-box" id="drill-container" style="display:none;">
+              <div style="font-size: 14px; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 6px;">
+                <span>🎯 3分钟靶向微练习补丁 (当场切除本次暴露的思维与语言病灶)</span>
+              </div>
+              
+              <div class="drill-item">
+                <div class="drill-q" id="drill-q-text">补丁题目加载中...</div>
+                <input type="hidden" id="drill-flaw-text">
+                <div class="drill-input-row">
+                  <input type="text" class="form-input" id="drill-user-input" placeholder="敲入你的改写，例如：完善基层财政保障机制...">
+                  <button class="btn btn-primary" onclick="verifyDrill()">秒判</button>
+                </div>
+                <div id="drill-res-badge" style="font-size: 12px; margin-top: 6px; display: none;"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: 个人申论记忆库 (SM-2) -->
+    <div id="tab-memory" class="tab-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>📖 个人专属申论记忆库 (基于 Anki SM-2 艾宾浩斯间隔重复)</span>
+          <button class="btn btn-primary" onclick="alert('点击卡片即可翻面查看内容，并支持忘词/良好/秒答艾宾浩斯打分')">➕ 新增记忆卡片</button>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+          你背诵的每一张卡片，在作答时都将被客户端自动召回，并逆向检测用出率。点击卡片可翻面查看对策与金句，并提交复习反馈。
+        </p>
+
+        <div class="flashcard-deck" id="memory-deck">
+          <!-- 动态由 app.js 渲染 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 官方真题与知识库 -->
+    <div id="tab-kb" class="tab-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>🏛️ 分层混合知识库 (Default 真题采分底稿 + 用户私有资料)</span>
+        </div>
+        <div class="grid-2col">
+          <div>
+            <div class="form-label">【公共库】近10年国考/省考官方真题与标准采分底稿 (只读秒开)</div>
+            <div style="background:#090d16; border:1px solid var(--card-border); border-radius:6px; padding:12px;">
+              <div style="padding:8px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between;">
+                <span>2026年国考副省 (材料作文+公文+单一题)</span>
+                <span class="tag-blue card-tag">官方原卷+底稿</span>
+              </div>
+              <div style="padding:8px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between;">
+                <span>2025年江苏省考A类 (综合分析+公文题)</span>
+                <span class="tag-blue card-tag">官方原卷+底稿</span>
+              </div>
+              <div style="padding:8px; display:flex; justify-content:space-between;">
+                <span>2025年事业单位联考综合应用能力(A类)</span>
+                <span class="tag-blue card-tag">官方原卷+底稿</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="form-label" style="display:flex; justify-content:space-between;">
+              <span>【私有库】我的个性化讲义与时政文件 (100% 存浏览器)</span>
+              <button class="btn btn-outline" style="padding:2px 8px; font-size:11px;" onclick="alert('上传的讲义/笔记文本完全保留在本地 IndexedDB，服务端不存')">➕ 上传私有材料</button>
+            </div>
+            <div style="background:#090d16; border:1px solid var(--card-border); border-radius:6px; padding:12px;">
+              <div style="padding:8px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between;">
+                <span>📄 2026政府工作报告核心金句摘录.md</span>
+                <span style="font-size:11px; color:#4ade80;">本地已存 (支持划词入库)</span>
+              </div>
+              <div style="padding:8px; display:flex; justify-content:space-between;">
+                <span>📄 基层治理经典案例与制度创新汇编.txt</span>
+                <span style="font-size:11px; color:#4ade80;">本地已存 (支持划词入库)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: 认知病灶图谱 -->
+    <div id="tab-dossier" class="tab-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>🧬 跨试卷申论思维认知病灶图谱 (追踪你的基因缺陷)</span>
+          <span style="font-size:12px; color:var(--text-muted);">累计分析：12 篇作答</span>
+        </div>
+
+        <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid var(--danger); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;">
+          <strong style="color: #f87171;">⚠️ 置顶警报：你已触碰 1 个【一级顽固病灶】！</strong>
+          <p style="font-size: 13px; color: #fca5a5; margin-top: 4px;">
+            【材料抄袭依赖过重】：近 5 篇大作文中有 3 篇连续原句摘抄率超过 20% 扣分警戒线（历史最高 28.5%）。下次下笔请强制使用“改写法”与“联想法”，杜绝大段搬运。
+          </p>
+        </div>
+
+        <div class="dossier-list">
+          <div class="dossier-item">
+            <div class="dossier-name">
+              <span>1. 材料原文直接依附度 (超20%红线频率)</span>
+              <span class="dossier-badge-danger">一级顽固病灶</span>
+            </div>
+            <div class="dossier-rate">60.0% 犯错率</div>
+          </div>
+          <div class="dossier-item">
+            <div class="dossier-name">
+              <span>2. 论点隐蔽/总论点后置率 (未压在首段末句)</span>
+              <span style="font-size:11px; color:#4ade80; background:rgba(34,197,94,0.15); padding:2px 6px; border-radius:4px;">已克服 (最近4篇合规)</span>
+            </div>
+            <div class="dossier-rate" style="color:#4ade80;">8.3%</div>
+          </div>
+          <div class="dossier-item">
+            <div class="dossier-name">
+              <span>3. 对策假大空虚化率 (无主体/机制/举措空话)</span>
+              <span style="font-size:11px; color:#facc15; background:rgba(234,179,8,0.15); padding:2px 6px; border-radius:4px;">二级病灶关注</span>
+            </div>
+            <div class="dossier-rate" style="color:#facc15;">33.3%</div>
+          </div>
+          <div class="dossier-item">
+            <div class="dossier-name">
+              <span>4. 单一题要素混淆率 (问原因误写对策)</span>
+              <span style="font-size:11px; color:#4ade80; background:rgba(34,197,94,0.15); padding:2px 6px; border-radius:4px;">良好</span>
+            </div>
+            <div class="dossier-rate" style="color:#4ade80;">16.7%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: Skill 提炼工坊 -->
+    <div id="tab-workshop" class="tab-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>🛠️ Skill 提炼工坊 (两步结构化生成私有批改专家)</span>
+        </div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+          上传你的私有名师讲义或笔记，AI 将为你自动提炼出【心智模型】、【评分量化表】与【Prompt 规范】，微调后保存在你的本地，立即可在批改下拉框中使用。
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">自定义 Skill 名称</label>
+          <input type="text" class="form-input" id="custom-skill-name" value="我的议论文八大要素批改专家" placeholder="例如：李梦娇贯通法专家">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">上传或粘贴讲义/笔记文本</label>
+          <textarea class="form-textarea" id="custom-skill-text" style="min-height:120px;" placeholder="粘贴你的讲义核心论述、判分原则...">第一讲：寻找主题和观点。标题必须包含核心主题词，开头段尾句亮明总论点，正文三段首句亮明分论点。每一段事例之后必须跟进多维度分析，不可单摆浮搁案例...</textarea>
+        </div>
+
+        <button class="btn btn-primary" onclick="alert('已模拟两步提炼！已成功生成并在本地注册该自定义 Skill，你可在批改题型下拉中选择此专家！')">⚡ 一键提炼并注册本地 Skill</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- 模型配置 BYOK 弹窗 -->
+  <div class="modal-overlay" id="setting-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">⚙️ 大模型连接配置 (严格纯客户端 BYOK)</div>
+        <div class="modal-close" onclick="closeSettingModal()">✕</div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
+        服务端绝不存储任何 API Key。密钥 100% 保存在你的浏览器本地，仅在发起批改请求时透传，用完即焚。
+      </p>
+
+      <div class="form-group">
+        <label class="form-label">OpenAI 兼容 Base URL</label>
+        <input type="text" class="form-input" id="cfg-base-url" value="https://ark.cn-beijing.volces.com/api/v3" placeholder="https://api.openai.com/v1">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">API Key</label>
+        <input type="password" class="form-input" id="cfg-api-key" placeholder="sk-...">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">模型标识 (Model ID)</label>
+        <input type="text" class="form-input" id="cfg-model" value="ep-20250210-xxxx" placeholder="gpt-4o / deepseek-chat">
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeSettingModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveSettings()">保存至本地浏览器</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 浮动提示 Popover -->
+  <div id="span-popover"></div>
+
+  <!-- 脚本引入 -->
+  <script src="js/db.js"></script>
+  <script src="js/sm2.js"></script>
+  <script src="js/retrieval.js"></script>
+  <script src="js/chroma_renderer.js"></script>
+  <script src="js/backup.js"></script>
+  <script src="js/api_client.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
