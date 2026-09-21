@@ -89,4 +89,9 @@ class ChromaRenderer {
   }
 }
 
-window.ChromaRenderer = ChromaRenderer;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { ChromaRenderer };
+}
+if (typeof window !== 'undefined') {
+  window.ChromaRenderer = ChromaRenderer;
+}

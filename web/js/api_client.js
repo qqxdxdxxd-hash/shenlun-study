@@ -185,7 +185,7 @@ class ApiClient {
       // 保持内置规范
     }
 
-    // 4. 组装 MAR 约束与评卷 User Prompt
+    // 4. 组装题型量规与评卷 User Prompt
     let marPromptStr = "";
     if (typeof LocalMARAudit !== 'undefined') {
       marPromptStr = LocalMARAudit.buildMARPrompt(payload.user_answer, payload.question_title, payload.recalled_memories || []);
@@ -204,9 +204,64 @@ ${payload.scoring_criteria}
 `;
     }
 
+    const targetScore = payload.target_score || (qType === 'essay' ? 35 : (qType === 'doc' ? 25 : 20));
+    let typeSpecificRule = "";
+    let radarExample = "";
+    let perspectivesExample = "";
+
+    if (qType === 'single') {
+      typeSpecificRule = `
+## 【单一题（归纳概括/对策/理解）客观采点给分铁律】：
+1. 采点给分，宁多勿少。以材料原词原意和采分点为唯一基准，严禁使用议论文“大五段”、“立意论证”等模式评判！
+2. 重点审查：①内容采点覆盖度（约占55%）；②分类逻辑与条理（MECE原则、宏观总括句、微观1.2.3.序号，约占20%）；③提炼概括度（前置动宾短语小标题、去案例流水账，约占15%）；④表达与字数规范（字数控制、无主观臆造，约占10%）。
+`;
+      const p1 = Math.round(targetScore * 0.55 * 10) / 10;
+      const p2 = Math.round(targetScore * 0.20 * 10) / 10;
+      const p3 = Math.round(targetScore * 0.15 * 10) / 10;
+      const p4 = Math.max(0.5, Math.round((targetScore - p1 - p2 - p3) * 10) / 10);
+      radarExample = `{"内容采点覆盖度": ${p1}, "分类逻辑与条理": ${p2}, "提炼概括度": ${p3}, "表达与字数规范": ${p4}}`;
+      perspectivesExample = `  "perspectives": {
+    "examiner": "考场考官前10秒第一眼定档：审题要素是否切中、字数与排版条理初判...",
+    "structure_expert": "要素归纳与分类逻辑诊断：诊断八大要素提取全面性、总分结构、MECE分类是否交叉重复、前置动宾大词是否工整醒目...",
+    "style_expert": "作答规范与去流水账质检：诊断是否存在大段抄录事例/人名/数据流水账、有无主观捏造事实、字数卡位规范度..."
+  }`;
+    } else if (qType === 'doc') {
+      typeSpecificRule = `
+## 【贯彻执行/公文题“格式+内容+语言逻辑”三轨阅卷铁律】：
+1. 三轨给分：格式分 + 内容分 + 语言逻辑分。严禁使用议论文“大五段骨架”等模式评判！
+2. 重点审查：①内容要点覆盖（材料原词提取，约占60%）；②格式规范三件套（标题/称谓/落款完备性，约占15%）；③行文结构与层次（发文缘由-主体分条-结语号召，约占15%）；④公文语体与口吻（身份场景语气匹配，约占10%）。
+`;
+      const p1 = Math.round(targetScore * 0.60 * 10) / 10;
+      const p2 = Math.round(targetScore * 0.15 * 10) / 10;
+      const p3 = Math.round(targetScore * 0.15 * 10) / 10;
+      const p4 = Math.max(0.5, Math.round((targetScore - p1 - p2 - p3) * 10) / 10);
+      radarExample = `{"内容要点覆盖": ${p1}, "格式规范三件套": ${p2}, "行文结构与层次": ${p3}, "公文语体与口吻": ${p4}}`;
+      perspectivesExample = `  "perspectives": {
+    "examiner": "考场考官前10秒第一眼定档：文种类型核定、格式三件套完整度、初扫档位与卷面排布...",
+    "structure_expert": "格式规范与行文逻辑诊断：核验标题/主送称谓/落款三件套格式合规性；诊断‘发文缘由-主体分条-结语号召’行文脉络...",
+    "style_expert": "公文语体与场景口吻质检：核查写作身份与受众口吻匹配度、宣传号召力或总结严肃度、公文语体规范..."
+  }`;
+    } else {
+      typeSpecificRule = `
+## 【申论材料大作文大五段规范阅卷铁律】：
+1. 立意源于材料，总分论点鲜明递进，采用标准大五段（1+3）或层层递进骨架；
+2. 重点审查：①立意与总分论点（约占35%）；②结构与段落布局（大五段匀称度，约占25%）；③论据与论证深度（因果制度深度分析，约占30%）；④语言与公文规范（政务动宾大词密度，约占10%）。
+`;
+      const p1 = Math.round(targetScore * (12 / 35) * 10) / 10;
+      const p2 = Math.round(targetScore * (8 / 35) * 10) / 10;
+      const p3 = Math.round(targetScore * (10 / 35) * 10) / 10;
+      const p4 = Math.max(0.5, Math.round((targetScore - p1 - p2 - p3) * 10) / 10);
+      radarExample = `{"立意与总分论点": ${p1}, "结构与段落布局": ${p2}, "论据与论证深度": ${p3}, "语言与公文规范": ${p4}}`;
+      perspectivesExample = `  "perspectives": {
+    "examiner": "考场考官前10秒第一眼定档：首段尾句总论点、字数卡位与第一眼档位初判...",
+    "structure_expert": "大五段骨架与对策论证诊断：诊断大五段‘1+3’架构、论据深度、因果分析与案例是否脱节...",
+    "style_expert": "政务文风与语汇质检诊断：诊断大白话口语瑕疵、政务动宾大词密度、公文严肃语体规范..."
+  }`;
+    }
+
     const userPrompt = `
 待评审申论试卷：
-【题目】：${payload.question_title || '申论作答'}（满分 ${payload.target_score || 35} 分）
+【题目】：${payload.question_title || '申论作答'}（满分 ${targetScore} 分）
 【题型】：${qType}
 【给定资料】：
 ${payload.materials}
@@ -216,6 +271,8 @@ ${payload.user_answer}
 
 【前置客观指标】：实测字数 ${preInfo.word_count} 字；材料摘抄率 ${(preInfo.copy_ratio * 100).toFixed(1)}%；标题合规问题：${preInfo.title_issues.length > 0 ? preInfo.title_issues.join('；') : '无'}。
 
+${typeSpecificRule}
+
 ${criteriaSection}
 
 ${marPromptStr}
@@ -223,19 +280,15 @@ ${marPromptStr}
 请以极其严格的官方阅卷考官标准进行评审，并严格按照以下 JSON 格式返回，严禁任何额外格式废话：
 \`\`\`json
 {
-  "score": 31.5,
-  "grade": "一类下 (31~32分)",
-  "radar_scores": {"立意与总分论点": 11.0, "结构与段落布局": 7.5, "论据与论证深度": 9.0, "语言与公文规范": 4.0},
+  "score": ${Math.round(targetScore * 0.85 * 10) / 10},
+  "grade": "二类文",
+  "radar_scores": ${radarExample},
   "quotes_evaluation": [
-    {"quote": "准确的句子原文", "type": "main_thesis", "color": "green", "style": "solid", "label": "总论点", "comment": "首段末句亮明总论点"},
+    {"quote": "准确的句子原文", "type": "main_thesis", "color": "green", "style": "solid", "label": "核心要点/论点", "comment": "准确踩中要点或亮明观点"},
     {"quote": "口语化句子原文", "type": "colloquial_flaw", "color": "purple", "style": "strikethrough", "label": "大白话", "comment": "口语化表达缺少政务大词"}
   ],
-  "perspectives": {
-    "examiner": "模拟考官前10秒第一眼扫描诊断...",
-    "structure_expert": "关于立意骨架与段落匀称度的深度评价...",
-    "style_expert": "关于政务公文文风与词汇密度的评价..."
-  },
-  "rewritten_exemplar": "基于考生原文结合其记忆库重构的一类文示范..."
+${perspectivesExample},
+  "rewritten_exemplar": "基于考生原文结合其记忆库重构的一类标杆示范..."
 }
 \`\`\`
 `;

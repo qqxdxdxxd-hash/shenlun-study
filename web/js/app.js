@@ -264,6 +264,12 @@ function changeQuestionType() {
   const qType = document.getElementById('q-type').value;
   renderSkillOptions(qType);
 
+  // 联动刷新顶部指标卡与占位
+  const structLblEl = document.getElementById('structure-lbl');
+  if (structLblEl && window.QuestionTypeRubrics) {
+    structLblEl.innerText = window.QuestionTypeRubrics.getStructureCardLabel(qType);
+  }
+
   // 如果当前整卷中存在匹配该题型的试题，自动联动切至该小题
   if (currentPaper && Array.isArray(currentPaper.questions)) {
     const matched = currentPaper.questions.find(q => q.type === qType);
@@ -494,6 +500,12 @@ async function selectSubQuestion(qid) {
     renderSkillOptions(q.type);
   }
 
+  // 联动更新顶部指标卡标签
+  const structLblEl = document.getElementById('structure-lbl');
+  if (structLblEl && window.QuestionTypeRubrics && q.type) {
+    structLblEl.innerText = window.QuestionTypeRubrics.getStructureCardLabel(q.type);
+  }
+
   // 呈现真实题干与作答要求
   document.getElementById('exam-title-badge').innerText = `🏛️ ${currentPaper.exam_name} · 第(${q.q_index})题`;
   document.getElementById('exam-score-badge').innerText = `满分 ${q.target_score || q.score || 20} 分`;
@@ -686,7 +698,7 @@ async function runFullReview() {
 
   try {
     const result = await window.ApiClient.submitReview(payload);
-    renderReviewResult(userText, result);
+    renderReviewResult(userText, result, qType, targetScore);
 
     // 持久化到客户端 IndexedDB
     const subId = `sub_${Date.now()}`;
@@ -737,7 +749,10 @@ async function runFullReview() {
 }
 
 // 渲染批改结果
-function renderReviewResult(userText, res) {
+function renderReviewResult(userText, res, passedQType, passedTargetScore) {
+  const qType = passedQType || (document.getElementById('q-type') && document.getElementById('q-type').value) || res.question_type || 'essay';
+  const targetScore = passedTargetScore || (currentQuestion ? (currentQuestion.target_score || currentQuestion.score) : (qType === 'essay' ? 35 : (qType === 'doc' ? 25 : 20)));
+
   // 显示评分条，隐藏未批改占位提示
   const bannerBox = document.getElementById('score-banner-box');
   if (bannerBox) bannerBox.style.display = 'flex';
@@ -747,10 +762,28 @@ function renderReviewResult(userText, res) {
   // 分数与定档
   document.getElementById('score-val').innerText = res.score;
   document.getElementById('score-grade').innerText = res.grade;
+
+  // 动态更新顶部指标卡第3项（结构/条理/格式）
+  const structLblEl = document.getElementById('structure-lbl');
+  if (structLblEl && window.QuestionTypeRubrics) {
+    structLblEl.innerText = window.QuestionTypeRubrics.getStructureCardLabel(qType);
+  }
   const structVal = document.getElementById('structure-val');
   if (structVal) {
-    const structScore = res.radar_scores ? res.radar_scores['结构与段落布局'] : null;
-    structVal.innerText = res.grade?.includes('四类') ? '结构残缺' : (structScore >= 7 ? '结构严整' : (structScore !== null ? '结构尚可' : '结构规范'));
+    let structScore = null;
+    const radar = res.radar_scores || {};
+    if (qType === 'single') {
+      structScore = radar['分类逻辑与条理'] ?? radar['分类逻辑'] ?? radar['条理'] ?? null;
+    } else if (qType === 'doc') {
+      structScore = radar['格式规范三件套'] ?? radar['格式规范'] ?? radar['格式分'] ?? null;
+    } else {
+      structScore = radar['结构与段落布局'] ?? radar['结构布局'] ?? null;
+    }
+    if (window.QuestionTypeRubrics) {
+      structVal.innerText = window.QuestionTypeRubrics.getStructureStatus(qType, structScore, null, res.grade);
+    } else {
+      structVal.innerText = res.grade?.includes('四类') ? '结构残缺' : (structScore >= 7 ? '结构严整' : '结构规范');
+    }
   }
   document.getElementById('copy-ratio-val').innerText = `${(res.copy_ratio * 100).toFixed(1)}% (${res.copy_redline_exceeded ? '⚠️超标' : '安全'})`;
 
@@ -762,23 +795,42 @@ function renderReviewResult(userText, res) {
 
   // 1. 渲染四维量化得分明细表与扣分依据 (#score-breakdown-tbody)
   const radar = res.radar_scores || {};
-  const dimensions = [
-    { key: "立意与总分论点", max: 12, desc: (res.grade?.includes("四类") || res.score < 20) ? "总论点或分论点不完整（未满足1+3骨架），或字数严重不足扣分" : "立意100%源于材料，首段末句亮明总论点，三分论点醒目" },
-    { key: "结构与段落布局", max: 8, desc: (res.grade?.includes("四类")) ? "分论点仅设两个，正文论证段未达三段标杆，结构残缺" : "五段大五段匀称，段落字数控制在250字左右" },
-    { key: "论据与论证深度", max: 10, desc: (res.copy_redline_exceeded || res.copy_ratio > 0.15) ? "存在大段照抄材料原句现象，论证沦为事实搬运缺乏深度制度剖析" : "道理论证与事例论证结合紧密，具备事后深度分析" },
-    { key: "语言与公文规范", max: 5, desc: res.chroma_spans?.some(s => s.type === 'colloquial_flaw') ? "存在口语化聊天大白话，需强化政务动宾大词提炼与短句对仗" : "公文语体规范严谨，短句对仗工整" }
-  ];
+  let dimensions = [];
+  if (window.QuestionTypeRubrics) {
+    dimensions = window.QuestionTypeRubrics.getDimensions(qType, targetScore);
+  } else {
+    dimensions = [
+      { key: "立意与总分论点", max: 12, getDesc: () => "立意100%源于材料，首段末句亮明总论点，三分论点醒目" },
+      { key: "结构与段落布局", max: 8, getDesc: () => "五段大五段匀称，段落字数控制在250字左右" },
+      { key: "论据与论证深度", max: 10, getDesc: () => "道理论证与事例论证结合紧密，具备事后深度分析" },
+      { key: "语言与公文规范", max: 5, getDesc: () => "公文语体规范严谨，短句对仗工整" }
+    ];
+  }
 
   let tbodyHtml = '';
   dimensions.forEach(d => {
-    const scoreVal = (radar[d.key] !== undefined) ? radar[d.key] : Math.round(d.max * (res.score / 35) * 10) / 10;
+    let scoreVal = undefined;
+    if (radar[d.key] !== undefined) {
+      scoreVal = radar[d.key];
+    } else {
+      for (const [rKey, rVal] of Object.entries(radar)) {
+        if (rKey.includes(d.key.slice(0, 2)) || d.key.includes(rKey.slice(0, 2))) {
+          scoreVal = rVal;
+          break;
+        }
+      }
+    }
+    if (scoreVal === undefined) {
+      scoreVal = Math.round(d.max * (res.score / targetScore) * 10) / 10;
+    }
     const color = scoreVal >= d.max * 0.8 ? '#4ade80' : (scoreVal >= d.max * 0.6 ? '#facc15' : '#f87171');
+    const desc = typeof d.getDesc === 'function' ? d.getDesc(res) : (d.desc || '按考规量化评定');
     tbodyHtml += `
       <tr style="border-bottom: 1px solid var(--card-border);">
         <td style="padding: 8px 10px; font-weight: 600; color: #f8fafc;">${d.key}</td>
         <td style="padding: 8px 10px; text-align: center; color: var(--text-muted);">${d.max}分</td>
         <td style="padding: 8px 10px; text-align: center; font-weight: 700; color: ${color};">${scoreVal}分</td>
-        <td style="padding: 8px 10px; color: #cbd5e1; font-size: 12px; line-height: 1.5;">${d.desc}</td>
+        <td style="padding: 8px 10px; color: #cbd5e1; font-size: 12px; line-height: 1.5;">${desc}</td>
       </tr>
     `;
   });
@@ -787,15 +839,24 @@ function renderReviewResult(userText, res) {
 
   // 2. 渲染多视角名师与考官判语 (#perspectives-container)
   const p = res.perspectives || {};
+  let pTitles = {
+    examiner: "【考场考官前10秒第一眼定档】",
+    structure_expert: "【大五段骨架与对策论证诊断】",
+    style_expert: "【政务文风与语汇质检诊断】"
+  };
+  if (window.QuestionTypeRubrics) {
+    pTitles = window.QuestionTypeRubrics.getPerspectiveTitles(qType);
+  }
+
   let phtml = '';
   if (p.examiner) {
-    phtml += `<div style="margin-bottom: 8px;"><strong style="color:#38bdf8;">【考场考官前10秒第一眼定档】</strong>：${window.ChromaRenderer.escapeHtml(p.examiner)}</div>`;
+    phtml += `<div style="margin-bottom: 8px;"><strong style="color:#38bdf8;">${pTitles.examiner}</strong>：${window.ChromaRenderer.escapeHtml(p.examiner)}</div>`;
   }
   if (p.structure_expert) {
-    phtml += `<div style="margin-bottom: 8px;"><strong style="color:#a855f7;">【大五段骨架与对策论证诊断】</strong>：${window.ChromaRenderer.escapeHtml(p.structure_expert)}</div>`;
+    phtml += `<div style="margin-bottom: 8px;"><strong style="color:#a855f7;">${pTitles.structure_expert}</strong>：${window.ChromaRenderer.escapeHtml(p.structure_expert)}</div>`;
   }
   if (p.style_expert) {
-    phtml += `<div><strong style="color:#f59e0b;">【政务文风与语汇质检诊断】</strong>：${window.ChromaRenderer.escapeHtml(p.style_expert)}</div>`;
+    phtml += `<div><strong style="color:#f59e0b;">${pTitles.style_expert}</strong>：${window.ChromaRenderer.escapeHtml(p.style_expert)}</div>`;
   }
   if (!phtml) {
     phtml = '<div style="color:var(--text-muted);">暂无名师判语，系统已依据官方阅卷规范执行评分。</div>';
