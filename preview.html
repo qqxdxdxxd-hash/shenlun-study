@@ -628,12 +628,21 @@
             <!-- 自定义题目与材料录入区 (默认隐藏) -->
             <div id="custom-prompt-container" style="display:none; background:#090d16; border:1px solid var(--card-border); border-radius:8px; padding:12px; margin-bottom:14px;">
               <div class="form-group">
+                <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
+                  <span>从我的私有知识库快速载入</span>
+                  <span style="color: #38bdf8; font-size: 11px;">自动填入题目与材料</span>
+                </label>
+                <select class="form-select" id="custom-load-from-kb-select" onchange="onLoadDocIntoCustomPrompt()">
+                  <option value="">-- 选择已上传的讲义/资料以一键载入 --</option>
+                </select>
+              </div>
+              <div class="form-group">
                 <label class="form-label">自定义题干与作答要求</label>
-                <textarea class="form-textarea" style="min-height:70px;" placeholder="在此粘贴你的题目要求，如：请概括材料1中的主要问题..."></textarea>
+                <textarea class="form-textarea" id="custom-prompt-input" style="min-height:70px;" placeholder="在此粘贴你的题目要求，如：请概括材料1中的主要问题..."></textarea>
               </div>
               <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">自定义给定资料全文</label>
-                <textarea class="form-textarea" style="min-height:140px;" placeholder="在此粘贴你的给定材料原文..."></textarea>
+                <textarea class="form-textarea" id="custom-mat-input" style="min-height:140px;" placeholder="在此粘贴你的给定材料原文..."></textarea>
               </div>
             </div>
 
@@ -1205,8 +1214,84 @@
       }
     };
 
+    function renderExamSelector() {
+      const selector = document.getElementById('exam-selector');
+      const customKbSelect = document.getElementById('custom-load-from-kb-select');
+      if (!selector) return;
+
+      const currentSelected = selector.value;
+      let html = '<optgroup label="🏛️ 预置官方真题与标准采分底稿">';
+      for (const [k, v] of Object.entries(EXAM_PRESETS)) {
+        html += `<option value="${k}">${v.titleBadge} · 官方真题</option>`;
+      }
+      html += '</optgroup>';
+
+      if (previewPrivateDocs.length > 0) {
+        html += '<optgroup label="📂 我的私有知识库 / 上传材料 (点击直接作为试卷材料)">';
+        previewPrivateDocs.forEach(doc => {
+          html += `<option value="${doc.id}">📂 私有材料：${doc.title} (${doc.content.length}字)</option>`;
+        });
+        html += '</optgroup>';
+      }
+
+      html += '<optgroup label="✏️ 自定义自由输入">';
+      html += '<option value="custom_manual">✏️ 自由手动输入全新题目与资料...</option>';
+      html += '</optgroup>';
+
+      selector.innerHTML = html;
+
+      if (customKbSelect) {
+        let optHtml = '<option value="">-- 选择已上传的讲义/资料以一键载入 --</option>';
+        previewPrivateDocs.forEach(doc => {
+          optHtml += `<option value="${doc.id}">📄 ${doc.title} (${doc.content.length}字)</option>`;
+        });
+        customKbSelect.innerHTML = optHtml;
+      }
+
+      if (currentSelected && selector.querySelector(`option[value="${currentSelected}"]`)) {
+        selector.value = currentSelected;
+      } else if (selector.options.length > 0) {
+        selector.selectedIndex = 0;
+      }
+      onExamSelectChange();
+    }
+
     function onExamSelectChange() {
-      const key = document.getElementById('exam-selector').value;
+      const selector = document.getElementById('exam-selector');
+      const key = selector.value;
+      if (!key) return;
+
+      if (key === 'custom_manual') {
+        if (!isCustomPrompt) toggleCustomPromptMode();
+        return;
+      }
+
+      // 1. 优先判定私有材料
+      if (key.startsWith('doc_')) {
+        const doc = previewPrivateDocs.find(d => d.id === key);
+        if (doc) {
+          document.getElementById('exam-title-badge').innerText = `📂 私有资料 · ${doc.title}`;
+          document.getElementById('exam-score-badge').innerText = `共 ${doc.content.length} 字`;
+          document.getElementById('prompt-text').innerText = `《${doc.title}》· 深入研读与申论综合分析`;
+          document.getElementById('prompt-reqs').innerHTML = `<strong>使用材料：</strong>${doc.title}（已作为本次作答批改依据，并作为材料抄袭率比对基准）。`;
+
+          const paras = doc.content.split(/\n+/).map(p => p.trim()).filter(p => p.length > 0);
+          const matBlocks = paras.map((p, idx) => `
+            <div class="mat-block">
+              <div class="mat-header">
+                <span>【资料段落 §${idx + 1}】</span>
+                <span style="color:#64748b; font-size:11px;">${p.length}字</span>
+              </div>
+              <p><span class="para-num">§${idx + 1}</span>${p}</p>
+            </div>
+          `).join('');
+          document.getElementById('materials-panel').innerHTML = matBlocks;
+          if (isCustomPrompt) toggleCustomPromptMode();
+          return;
+        }
+      }
+
+      // 2. 否则判定官方真题
       const data = EXAM_PRESETS[key];
       if (!data) return;
       document.getElementById('exam-title-badge').innerText = data.titleBadge;
@@ -1214,6 +1299,17 @@
       document.getElementById('prompt-text').innerText = data.promptText;
       document.getElementById('prompt-reqs').innerHTML = data.promptReqs;
       document.getElementById('materials-panel').innerHTML = data.materialsHtml;
+      if (isCustomPrompt) toggleCustomPromptMode();
+    }
+
+    function onLoadDocIntoCustomPrompt() {
+      const docId = document.getElementById('custom-load-from-kb-select').value;
+      if (!docId) return;
+      const doc = previewPrivateDocs.find(d => d.id === docId);
+      if (doc) {
+        document.getElementById('custom-prompt-input').value = `请结合材料《${doc.title}》，深入思考其现实意义，自选角度写一篇申论分析。`;
+        document.getElementById('custom-mat-input').value = doc.content;
+      }
     }
 
     // 折叠/展开给定资料
@@ -1552,6 +1648,7 @@
       alert(`成功存入本地知识库: 《${title}》！`);
       closeUploadDocModal();
       renderPreviewPrivateDocs();
+      renderExamSelector();
     }
 
     function deletePreviewDoc(id) {
@@ -1559,6 +1656,7 @@
       previewPrivateDocs = previewPrivateDocs.filter(d => d.id !== id);
       savePreviewDocsToDisk();
       renderPreviewPrivateDocs();
+      renderExamSelector();
     }
 
     let currentDoc = null;
@@ -1646,6 +1744,7 @@
       // 默认按大作文初始化 Skill 列表与描述
       renderSkillOptions('essay');
       renderPreviewPrivateDocs();
+      renderExamSelector();
 
       const pop = document.getElementById('span-popover');
       document.querySelectorAll('.c-span').forEach(span => {

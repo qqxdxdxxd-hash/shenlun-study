@@ -144,6 +144,7 @@ async function initApp() {
 
   // 3. 渲染首屏
   renderSkillOptions('essay');
+  await renderExamSelector();
   renderMemoryDeck();
   renderPrivateKBDocs();
   renderDossierList();
@@ -230,9 +231,90 @@ function onSkillSelectChange() {
   }
 }
 
-// 真题切换
-function onExamSelectChange() {
-  const key = document.getElementById('exam-selector').value;
+// 动态渲染真题与私有知识库资料下拉菜单
+async function renderExamSelector() {
+  const selector = document.getElementById('exam-selector');
+  const customKbSelect = document.getElementById('custom-load-from-kb-select');
+  if (!selector) return;
+
+  const currentSelected = selector.value;
+  const userDocs = await window.clientDB.getAll('private_kb') || [];
+
+  let html = '<optgroup label="🏛️ 预置官方真题与标准采分底稿">';
+  currentExams.forEach(exam => {
+    html += `<option value="${exam.id}">🏛️ ${exam.exam_name} · ${exam.question_title}</option>`;
+  });
+  html += '</optgroup>';
+
+  if (userDocs.length > 0) {
+    html += '<optgroup label="📂 我的私有知识库 / 上传材料 (点击直接作为试卷材料)">';
+    userDocs.forEach(doc => {
+      html += `<option value="${doc.id}">📂 私有材料：${doc.title} (${doc.content.length}字)</option>`;
+    });
+    html += '</optgroup>';
+  }
+
+  html += '<optgroup label="✏️ 自定义自由输入">';
+  html += '<option value="custom_manual">✏️ 自由手动输入全新题目与资料...</option>';
+  html += '</optgroup>';
+
+  selector.innerHTML = html;
+
+  if (customKbSelect) {
+    let optHtml = '<option value="">-- 选择已上传的讲义/资料以一键载入 --</option>';
+    userDocs.forEach(doc => {
+      optHtml += `<option value="${doc.id}">📄 ${doc.title} (${doc.content.length}字)</option>`;
+    });
+    customKbSelect.innerHTML = optHtml;
+  }
+
+  if (currentSelected && selector.querySelector(`option[value="${currentSelected}"]`)) {
+    selector.value = currentSelected;
+  } else if (selector.options.length > 0) {
+    selector.selectedIndex = 0;
+  }
+  await onExamSelectChange();
+}
+
+// 真题 / 私有知识库材料切换
+async function onExamSelectChange() {
+  const selector = document.getElementById('exam-selector');
+  const key = selector.value;
+  if (!key) return;
+
+  if (key === 'custom_manual') {
+    if (!isCustomPrompt) toggleCustomPromptMode();
+    return;
+  }
+
+  // 1. 优先判定是否为私有知识库上传的材料
+  if (key.startsWith('doc_')) {
+    const userDocs = await window.clientDB.getAll('private_kb');
+    const doc = userDocs.find(d => d.id === key);
+    if (doc) {
+      document.getElementById('exam-title-badge').innerText = `📂 私有资料 · ${doc.title}`;
+      document.getElementById('exam-score-badge').innerText = `共 ${doc.content.length} 字`;
+      document.getElementById('prompt-text').innerText = `《${doc.title}》· 深入研读与申论综合分析`;
+      document.getElementById('prompt-reqs').innerHTML = `<strong>使用材料：</strong>${doc.title}（已作为本次作答批改依据，并作为材料抄袭率比对基准）。`;
+
+      // 智能分段呈现
+      const paras = doc.content.split(/\n+/).map(p => p.trim()).filter(p => p.length > 0);
+      const matBlocks = paras.map((p, idx) => `
+        <div class="mat-block">
+          <div class="mat-header">
+            <span>【资料段落 §${idx + 1}】</span>
+            <span style="color:#64748b; font-size:11px;">${p.length}字</span>
+          </div>
+          <p><span class="para-num">§${idx + 1}</span>${p}</p>
+        </div>
+      `).join('');
+      document.getElementById('materials-panel').innerHTML = matBlocks;
+      if (isCustomPrompt) toggleCustomPromptMode();
+      return;
+    }
+  }
+
+  // 2. 否则判定为官方预置真题
   const exam = currentExams.find(e => e.id === key);
   if (!exam) return;
 
@@ -252,6 +334,19 @@ function onExamSelectChange() {
     </div>
   `).join('');
   document.getElementById('materials-panel').innerHTML = matBlocks;
+  if (isCustomPrompt) toggleCustomPromptMode();
+}
+
+// 从私有知识库一键载入至自定义编辑框
+async function onLoadDocIntoCustomPrompt() {
+  const docId = document.getElementById('custom-load-from-kb-select').value;
+  if (!docId) return;
+  const userDocs = await window.clientDB.getAll('private_kb');
+  const doc = userDocs.find(d => d.id === docId);
+  if (doc) {
+    document.getElementById('custom-prompt-input').value = `请结合材料《${doc.title}》，深入思考其现实意义，自选角度写一篇申论分析。`;
+    document.getElementById('custom-mat-input').value = doc.content;
+  }
 }
 
 // 折叠给定资料
@@ -602,12 +697,14 @@ async function saveUploadedDoc() {
   alert(`成功存入本地知识库: 《${title}》！`);
   closeUploadDocModal();
   renderPrivateKBDocs();
+  await renderExamSelector();
 }
 
 async function deletePrivateDoc(id) {
   if (!confirm('确定从本地 IndexedDB 中删除该篇学习资料吗？')) return;
   await window.clientDB.delete('private_kb', id);
   renderPrivateKBDocs();
+  await renderExamSelector();
 }
 
 // 文档阅读与划词入库

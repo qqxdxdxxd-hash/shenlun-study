@@ -115,6 +115,15 @@
             <!-- 自定义题目与材料录入区 (默认隐藏) -->
             <div id="custom-prompt-container" style="display:none; background:#090d16; border:1px solid var(--card-border); border-radius:8px; padding:12px; margin-bottom:14px;">
               <div class="form-group">
+                <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
+                  <span>从我的私有知识库快速载入</span>
+                  <span style="color: #38bdf8; font-size: 11px;">自动填入题目与材料</span>
+                </label>
+                <select class="form-select" id="custom-load-from-kb-select" onchange="onLoadDocIntoCustomPrompt()">
+                  <option value="">-- 选择已上传的讲义/资料以一键载入 --</option>
+                </select>
+              </div>
+              <div class="form-group">
                 <label class="form-label">自定义题干与作答要求</label>
                 <textarea class="form-textarea" id="custom-prompt-input" style="min-height:70px;" placeholder="在此粘贴你的题目要求，如：请概括材料1中的主要问题..."></textarea>
               </div>
