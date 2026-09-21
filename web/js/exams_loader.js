@@ -86,7 +86,7 @@ class ExamsLoader {
     try {
       if (db && typeof db.getExamById === 'function') {
         const cached = await db.getExamById(examId);
-        if (cached && cached.materials && cached.prompt_text) {
+        if (cached && (cached.materials || cached.materials_text) && (cached.prompt_text || cached.questions)) {
           return cached;
         }
       }
@@ -119,6 +119,32 @@ class ExamsLoader {
     }
 
     return null;
+  }
+
+  /**
+   * 获取题本详情及其全部小题
+   */
+  static async getPaperDetail(paperId) {
+    return await this.getExamDetail(paperId);
+  }
+
+  /**
+   * 获取某题本下指定小题的详细采分底稿与题干
+   */
+  static async getQuestionDetail(paperId, questionId) {
+    const paper = await this.getPaperDetail(paperId);
+    if (!paper) return null;
+    const questions = paper.questions || [];
+    const q = questions.find(item => item.id === questionId) || questions[0];
+    if (!q) return null;
+    return {
+      ...q,
+      paper_id: paper.id,
+      exam_name: paper.exam_name,
+      materials: paper.materials_text || paper.materials || '',
+      scoring_criteria: q.scoring_criteria || '',
+      reference_answer: q.reference_answer || ''
+    };
   }
 }
 

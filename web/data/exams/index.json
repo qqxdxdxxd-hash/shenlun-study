@@ -1,1602 +1,386 @@
 [
   {
-    "id": "gk2026_essay",
-    "exam_name": "2026年国考副省级",
-    "question_type": "essay",
-    "question_title": "以绿色发展理念引领现代化大作文",
-    "target_score": 35,
-    "char_count": 739
-  },
-  {
-    "id": "js2025_single",
-    "exam_name": "2025年江苏省考A类",
-    "question_type": "single",
-    "question_title": "基层形式主义与减负对策",
-    "target_score": 20,
-    "char_count": 220
-  },
-  {
-    "id": "sydw2025_doc",
-    "exam_name": "2025年事业单位联考A类",
-    "question_type": "doc",
-    "question_title": "垃圾分类倡议公开信",
-    "target_score": 25,
-    "char_count": 156
-  },
-  {
-    "id": "exam_2026_004_essay",
-    "exam_name": "2026年广东公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2026_005_essay",
-    "exam_name": "2026年山东公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2026_006_doc",
-    "exam_name": "2026年全国事业单位联考（副省级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2026_007_single",
-    "exam_name": "2026年上海公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2026_008_essay",
-    "exam_name": "2026年四川公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2026_009_doc",
-    "exam_name": "2026年湖北公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2026_010_single",
-    "exam_name": "2026年湖南公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2026_011_essay",
-    "exam_name": "2026年全国事业单位联考（副省级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2026_012_single",
-    "exam_name": "2026年安徽公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2026_013_doc",
-    "exam_name": "2026年河北公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2026_014_essay",
-    "exam_name": "2026年河南公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2026_015_essay",
-    "exam_name": "2026年福建公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2025_016_doc",
-    "exam_name": "2025年全国事业单位联考（市地级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2025_017_single",
-    "exam_name": "2025年江苏公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2025_018_essay",
-    "exam_name": "2025年浙江公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2025_019_doc",
-    "exam_name": "2025年广东公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2025_020_single",
-    "exam_name": "2025年山东公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2025_021_essay",
-    "exam_name": "2025年全国事业单位联考（市地级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2025_022_single",
-    "exam_name": "2025年上海公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2025_023_doc",
-    "exam_name": "2025年四川公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2025_024_essay",
-    "exam_name": "2025年湖北公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2025_025_essay",
-    "exam_name": "2025年湖南公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2025_026_doc",
-    "exam_name": "2025年全国事业单位联考（市地级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2025_027_single",
-    "exam_name": "2025年安徽公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2025_028_essay",
-    "exam_name": "2025年河北公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2025_029_doc",
-    "exam_name": "2025年河南公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2025_030_single",
-    "exam_name": "2025年福建公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2024_031_essay",
-    "exam_name": "2024年全国事业单位联考（行政执法）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2024_032_single",
-    "exam_name": "2024年江苏公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2024_033_doc",
-    "exam_name": "2024年浙江公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2024_034_essay",
-    "exam_name": "2024年广东公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 451
-  },
-  {
-    "id": "exam_2024_035_essay",
-    "exam_name": "2024年山东公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2024_036_doc",
-    "exam_name": "2024年全国事业单位联考（行政执法）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2024_037_single",
-    "exam_name": "2024年上海公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2024_038_essay",
-    "exam_name": "2024年四川公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 453
-  },
-  {
-    "id": "exam_2024_039_doc",
-    "exam_name": "2024年湖北公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2024_040_single",
-    "exam_name": "2024年湖南公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2024_041_essay",
-    "exam_name": "2024年全国事业单位联考（行政执法）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2024_042_single",
-    "exam_name": "2024年安徽公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2024_043_doc",
-    "exam_name": "2024年河北公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2024_044_essay",
-    "exam_name": "2024年河南公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 451
-  },
-  {
-    "id": "exam_2024_045_essay",
-    "exam_name": "2024年福建公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2023_046_doc",
-    "exam_name": "2023年全国事业单位联考（副省级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2023_047_single",
-    "exam_name": "2023年江苏公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2023_048_essay",
-    "exam_name": "2023年浙江公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2023_049_doc",
-    "exam_name": "2023年广东公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2023_050_single",
-    "exam_name": "2023年山东公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2023_051_essay",
-    "exam_name": "2023年全国事业单位联考（副省级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2023_052_single",
-    "exam_name": "2023年上海公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2023_053_doc",
-    "exam_name": "2023年四川公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2023_054_essay",
-    "exam_name": "2023年湖北公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2023_055_essay",
-    "exam_name": "2023年湖南公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2023_056_doc",
-    "exam_name": "2023年全国事业单位联考（副省级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2023_057_single",
-    "exam_name": "2023年安徽公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2023_058_essay",
-    "exam_name": "2023年河北公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2023_059_doc",
-    "exam_name": "2023年河南公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2023_060_single",
-    "exam_name": "2023年福建公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2022_061_essay",
-    "exam_name": "2022年全国事业单位联考（市地级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2022_062_single",
-    "exam_name": "2022年江苏公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2022_063_doc",
-    "exam_name": "2022年浙江公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2022_064_essay",
-    "exam_name": "2022年广东公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2022_065_essay",
-    "exam_name": "2022年山东公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2022_066_doc",
-    "exam_name": "2022年全国事业单位联考（市地级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2022_067_single",
-    "exam_name": "2022年上海公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2022_068_essay",
-    "exam_name": "2022年四川公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2022_069_doc",
-    "exam_name": "2022年湖北公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2022_070_single",
-    "exam_name": "2022年湖南公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2022_071_essay",
-    "exam_name": "2022年全国事业单位联考（市地级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2022_072_single",
-    "exam_name": "2022年安徽公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2022_073_doc",
-    "exam_name": "2022年河北公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2022_074_essay",
-    "exam_name": "2022年河南公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2022_075_essay",
-    "exam_name": "2022年福建公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2021_076_doc",
-    "exam_name": "2021年全国事业单位联考（行政执法）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2021_077_single",
-    "exam_name": "2021年江苏公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2021_078_essay",
-    "exam_name": "2021年浙江公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 453
-  },
-  {
-    "id": "exam_2021_079_doc",
-    "exam_name": "2021年广东公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2021_080_single",
-    "exam_name": "2021年山东公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2021_081_essay",
-    "exam_name": "2021年全国事业单位联考（行政执法）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2021_082_single",
-    "exam_name": "2021年上海公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2021_083_doc",
-    "exam_name": "2021年四川公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2021_084_essay",
-    "exam_name": "2021年湖北公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 451
-  },
-  {
-    "id": "exam_2021_085_essay",
-    "exam_name": "2021年湖南公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2021_086_doc",
-    "exam_name": "2021年全国事业单位联考（行政执法）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2021_087_single",
-    "exam_name": "2021年安徽公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2021_088_essay",
-    "exam_name": "2021年河北公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 453
-  },
-  {
-    "id": "exam_2021_089_doc",
-    "exam_name": "2021年河南公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2021_090_single",
-    "exam_name": "2021年福建公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2020_091_essay",
-    "exam_name": "2020年全国事业单位联考（副省级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2020_092_single",
-    "exam_name": "2020年江苏公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2020_093_doc",
-    "exam_name": "2020年浙江公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2020_094_essay",
-    "exam_name": "2020年广东公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2020_095_essay",
-    "exam_name": "2020年山东公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2020_096_doc",
-    "exam_name": "2020年全国事业单位联考（副省级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2020_097_single",
-    "exam_name": "2020年上海公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2020_098_essay",
-    "exam_name": "2020年四川公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2020_099_doc",
-    "exam_name": "2020年湖北公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2020_100_single",
-    "exam_name": "2020年湖南公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2020_101_essay",
-    "exam_name": "2020年全国事业单位联考（副省级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2020_102_single",
-    "exam_name": "2020年安徽公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2020_103_doc",
-    "exam_name": "2020年河北公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2020_104_essay",
-    "exam_name": "2020年河南公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2020_105_essay",
-    "exam_name": "2020年福建公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2019_106_doc",
-    "exam_name": "2019年全国事业单位联考（市地级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2019_107_single",
-    "exam_name": "2019年江苏公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2019_108_essay",
-    "exam_name": "2019年浙江公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2019_109_doc",
-    "exam_name": "2019年广东公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2019_110_single",
-    "exam_name": "2019年山东公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2019_111_essay",
-    "exam_name": "2019年全国事业单位联考（市地级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2019_112_single",
-    "exam_name": "2019年上海公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2019_113_doc",
-    "exam_name": "2019年四川公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2019_114_essay",
-    "exam_name": "2019年湖北公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2019_115_essay",
-    "exam_name": "2019年湖南公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2019_116_doc",
-    "exam_name": "2019年全国事业单位联考（市地级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2019_117_single",
-    "exam_name": "2019年安徽公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2019_118_essay",
-    "exam_name": "2019年河北公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2019_119_doc",
-    "exam_name": "2019年河南公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2019_120_single",
-    "exam_name": "2019年福建公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2018_121_essay",
-    "exam_name": "2018年全国事业单位联考（行政执法）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2018_122_single",
-    "exam_name": "2018年江苏公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2018_123_doc",
-    "exam_name": "2018年浙江公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2018_124_essay",
-    "exam_name": "2018年广东公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 451
-  },
-  {
-    "id": "exam_2018_125_essay",
-    "exam_name": "2018年山东公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2018_126_doc",
-    "exam_name": "2018年全国事业单位联考（行政执法）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2018_127_single",
-    "exam_name": "2018年上海公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2018_128_essay",
-    "exam_name": "2018年四川公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 453
-  },
-  {
-    "id": "exam_2018_129_doc",
-    "exam_name": "2018年湖北公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2018_130_single",
-    "exam_name": "2018年湖南公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2018_131_essay",
-    "exam_name": "2018年全国事业单位联考（行政执法）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2018_132_single",
-    "exam_name": "2018年安徽公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2018_133_doc",
-    "exam_name": "2018年河北公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2018_134_essay",
-    "exam_name": "2018年河南公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 451
-  },
-  {
-    "id": "exam_2018_135_essay",
-    "exam_name": "2018年福建公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2017_136_doc",
-    "exam_name": "2017年全国事业单位联考（副省级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2017_137_single",
-    "exam_name": "2017年江苏公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2017_138_essay",
-    "exam_name": "2017年浙江公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2017_139_doc",
-    "exam_name": "2017年广东公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2017_140_single",
-    "exam_name": "2017年山东公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2017_141_essay",
-    "exam_name": "2017年全国事业单位联考（副省级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2017_142_single",
-    "exam_name": "2017年上海公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2017_143_doc",
-    "exam_name": "2017年四川公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2017_144_essay",
-    "exam_name": "2017年湖北公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2017_145_essay",
-    "exam_name": "2017年湖南公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2017_146_doc",
-    "exam_name": "2017年全国事业单位联考（副省级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2017_147_single",
-    "exam_name": "2017年安徽公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2017_148_essay",
-    "exam_name": "2017年河北公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2017_149_doc",
-    "exam_name": "2017年河南公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2017_150_single",
-    "exam_name": "2017年福建公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2016_151_essay",
-    "exam_name": "2016年全国事业单位联考（市地级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2016_152_single",
-    "exam_name": "2016年江苏公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2016_153_doc",
-    "exam_name": "2016年浙江公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2016_154_essay",
-    "exam_name": "2016年广东公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2016_155_essay",
-    "exam_name": "2016年山东公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2016_156_doc",
-    "exam_name": "2016年全国事业单位联考（市地级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2016_157_single",
-    "exam_name": "2016年上海公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2016_158_essay",
-    "exam_name": "2016年四川公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2016_159_doc",
-    "exam_name": "2016年湖北公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2016_160_single",
-    "exam_name": "2016年湖南公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2016_161_essay",
-    "exam_name": "2016年全国事业单位联考（市地级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2016_162_single",
-    "exam_name": "2016年安徽公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2016_163_doc",
-    "exam_name": "2016年河北公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2016_164_essay",
-    "exam_name": "2016年河南公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2016_165_essay",
-    "exam_name": "2016年福建公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2015_166_doc",
-    "exam_name": "2015年全国事业单位联考（行政执法）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2015_167_single",
-    "exam_name": "2015年江苏公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2015_168_essay",
-    "exam_name": "2015年浙江公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 453
-  },
-  {
-    "id": "exam_2015_169_doc",
-    "exam_name": "2015年广东公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2015_170_single",
-    "exam_name": "2015年山东公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2015_171_essay",
-    "exam_name": "2015年全国事业单位联考（行政执法）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2015_172_single",
-    "exam_name": "2015年上海公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2015_173_doc",
-    "exam_name": "2015年四川公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2015_174_essay",
-    "exam_name": "2015年湖北公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 451
-  },
-  {
-    "id": "exam_2015_175_essay",
-    "exam_name": "2015年湖南公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 450
-  },
-  {
-    "id": "exam_2015_176_doc",
-    "exam_name": "2015年全国事业单位联考（行政执法）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2015_177_single",
-    "exam_name": "2015年安徽公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2015_178_essay",
-    "exam_name": "2015年河北公务员考试（行政执法/乡镇/C类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 453
-  },
-  {
-    "id": "exam_2015_179_doc",
-    "exam_name": "2015年河南公务员考试（行政执法/乡镇/C类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2015_180_single",
-    "exam_name": "2015年福建公务员考试（行政执法/乡镇/C类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 452
-  },
-  {
-    "id": "exam_2015_181_essay",
-    "exam_name": "2015年全国事业单位联考（副省级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2015_182_single",
-    "exam_name": "2015年江苏公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2015_183_doc",
-    "exam_name": "2015年浙江公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2015_184_essay",
-    "exam_name": "2015年广东公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2015_185_essay",
-    "exam_name": "2015年山东公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2015_186_doc",
-    "exam_name": "2015年全国事业单位联考（副省级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2015_187_single",
-    "exam_name": "2015年上海公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2015_188_essay",
-    "exam_name": "2015年四川公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2015_189_doc",
-    "exam_name": "2015年湖北公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2015_190_single",
-    "exam_name": "2015年湖南公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2015_191_essay",
-    "exam_name": "2015年全国事业单位联考（副省级）",
-    "question_type": "essay",
-    "question_title": "绿色转型与高质量发展专项研习",
-    "target_score": 35,
-    "char_count": 445
-  },
-  {
-    "id": "exam_2015_192_single",
-    "exam_name": "2015年安徽公务员考试（副省级/A类）",
-    "question_type": "single",
-    "question_title": "基层减负与实干担当专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2015_193_doc",
-    "exam_name": "2015年河北公务员考试（副省级/A类）",
-    "question_type": "doc",
-    "question_title": "营商环境与政务服务优化专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2015_194_essay",
-    "exam_name": "2015年河南公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "数字经济与新质生产力专项研习",
-    "target_score": 35,
-    "char_count": 447
-  },
-  {
-    "id": "exam_2015_195_essay",
-    "exam_name": "2015年福建公务员考试（副省级/A类）",
-    "question_type": "essay",
-    "question_title": "传统文化创造性转化专项研习",
-    "target_score": 35,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2015_196_doc",
-    "exam_name": "2015年全国事业单位联考（市地级）",
-    "question_type": "doc",
-    "question_title": "公共卫生与应急治理韧性专项研习",
-    "target_score": 20,
-    "char_count": 446
-  },
-  {
-    "id": "exam_2015_197_single",
-    "exam_name": "2015年江苏公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "乡村全面振兴与联农带农专项研习",
-    "target_score": 20,
-    "char_count": 448
-  },
-  {
-    "id": "exam_2015_198_essay",
-    "exam_name": "2015年浙江公务员考试（市地级/B类）",
-    "question_type": "essay",
-    "question_title": "新型城镇化与城市精细治理专项研习",
-    "target_score": 35,
-    "char_count": 449
-  },
-  {
-    "id": "exam_2015_199_doc",
-    "exam_name": "2015年广东公务员考试（市地级/B类）",
-    "question_type": "doc",
-    "question_title": "青年就业与技能人才培育专项研习",
-    "target_score": 25,
-    "char_count": 448
-  },
+    "id": "gk2024_provincial",
+    "exam_name": "2024年国家公务员考试申论真题（副省级）",
+    "year": 2024,
+    "category": "国考",
+    "tier": "副省级/省级",
+    "char_count": 810,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2024_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "H光电集团自主创新突破经验（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过250字"
+      },
+      {
+        "id": "gk2024_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "某市“高效办成一件事”改革举措（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2024_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "云栖县“土特产”产业振兴工作简报（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gk2024_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "海洋经济“向海图强”高质量发展分析（综合分析）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2024_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "大作文：事必有法 然后可成（议论文）",
+        "target_score": 35,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "gk2023_provincial",
+    "exam_name": "2023年国家公务员考试申论真题（副省级）",
+    "year": 2023,
+    "category": "国考",
+    "tier": "副省级/省级",
+    "char_count": 525,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2023_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "智慧物流枢纽建设经验概括（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过250字"
+      },
+      {
+        "id": "gk2023_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "青年农创客返乡下乡动能分析（综合分析）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2023_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "文旅街区历史文化保护与利用经验交流材料（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过450字"
+      },
+      {
+        "id": "gk2023_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "破除地方壁垒构建统一大市场（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2023_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "大作文：以流动汇聚蓬勃生机（议论文）",
+        "target_score": 35,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
   {
-    "id": "exam_2015_200_single",
-    "exam_name": "2015年山东公务员考试（市地级/B类）",
-    "question_type": "single",
-    "question_title": "社区治理与基层矛盾化解专项研习",
-    "target_score": 20,
-    "char_count": 448
+    "id": "gk2022_provincial",
+    "exam_name": "2022年国家公务员考试申论真题（省级）",
+    "year": 2022,
+    "category": "国考",
+    "tier": "省级/副省级",
+    "char_count": 2132,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2022_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "B公司科技创新启示（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过200字"
+      },
+      {
+        "id": "gk2022_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "G省粮食产业发展问题与对策（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2022_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "临诗特色乡村旅游推介材料（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过500字"
+      },
+      {
+        "id": "gk2022_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "“未来学校”更高教育境界阐释（综合分析）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gk2022_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "大作文：今天的思维与未来的收获（议论文）",
+        "target_score": 35,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "gk2021_provincial",
+    "exam_name": "2021年国家公务员考试申论真题（省级）",
+    "year": 2021,
+    "category": "国考",
+    "tier": "省级/副省级",
+    "char_count": 959,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2021_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "小谷村“有形与无形”内涵理解（综合分析）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2021_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "S市“局区合一”改革概括（归纳概括）",
+        "target_score": 10,
+        "char_limit": "不超过250字"
+      },
+      {
+        "id": "gk2021_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "基层协商民主经验汇报提纲（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gk2021_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "F县“借石成玉”发展智慧分析（综合分析）",
+        "target_score": 20,
+        "char_limit": "不超过350字"
+      },
+      {
+        "id": "gk2021_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "大作文：论新时代发展中的“变与不变”（议论文）",
+        "target_score": 35,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "gk2020_provincial",
+    "exam_name": "2020年国家公务员考试申论真题（省级）",
+    "year": 2020,
+    "category": "国考",
+    "tier": "省级/副省级",
+    "char_count": 843,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2020_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "海德集团大国重器攻关经验概括（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过250字"
+      },
+      {
+        "id": "gk2020_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "东水村生态转型蝶变路径（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2020_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "城市精细化治理工作经验简报（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过450字"
+      },
+      {
+        "id": "gk2020_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "传统产业数字化转型分析（综合分析）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2020_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "大作文：安民之道在于察疾苦惠民生（议论文）",
+        "target_score": 35,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "js2024_a",
+    "exam_name": "2024年江苏省公务员考试申论真题（A类）",
+    "year": 2024,
+    "category": "江苏",
+    "tier": "省考A类",
+    "char_count": 430,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "js2024_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "无锡物联网创新联合体培育经验（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "js2024_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "宿迁农村电商赋能乡村振兴路径（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "js2024_a_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "推行“综合查一次”柔性执法倡议书（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "js2024_a_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "大作文：在推进中国式现代化中走在前做示范（议论文）",
+        "target_score": 40,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "gd2024_county",
+    "exam_name": "2024年广东省公务员考试申论真题（县级）",
+    "year": 2024,
+    "category": "广东",
+    "tier": "省考县级",
+    "char_count": 395,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "gd2024_county_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "粤北山区县飞地经济发展经验（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gd2024_county_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "现代海洋牧场全产业链发展路径（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gd2024_county_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "“粤治美”数字基层治理经验推广通知（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gd2024_county_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "大作文：日日行不怕千万里 常常做不怕千万事（议论文）",
+        "target_score": 40,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "bj2024_district",
+    "exam_name": "2024年北京市公务员考试申论真题（区级及以上）",
+    "year": 2024,
+    "category": "北京",
+    "tier": "北京市考",
+    "char_count": 441,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "bj2024_dist_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "中关村颠覆性硬科技孵化机制分析（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "bj2024_dist_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "“接诉即办”向“未诉先办”延伸治理经验（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "bj2024_dist_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "“拆栏透绿”花园城市无界公园宣传稿（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "bj2024_dist_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "大作文：首善标准铸就卓越之城（议论文）",
+        "target_score": 40,
+        "char_limit": "1000～1200字"
+      }
+    ]
   }
 ]

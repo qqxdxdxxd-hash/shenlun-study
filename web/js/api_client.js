@@ -191,6 +191,19 @@ class ApiClient {
       marPromptStr = LocalMARAudit.buildMARPrompt(payload.user_answer, payload.question_title, payload.recalled_memories || []);
     }
 
+    let criteriaSection = "";
+    if (payload.scoring_criteria) {
+      criteriaSection = `
+## 【官方客观标准采分底稿与判分细则 (Ground Truth)】：
+${payload.scoring_criteria}
+
+【官方客观阅卷铁律】：
+1. 必须以上述【官方客观标准采分底稿】为唯一基准逐点比对得分，严禁脱离底稿凭空估分；
+2. 考生作答若踩中底稿采分实词或规范动宾搭配，按点赋分并在 quotes_evaluation 中标注为 source_hit (绿色)；
+3. 漏掉的采分要点需在考官诊断中明确指出缺漏项。
+`;
+    }
+
     const userPrompt = `
 待评审申论试卷：
 【题目】：${payload.question_title || '申论作答'}（满分 ${payload.target_score || 35} 分）
@@ -202,6 +215,8 @@ ${payload.materials}
 ${payload.user_answer}
 
 【前置客观指标】：实测字数 ${preInfo.word_count} 字；材料摘抄率 ${(preInfo.copy_ratio * 100).toFixed(1)}%；标题合规问题：${preInfo.title_issues.length > 0 ? preInfo.title_issues.join('；') : '无'}。
+
+${criteriaSection}
 
 ${marPromptStr}
 

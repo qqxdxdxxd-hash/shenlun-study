@@ -57,3 +57,4 @@ jobs:
           node web/tests/test_exams_loader.js
           node web/tests/test_local_pdf.js
           node web/tests/test_api_client.js
+          node web/tests/test_real_exam_subquestions.js

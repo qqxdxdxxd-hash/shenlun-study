@@ -76,5 +76,27 @@ global.fetch = async (url) => {
   assert.strictEqual(fallback.materials, "保底材料");
   console.log("✓ getExamDetail 终极离线兜底常量生效");
 
+  // 测试 getPaperDetail 与 getQuestionDetail 提取小题与采分底稿
+  mockDBStore["paper_2022"] = {
+    id: "paper_2022",
+    exam_name: "2022国考省级",
+    materials_text: "2022完整资料文本...",
+    questions: [
+      { id: "p22_q1", q_index: 1, type: "single", target_score: 10, scoring_criteria: "采分点1：超前研发(2分)", prompt_text: "启示..." },
+      { id: "p22_q5", q_index: 5, type: "essay", target_score: 35, scoring_criteria: "一类文30-35分", prompt_text: "大作文..." }
+    ]
+  };
+
+  const paper = await ExamsLoader.getPaperDetail("paper_2022");
+  assert.strictEqual(paper.id, "paper_2022");
+  assert.strictEqual(paper.questions.length, 2);
+
+  const q1 = await ExamsLoader.getQuestionDetail("paper_2022", "p22_q1");
+  assert.strictEqual(q1.id, "p22_q1");
+  assert.strictEqual(q1.target_score, 10);
+  assert(q1.scoring_criteria.includes("超前研发"));
+  assert.strictEqual(q1.materials, "2022完整资料文本...");
+  console.log("✓ getPaperDetail & getQuestionDetail 提取小题与采分底稿成功");
+
   console.log("🎉 ExamsLoader 测试全部通过！");
 })();

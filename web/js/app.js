@@ -122,37 +122,69 @@ const SKILL_DATABASE = {
   ]
 };
 
-// 静态/纯前端兜底真题库 (保证在 GitHub Pages 等纯静态环境下依然能即刻呈现真题)
+// 静态/纯前端保底真实真题库 (采用最近5年真实国考与省考真题)
 const FALLBACK_DEFAULT_EXAMS = [
   {
-    id: "gk2026_essay",
-    exam_name: "2026年国考副省级",
-    question_type: "essay",
-    question_title: "以绿色发展理念引领现代化大作文",
-    prompt_text: "“给定资料4”中提到“大鹏之动，非一羽之轻；骐骥之速，非一足之力”。请深入思考这句话的内涵，联系实际，自选角度，自拟题目，写一篇议论文。",
-    prompt_reqs: "① 立意明确，见解深刻；② 联系实际，不拘泥于给定资料；③ 思路清晰，语言流畅；④ 参考时限 60 分钟，字数 1000~1200 字，满分 35 分。",
-    target_score: 35,
-    materials: "【给定资料 1】某沿海工业强市曾走过一段高能耗、高污染的粗放增长历程。上世纪末，为了追求产值增速，该市盲目招引大量高耗能化工与印染企业，虽然短期内财政收入大幅上涨，但随之而来的是河道发黑发臭、灰霾天气频繁，引发群众强烈不满。进入新时代，该市坚决摒弃“先污染后治理”的传统老路，坚决贯彻绿色发展理念。市委统筹算大账、长远账，三年内依法关停搬迁落后污染企业 128 家，引入清洁能源装备制造与工业互联网产业，昔日黑烟滚滚的厂区全面升级为绿色低碳示范园，实现了经济增速与生态环境的“双向提升”。\n\n【给定资料 2】在中国式现代化进程中，生态文明建设是全局性、根本性工程。环境法学专家李教授指出：“保护生态环境必须依靠最严格的制度、最严密的法治。很多地方基层治理出现‘上面发文件、基层难落实’，根源在于财政保障不足与权责脱节。”必须健全生态保护补偿制度和转移支付机制，打破部门壁垒，推行跨流域横向生态补偿，严格落实河湖长制、林长制，把生态环境指标作为领导干部考核的硬性刚性约束，以制度倒逼产业升级。\n\n【给定资料 3】良好生态环境是最普惠的民生福祉。某街道探索“绿色积分银行”，将垃圾分类、河道巡查、低碳出行转化为积分，居民可凭积分兑换生活用品。党员带头成立“绿色管家”志愿者队伍，开展常态化环保宣传，带动超 90% 的居民自觉参与社区环境整治，昔日脏乱老旧小区变成了绿树成荫的生态宜居家园。\n\n【给定资料 4】古人云：“大鹏之动，非一羽之轻；骐骥之速，非一足之力。”中国式现代化是人与自然和谐共生的现代化。面对艰巨繁重的绿色转型任务，既需要国家层面的顶层设计与战略定力，也需要经营主体的自觉践行，更需要亿万人民的团结奋斗。只有全社会凝心聚力、久久为功，才能共同绘就美丽中国的壮阔图景。"
+    id: "gk2024_provincial",
+    exam_name: "2024年国家公务员考试申论真题（副省级）",
+    year: 2024,
+    category: "国考",
+    tier: "副省级/省级",
+    char_count: 7600,
+    question_count: 5,
+    questions_summary: [
+      { id: "gk2024_prov_q1", q_index: 1, type: "single", question_title: "H光电集团自主创新突破经验", target_score: 15 },
+      { id: "gk2024_prov_q2", q_index: 2, type: "single", question_title: "某市“高效办成一件事”改革举措", target_score: 15 },
+      { id: "gk2024_prov_q3", q_index: 3, type: "doc", question_title: "云栖县“土特产”产业振兴工作简报", target_score: 20 },
+      { id: "gk2024_prov_q4", q_index: 4, type: "single", question_title: "海洋经济“向海图强”高质量发展分析", target_score: 15 },
+      { id: "gk2024_prov_q5", q_index: 5, type: "essay", question_title: "大作文：事必有法 然后可成", target_score: 35 }
+    ]
   },
   {
-    id: "js2025_single",
-    exam_name: "2025年江苏省考A类",
-    question_type: "single",
-    question_title: "基层形式主义与减负对策",
-    prompt_text: "根据“给定资料2”，请概括当前部分地区在基层形式主义整治过程中面临的主要瓶颈与成因，并提出切实可行的对策建议。",
-    prompt_reqs: "① 概括全面，条理清晰；② 对策具备针对性与可行性；③ 字数不超过 300 字，满分 20 分。",
-    target_score: 20,
-    materials: "【给定资料 2】半月谈记者走访某乡镇，一名大学生村官坦言：“现在上级各类检查评比名目繁多，手机里装了十几个政务App，每天打卡拍照、填报台账耗费了近半天时间。工作干得好不如材料写得好、台账造得齐，基层干部苦不堪言。”县委党校副教授分析指出，形式主义在基层屡禁不止，根源在于政绩观扭曲以及“考核机制唯痕迹论”。一些上级部门图省事，把督导简化为查台账、看留痕；加上权责不对等，基层‘看得见的管不着、管得着的看不见’，导致减负政策在基层出现温差。"
+    id: "gk2022_provincial",
+    exam_name: "2022年国家公务员考试申论真题（省级）",
+    year: 2022,
+    category: "国考",
+    tier: "省级/副省级",
+    char_count: 7800,
+    question_count: 5,
+    questions_summary: [
+      { id: "gk2022_prov_q1", q_index: 1, type: "single", question_title: "B公司科技创新启示", target_score: 10 },
+      { id: "gk2022_prov_q2", q_index: 2, type: "single", question_title: "G省粮食产业发展问题与对策", target_score: 15 },
+      { id: "gk2022_prov_q3", q_index: 3, type: "doc", question_title: "临诗特色乡村旅游推介材料", target_score: 20 },
+      { id: "gk2022_prov_q4", q_index: 4, type: "single", question_title: "“未来学校”更高教育境界阐释", target_score: 20 },
+      { id: "gk2022_prov_q5", q_index: 5, type: "essay", question_title: "大作文：今天的思维与未来的收获", target_score: 35 }
+    ]
   },
   {
-    id: "sydw2025_doc",
-    exam_name: "2025年事业单位联考A类",
-    question_type: "doc",
-    question_title: "垃圾分类倡议公开信",
-    prompt_text: "为了在全区推广生活垃圾分类，某区城管局拟向全体市民发布一封倡议公开信。请根据“给定资料3”，拟写这份公开信的内容提纲。",
-    prompt_reqs: "① 格式要素齐全（标题、称谓、正文、落款）；② 动员语言有感染力，措施具体；③ 字数 400~500 字，满分 25 分。",
-    target_score: 25,
-    materials: "【给定资料 3】生活垃圾分类不仅是民生关键小事，更关乎城市文明底色。某区日均产生生活垃圾达 800 余吨，垃圾焚烧厂超负荷运转。为扭转这一现状，区政府决定在全区全面启动垃圾分类定时定点投放工作。公开信需向广大市民讲清分类必要性，倡导源头减量，明确厨余垃圾、可回收物分类标准，并公布社区志愿监督热线与奖励积分细则。"
+    id: "js2024_a",
+    exam_name: "2024年江苏省公务员考试申论真题（A类）",
+    year: 2024,
+    category: "江苏",
+    tier: "省考A类",
+    char_count: 7200,
+    question_count: 4,
+    questions_summary: [
+      { id: "js2024_a_q1", q_index: 1, type: "single", question_title: "无锡物联网创新联合体培育经验", target_score: 20 },
+      { id: "js2024_a_q2", q_index: 2, type: "single", question_title: "宿迁农村电商赋能乡村振兴路径", target_score: 20 },
+      { id: "js2024_a_q3", q_index: 3, type: "doc", question_title: "推行“综合查一次”柔性执法倡议书", target_score: 20 },
+      { id: "js2024_a_q4", q_index: 4, type: "essay", question_title: "大作文：在推进中国式现代化中走在前做示范", target_score: 40 }
+    ]
+  },
+  {
+    id: "gd2024_county",
+    exam_name: "2024年广东省公务员考试申论真题（县级）",
+    year: 2024,
+    category: "广东",
+    tier: "省考县级",
+    char_count: 6900,
+    question_count: 4,
+    questions_summary: [
+      { id: "gd2024_county_q1", q_index: 1, type: "single", question_title: "粤北山区县飞地经济发展经验", target_score: 20 },
+      { id: "gd2024_county_q2", q_index: 2, type: "single", question_title: "现代海洋牧场全产业链发展路径", target_score: 20 },
+      { id: "gd2024_county_q3", q_index: 3, type: "doc", question_title: "“粤治美”数字基层治理经验推广通知", target_score: 20 },
+      { id: "gd2024_county_q4", q_index: 4, type: "essay", question_title: "大作文：日日行不怕千万里 常常做不怕千万事", target_score: 40 }
+    ]
   }
 ];
 
@@ -161,6 +193,8 @@ if (typeof window !== 'undefined') {
 }
 
 let currentExams = [...FALLBACK_DEFAULT_EXAMS];
+let currentPaper = null;
+let currentQuestion = null;
 let currentActiveMaterialText = "";
 
 // 初始化
@@ -230,21 +264,15 @@ function changeQuestionType() {
   const qType = document.getElementById('q-type').value;
   renderSkillOptions(qType);
 
-  const examSelector = document.getElementById('exam-selector');
-  if (qType === 'essay' && examSelector.querySelector('option[value="gk2026_essay"]')) {
-    examSelector.value = 'gk2026_essay';
-  } else if (qType === 'single' && examSelector.querySelector('option[value="js2025_single"]')) {
-    examSelector.value = 'js2025_single';
-  } else if (qType === 'doc' && examSelector.querySelector('option[value="sydw2025_doc"]')) {
-    examSelector.value = 'sydw2025_doc';
-  } else {
-    // 自动寻找当前题型的首个真题
-    const matched = currentExams.find(e => e.question_type === qType);
-    if (matched && examSelector.querySelector(`option[value="${matched.id}"]`)) {
-      examSelector.value = matched.id;
+  // 如果当前整卷中存在匹配该题型的试题，自动联动切至该小题
+  if (currentPaper && Array.isArray(currentPaper.questions)) {
+    const matched = currentPaper.questions.find(q => q.type === qType);
+    if (matched) {
+      selectSubQuestion(matched.id);
+      renderDossierWarningOnReviewPage(qType);
+      return;
     }
   }
-  onExamSelectChange();
 
   // 动态联动刷新作答页短板警报
   renderDossierWarningOnReviewPage(qType);
@@ -308,11 +336,26 @@ async function renderExamSelector() {
   const currentSelected = selector.value;
   const userDocs = await window.clientDB.getAll('private_kb') || [];
 
-  let html = '<optgroup label="🏛️ 预置官方真题与标准采分底稿">';
-  currentExams.forEach(exam => {
-    html += `<option value="${exam.id}">🏛️ ${exam.exam_name} · ${exam.question_title}</option>`;
-  });
-  html += '</optgroup>';
+  // 按国考与各省省考分类
+  const guokaoList = currentExams.filter(e => e.category === '国考' || (e.exam_name && (e.exam_name.includes('国家') || e.exam_name.includes('国考'))));
+  const provList = currentExams.filter(e => !(e.category === '国考' || (e.exam_name && (e.exam_name.includes('国家') || e.exam_name.includes('国考')))));
+
+  let html = '';
+  if (guokaoList.length > 0) {
+    html += '<optgroup label="🏛️ 历年国考官方真题 (最近5年整卷)">';
+    guokaoList.forEach(exam => {
+      html += `<option value="${exam.id}">🏛️ ${exam.exam_name}</option>`;
+    });
+    html += '</optgroup>';
+  }
+
+  if (provList.length > 0) {
+    html += '<optgroup label="🏛️ 各省省考官方真题 (最近5年代表卷)">';
+    provList.forEach(exam => {
+      html += `<option value="${exam.id}">🏛️ ${exam.exam_name}</option>`;
+    });
+    html += '</optgroup>';
+  }
 
   if (userDocs.length > 0) {
     html += '<optgroup label="📂 我的私有知识库 / 上传材料 (点击直接作为试卷材料)">';
@@ -350,8 +393,14 @@ async function onExamSelectChange() {
   const key = selector.value;
   if (!key) return;
 
+  const qContainer = document.getElementById('paper-questions-container');
+  const pillsContainer = document.getElementById('paper-questions-pills');
+
   if (key === 'custom_manual') {
     if (!isCustomPrompt) toggleCustomPromptMode();
+    if (qContainer) qContainer.style.display = 'none';
+    currentPaper = null;
+    currentQuestion = null;
     return;
   }
 
@@ -360,13 +409,16 @@ async function onExamSelectChange() {
     const userDocs = await window.clientDB.getAll('private_kb');
     const doc = userDocs.find(d => d.id === key);
     if (doc) {
-      currentActiveMaterialText = doc.content; // 确保大模型与色谱比对拿到的是完整纯净原文
+      currentPaper = null;
+      currentQuestion = null;
+      if (qContainer) qContainer.style.display = 'none';
+
+      currentActiveMaterialText = doc.content;
       document.getElementById('exam-title-badge').innerText = `📂 私有资料 · ${doc.title}`;
       document.getElementById('exam-score-badge').innerText = `共 ${doc.content.length} 字`;
       document.getElementById('prompt-text').innerText = `《${doc.title}》· 深入研读与申论综合分析`;
       document.getElementById('prompt-reqs').innerHTML = `<strong>使用材料：</strong>${doc.title}（已关联为大模型批改与抄袭比对全文基准，共 ${doc.content.length} 字）。`;
 
-      // 优雅呈现自然原文流，过滤页码噪声，保留连贯舒适阅读与段间距
       const cleanContent = doc.content.replace(/---\s*\[第\s*\d+\s*页\]\s*---\s*/g, '').trim();
       document.getElementById('materials-panel').innerHTML = `
         <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
@@ -378,38 +430,104 @@ ${window.ChromaRenderer.escapeHtml(cleanContent)}
     }
   }
 
-  // 2. 否则判定为官方预置真题
-  let exam = currentExams.find(e => e.id === key);
-  if (!exam) return;
+  // 2. 判定为官方预置真题题本 (获取整卷与题目)
+  let paper = null;
+  if (window.ExamsLoader) {
+    paper = await window.ExamsLoader.getPaperDetail(key);
+  }
+  if (!paper) {
+    paper = currentExams.find(e => e.id === key);
+  }
+  if (!paper) return;
 
-  // 若材料尚未加载（首屏分片懒加载架构），按需拉取单卷 (~25KB)
-  if (!exam.materials || !exam.prompt_text) {
+  currentPaper = paper;
+
+  // 渲染试卷内题目切换 Pill 标签组
+  const questions = paper.questions || [];
+  if (questions.length > 0) {
+    if (qContainer) qContainer.style.display = 'block';
+    if (pillsContainer) {
+      pillsContainer.innerHTML = questions.map((q, idx) => {
+        let typeBadge = '大作文';
+        if (q.type === 'doc') typeBadge = '公文';
+        else if (q.type === 'single') typeBadge = '单一';
+        return `<button type="button" class="q-pill ${idx === 0 ? 'active' : ''}" id="pill-${q.id}" onclick="selectSubQuestion('${q.id}')">题(${q.q_index})·${typeBadge} (${q.target_score || q.score}分)</button>`;
+      }).join('');
+    }
+    await selectSubQuestion(questions[0].id);
+  } else {
+    // 兼容单题旧数据
+    if (qContainer) qContainer.style.display = 'none';
+    currentQuestion = null;
+    currentActiveMaterialText = paper.materials || paper.materials_text || '';
+    document.getElementById('exam-title-badge').innerText = `🏛️ ${paper.exam_name}`;
+    document.getElementById('exam-score-badge').innerText = `满分 ${paper.target_score || 35} 分`;
+    document.getElementById('prompt-text').innerText = paper.prompt_text || paper.question_title;
+    document.getElementById('prompt-reqs').innerHTML = `<strong>作答要求：</strong>${paper.prompt_reqs || '按公考规范要求作答'}`;
     document.getElementById('materials-panel').innerHTML = `
-      <div style="font-size: 13.5px; color: #94a3b8; padding: 14px; text-align: center;">
-        ⏳ 正在按需懒加载《${exam.question_title}》真题资料与采分底稿 (~25KB)...
+      <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
+${window.ChromaRenderer.escapeHtml(currentActiveMaterialText)}
       </div>
     `;
-    if (window.ExamsLoader) {
-      const fullExam = await window.ExamsLoader.getExamDetail(key);
-      if (fullExam) {
-        Object.assign(exam, fullExam);
-      }
-    }
   }
 
-  currentActiveMaterialText = exam.materials || '';
-  document.getElementById('exam-title-badge').innerText = `🏛️ ${exam.exam_name}`;
-  document.getElementById('exam-score-badge').innerText = `满分 ${exam.target_score || 35} 分`;
-  document.getElementById('prompt-text').innerText = exam.prompt_text || exam.question_title;
-  document.getElementById('prompt-reqs').innerHTML = `<strong>作答要求：</strong>${exam.prompt_reqs || '按申论规范要求作答'}`;
-  
-  // 优雅呈现完整原文
+  if (isCustomPrompt) toggleCustomPromptMode();
+}
+
+// 选择试卷中的具体小题
+async function selectSubQuestion(qid) {
+  if (!currentPaper || !Array.isArray(currentPaper.questions)) return;
+  const q = currentPaper.questions.find(item => item.id === qid) || currentPaper.questions[0];
+  if (!q) return;
+
+  currentQuestion = q;
+
+  // 更新 pill 按钮激活状态
+  document.querySelectorAll('.q-pill').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.getElementById(`pill-${q.id}`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  // 同步题型与 Skill 规范
+  const qTypeEl = document.getElementById('q-type');
+  if (qTypeEl && q.type) {
+    qTypeEl.value = q.type;
+    renderSkillOptions(q.type);
+  }
+
+  // 呈现真实题干与作答要求
+  document.getElementById('exam-title-badge').innerText = `🏛️ ${currentPaper.exam_name} · 第(${q.q_index})题`;
+  document.getElementById('exam-score-badge').innerText = `满分 ${q.target_score || q.score || 20} 分`;
+  document.getElementById('prompt-text').innerText = q.prompt_text;
+  document.getElementById('prompt-reqs').innerHTML = `<strong>作答要求：</strong>${q.prompt_reqs || '按要求作答'}（${q.char_limit || ''}）。`;
+
+  // 呈现采分底稿内容
+  const criteriaContent = document.getElementById('scoring-criteria-content');
+  if (criteriaContent) {
+    criteriaContent.innerText = q.scoring_criteria || '本题根据材料客观原词与要点采分。';
+  }
+
+  // 呈现完整给定资料
+  currentActiveMaterialText = currentPaper.materials_text || currentPaper.materials || '';
   document.getElementById('materials-panel').innerHTML = `
     <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
-${window.ChromaRenderer.escapeHtml(exam.materials || '')}
+${window.ChromaRenderer.escapeHtml(currentActiveMaterialText)}
     </div>
   `;
-  if (isCustomPrompt) toggleCustomPromptMode();
+
+  // 联动刷新作答页短板警报
+  renderDossierWarningOnReviewPage(q.type);
+}
+
+// 展开/收起官方标准采分底稿
+function toggleScoringCriteria() {
+  const box = document.getElementById('scoring-criteria-box');
+  const btnText = document.getElementById('scoring-toggle-text');
+  if (!box) return;
+  const isHidden = box.style.display === 'none';
+  box.style.display = isHidden ? 'block' : 'none';
+  if (btnText) {
+    btnText.innerText = isHidden ? '✕ 收起采分底稿' : '🔍 查看官方采分底稿';
+  }
 }
 
 // 从私有知识库一键载入至自定义编辑框
@@ -472,7 +590,8 @@ async function runFullReview() {
   const qType = document.getElementById('q-type').value;
   const skillId = document.getElementById('skill-selector').value;
   
-  let topic = document.getElementById('prompt-text').innerText;
+  let topic = currentQuestion ? currentQuestion.question_title : document.getElementById('prompt-text').innerText;
+  let targetScore = currentQuestion ? (currentQuestion.target_score || currentQuestion.score) : (qType === 'essay' ? 35 : (qType === 'doc' ? 25 : 20));
   let materials = currentActiveMaterialText;
 
   if (isCustomPrompt) {
@@ -499,6 +618,8 @@ async function runFullReview() {
     target_score: targetScore,
     skill_id: skillId,
     recalled_memories: recalled,
+    scoring_criteria: currentQuestion ? (currentQuestion.scoring_criteria || '') : '',
+    reference_answer: currentQuestion ? (currentQuestion.reference_answer || '') : '',
     api_key: apiKey,
     base_url: localStorage.getItem('shenlun_base_url') || 'https://api.deepseek.com/v1',
     model_id: localStorage.getItem('shenlun_model_id') || 'deepseek-chat'
@@ -1357,14 +1478,14 @@ async function renderPrivateKBDocs() {
   `).join('');
 }
 
-// 动态渲染 200 套公共官方真题列表
+// 动态渲染历年真实官方题本列表 (最近5年国考与省考)
 function renderPublicKBList() {
   const container = document.getElementById('public-kb-list');
   const countBadge = document.getElementById('public-kb-count');
   if (!container) return;
 
   if (countBadge) {
-    countBadge.innerText = `共 ${currentExams.length} 套真题 (分片秒开)`;
+    countBadge.innerText = `共 ${currentExams.length} 套真实题本 (最近5年)`;
   }
 
   if (!currentExams || currentExams.length === 0) {
@@ -1373,32 +1494,32 @@ function renderPublicKBList() {
   }
 
   let html = '';
-  currentExams.forEach(exam => {
-    let typeTag = '大作文';
-    let tagColor = '#38bdf8';
-    if (exam.question_type === 'doc') {
-      typeTag = '公文题';
-      tagColor = '#a855f7';
-    } else if (exam.question_type === 'single') {
-      typeTag = '单一题';
-      tagColor = '#22c55e';
-    }
+  currentExams.forEach(paper => {
+    const qCount = paper.question_count || (paper.questions ? paper.questions.length : (paper.questions_summary ? paper.questions_summary.length : 1));
+    const questionsSummary = paper.questions_summary || paper.questions || [];
 
     html += `
-      <div style="padding: 8px 10px; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; transition: background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background='transparent'">
-        <div style="flex:1; margin-right:8px; overflow:hidden;">
-          <div style="font-size: 13px; font-weight: 600; color: #f1f5f9; display: flex; align-items: center; gap: 6px;">
-            <span>🏛️ ${exam.exam_name}</span>
-            <span style="font-size: 11px; padding: 1px 6px; border-radius: 4px; background: rgba(255,255,255,0.08); color: ${tagColor}; border: 1px solid ${tagColor}44;">${typeTag}</span>
-            <span style="font-size: 11px; color: var(--text-muted);">${exam.target_score || 35}分</span>
+      <div style="padding: 10px 12px; border-bottom: 1px solid var(--card-border); transition: background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background='transparent'">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <div style="font-size: 13.5px; font-weight: 600; color: #f1f5f9; display: flex; align-items: center; gap: 8px;">
+            <span>🏛️ ${paper.exam_name}</span>
+            <span class="card-tag tag-blue" style="padding: 1px 6px; font-size: 11px;">${paper.category || '国考'} · ${paper.tier || '全卷'}</span>
+            <span style="font-size: 11px; color: var(--text-muted);">共 ${qCount} 题 · 100分</span>
           </div>
-          <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            ${exam.question_title}
-          </div>
+          <button class="btn btn-outline" style="padding: 2px 10px; font-size: 11px;" onclick="selectExamForStudy('${paper.id}')">
+            ✍️ 选用整卷
+          </button>
         </div>
-        <button class="btn btn-outline" style="padding: 2px 8px; font-size: 11px; white-space: nowrap;" onclick="selectExamForStudy('${exam.id}', '${exam.question_type || 'essay'}')">
-          ✍️ 一键选用
-        </button>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">
+          ${questionsSummary.map(q => {
+            const typeLabel = q.type === 'essay' ? '大作文' : (q.type === 'doc' ? '公文' : '单一');
+            return `
+              <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); color: #cbd5e1; cursor:pointer;" onclick="selectExamForStudy('${paper.id}', '${q.id}')">
+                题(${q.q_index})·${typeLabel} (${q.target_score || q.score || 20}分) ${q.title || q.question_title || ''}
+              </span>
+            `;
+          }).join('')}
+        </div>
       </div>
     `;
   });
@@ -1407,17 +1528,15 @@ function renderPublicKBList() {
 }
 
 // 从公共题库一键选用并跳转到做题界面
-async function selectExamForStudy(examId, qType) {
+async function selectExamForStudy(paperId, questionId) {
   switchTab('review');
-  const typeSelect = document.getElementById('q-type');
-  if (typeSelect && qType) {
-    typeSelect.value = qType;
-    renderSkillOptions(qType);
-  }
   const selector = document.getElementById('exam-selector');
   if (selector) {
-    selector.value = examId;
+    selector.value = paperId;
     await onExamSelectChange();
+    if (questionId) {
+      await selectSubQuestion(questionId);
+    }
   }
 }
 
