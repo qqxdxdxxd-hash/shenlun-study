@@ -123,6 +123,7 @@ const SKILL_DATABASE = {
 };
 
 let currentExams = [];
+let currentActiveMaterialText = "";
 
 // 初始化
 async function initApp() {
@@ -292,23 +293,19 @@ async function onExamSelectChange() {
     const userDocs = await window.clientDB.getAll('private_kb');
     const doc = userDocs.find(d => d.id === key);
     if (doc) {
+      currentActiveMaterialText = doc.content; // 确保大模型与色谱比对拿到的是完整纯净原文
       document.getElementById('exam-title-badge').innerText = `📂 私有资料 · ${doc.title}`;
       document.getElementById('exam-score-badge').innerText = `共 ${doc.content.length} 字`;
       document.getElementById('prompt-text').innerText = `《${doc.title}》· 深入研读与申论综合分析`;
-      document.getElementById('prompt-reqs').innerHTML = `<strong>使用材料：</strong>${doc.title}（已作为本次作答批改依据，并作为材料抄袭率比对基准）。`;
+      document.getElementById('prompt-reqs').innerHTML = `<strong>使用材料：</strong>${doc.title}（已关联为大模型批改与抄袭比对全文基准，共 ${doc.content.length} 字）。`;
 
-      // 智能分段呈现
-      const paras = doc.content.split(/\n+/).map(p => p.trim()).filter(p => p.length > 0);
-      const matBlocks = paras.map((p, idx) => `
-        <div class="mat-block">
-          <div class="mat-header">
-            <span>【资料段落 §${idx + 1}】</span>
-            <span style="color:#64748b; font-size:11px;">${p.length}字</span>
-          </div>
-          <p><span class="para-num">§${idx + 1}</span>${p}</p>
+      // 优雅呈现自然原文流，过滤页码噪声，保留连贯舒适阅读与段间距
+      const cleanContent = doc.content.replace(/---\s*\[第\s*\d+\s*页\]\s*---\s*/g, '').trim();
+      document.getElementById('materials-panel').innerHTML = `
+        <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
+${window.ChromaRenderer.escapeHtml(cleanContent)}
         </div>
-      `).join('');
-      document.getElementById('materials-panel').innerHTML = matBlocks;
+      `;
       if (isCustomPrompt) toggleCustomPromptMode();
       return;
     }
@@ -318,22 +315,18 @@ async function onExamSelectChange() {
   const exam = currentExams.find(e => e.id === key);
   if (!exam) return;
 
+  currentActiveMaterialText = exam.materials;
   document.getElementById('exam-title-badge').innerText = `🏛️ ${exam.exam_name}`;
   document.getElementById('exam-score-badge').innerText = `满分 ${exam.target_score} 分`;
   document.getElementById('prompt-text').innerText = exam.prompt_text;
   document.getElementById('prompt-reqs').innerHTML = `<strong>作答要求：</strong>${exam.prompt_reqs}`;
   
-  // 渲染分段材料
-  const matBlocks = exam.materials.split('\n\n').map((para, i) => `
-    <div class="mat-block">
-      <div class="mat-header">
-        <span>【资料片段 ${i+1}】</span>
-        <span style="color:#64748b; font-size:11px;">字数：${para.length}字</span>
-      </div>
-      <p><span class="para-num">§${i+1}</span>${para}</p>
+  // 优雅呈现完整原文
+  document.getElementById('materials-panel').innerHTML = `
+    <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
+${window.ChromaRenderer.escapeHtml(exam.materials)}
     </div>
-  `).join('');
-  document.getElementById('materials-panel').innerHTML = matBlocks;
+  `;
   if (isCustomPrompt) toggleCustomPromptMode();
 }
 
@@ -398,11 +391,11 @@ async function runFullReview() {
   const skillId = document.getElementById('skill-selector').value;
   
   let topic = document.getElementById('prompt-text').innerText;
-  let materials = document.getElementById('materials-panel').innerText;
+  let materials = currentActiveMaterialText;
 
   if (isCustomPrompt) {
     topic = document.getElementById('custom-prompt-input').value || topic;
-    materials = document.getElementById('custom-mat-input').value || materials;
+    materials = document.getElementById('custom-mat-input').value || currentActiveMaterialText;
   }
 
   // 1. 本地 Mini-RAG 智能召回匹配记忆

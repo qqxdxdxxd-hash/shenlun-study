@@ -1273,19 +1273,15 @@
           document.getElementById('exam-title-badge').innerText = `📂 私有资料 · ${doc.title}`;
           document.getElementById('exam-score-badge').innerText = `共 ${doc.content.length} 字`;
           document.getElementById('prompt-text').innerText = `《${doc.title}》· 深入研读与申论综合分析`;
-          document.getElementById('prompt-reqs').innerHTML = `<strong>使用材料：</strong>${doc.title}（已作为本次作答批改依据，并作为材料抄袭率比对基准）。`;
+          document.getElementById('prompt-reqs').innerHTML = `<strong>使用材料：</strong>${doc.title}（已关联为大模型批改与抄袭比对全文基准，共 ${doc.content.length} 字）。`;
 
-          const paras = doc.content.split(/\n+/).map(p => p.trim()).filter(p => p.length > 0);
-          const matBlocks = paras.map((p, idx) => `
-            <div class="mat-block">
-              <div class="mat-header">
-                <span>【资料段落 §${idx + 1}】</span>
-                <span style="color:#64748b; font-size:11px;">${p.length}字</span>
-              </div>
-              <p><span class="para-num">§${idx + 1}</span>${p}</p>
+          // 优雅呈现自然原文流，过滤页码噪声，保留连贯舒适阅读与段间距
+          const cleanContent = doc.content.replace(/---\s*\[第\s*\d+\s*页\]\s*---\s*/g, '').trim();
+          document.getElementById('materials-panel').innerHTML = `
+            <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
+${cleanContent.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}
             </div>
-          `).join('');
-          document.getElementById('materials-panel').innerHTML = matBlocks;
+          `;
           if (isCustomPrompt) toggleCustomPromptMode();
           return;
         }
@@ -1298,7 +1294,11 @@
       document.getElementById('exam-score-badge').innerText = data.scoreBadge;
       document.getElementById('prompt-text').innerText = data.promptText;
       document.getElementById('prompt-reqs').innerHTML = data.promptReqs;
-      document.getElementById('materials-panel').innerHTML = data.materialsHtml;
+      document.getElementById('materials-panel').innerHTML = `
+        <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
+${data.materialsHtml}
+        </div>
+      `;
       if (isCustomPrompt) toggleCustomPromptMode();
     }
 
