@@ -513,16 +513,27 @@ async function runFullReview() {
   } catch (err) {
     alert(`批改遇到错误: ${err.message}`);
   } finally {
-    btn.innerText = '🚀 开始全真多维色谱穿透批改';
+    btn.innerText = '🚀 开始批改';
     btn.disabled = false;
   }
 }
 
 // 渲染批改结果
 function renderReviewResult(userText, res) {
+  // 显示评分条，隐藏未批改占位提示
+  const bannerBox = document.getElementById('score-banner-box');
+  if (bannerBox) bannerBox.style.display = 'flex';
+  const emptyBox = document.getElementById('score-empty-box');
+  if (emptyBox) emptyBox.style.display = 'none';
+
   // 分数与定档
   document.getElementById('score-val').innerText = res.score;
   document.getElementById('score-grade').innerText = res.grade;
+  const structVal = document.getElementById('structure-val');
+  if (structVal) {
+    const structScore = res.radar_scores ? res.radar_scores['结构与段落布局'] : null;
+    structVal.innerText = res.grade?.includes('四类') ? '结构残缺' : (structScore >= 7 ? '结构严整' : (structScore !== null ? '结构尚可' : '结构规范'));
+  }
   document.getElementById('copy-ratio-val').innerText = `${(res.copy_ratio * 100).toFixed(1)}% (${res.copy_redline_exceeded ? '⚠️超标' : '安全'})`;
 
   // 渲染多维色谱文本

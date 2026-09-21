@@ -67,11 +67,11 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label">题型与评分基准</label>
+              <label class="form-label">作答题型</label>
               <select class="form-select" id="q-type" onchange="changeQuestionType()">
-                <option value="essay">材料大作文（1000字 · 35/40分制 · 考场大五段）</option>
-                <option value="doc">公文题（贯彻执行 · 20分制 · 格式与内容三轨）</option>
-                <option value="single">单一题（归纳概括/对策 · 15分制 · 采点给分制）</option>
+                <option value="essay">大作文</option>
+                <option value="doc">公文题</option>
+                <option value="single">单一题</option>
               </select>
             </div>
 
@@ -170,36 +170,41 @@
             </div>
 
             <button class="btn btn-primary" id="btn-start-review" style="width: 100%; padding: 10px;" onclick="runFullReview()">
-              <span>🚀 开始全真多维色谱穿透批改</span>
+              <span>🚀 开始批改</span>
             </button>
           </div>
         </div>
 
-        <!-- 右栏：多维色谱穿透报告与闭环 -->
+        <!-- 右栏：批改报告 -->
         <div>
           <div class="card">
             <div class="card-title">
-              <span>📊 多维色谱穿透报告与考场一类文重塑</span>
+              <span>📊 批改报告</span>
             </div>
 
-            <!-- 顶部总分与定档 -->
-            <div class="score-banner">
+            <!-- 顶部总分与定档 (未批改前隐藏，批改后动态展现) -->
+            <div class="score-banner" id="score-banner-box" style="display: none;">
               <div class="score-item">
-                <div class="score-val" id="score-val">31.5</div>
-                <div class="score-lbl">综合评定分 (满分35)</div>
+                <div class="score-val" id="score-val">--</div>
+                <div class="score-lbl" id="score-max-lbl">综合评定分</div>
               </div>
               <div class="score-item">
-                <div class="score-grade" id="score-grade">一类下 (31~32分档)</div>
+                <div class="score-grade" id="score-grade">--</div>
                 <div class="score-lbl">考场阅卷初扫档位</div>
               </div>
               <div class="score-item">
-                <div style="font-size: 15px; font-weight: 700; color: #38bdf8;">1+3 结构严整</div>
+                <div style="font-size: 15px; font-weight: 700; color: #38bdf8;" id="structure-val">--</div>
                 <div class="score-lbl">立意与骨架形态</div>
               </div>
               <div class="score-item">
-                <div style="font-size: 15px; font-weight: 700; color: #4ade80;" id="copy-ratio-val">14.2% (安全)</div>
+                <div style="font-size: 15px; font-weight: 700; color: #4ade80;" id="copy-ratio-val">--</div>
                 <div class="score-lbl">材料摘抄率 (未超20%红线)</div>
               </div>
+            </div>
+
+            <!-- 未批改前空白待批改占位提示 -->
+            <div id="score-empty-box" style="padding: 16px 20px; text-align: center; color: var(--text-muted); font-size: 13px; background: rgba(15, 23, 42, 0.4); border: 1px dashed var(--card-border); border-radius: 6px; margin-bottom: 16px;">
+              <span>⏳ <strong>空白待批改</strong>：在左侧录入作答文本后，点击【🚀 开始批改】生成四维得分与诊断报告。</span>
             </div>
 
             <!-- 色谱图例 Legend -->
@@ -214,7 +219,7 @@
 
             <!-- 色谱穿透高亮文本展示区 -->
             <div class="chroma-view" id="chroma-text-container">
-              点击左侧【开始全真多维色谱穿透批改】后，系统将在此处以字符级精准色谱高亮呈现您的作答。
+              点击左侧【开始批改】后，系统将在此处以字符级精准色谱高亮呈现您的作答。
             </div>
 
             <!-- 考场量化赋分与给分/扣分归因穿透面板 -->
