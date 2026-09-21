@@ -287,19 +287,12 @@
           </div>
 
           <div>
-            <div class="form-label" style="display:flex; justify-content:space-between;">
+            <div class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
               <span>【私有库】我的个性化讲义与时政文件 (100% 存浏览器)</span>
-              <button class="btn btn-outline" style="padding:2px 8px; font-size:11px;" onclick="alert('上传的讲义/笔记文本完全保留在本地 IndexedDB，服务端不存')">➕ 上传私有材料</button>
+              <button class="btn btn-primary" style="padding:3px 10px; font-size:12px;" onclick="openUploadDocModal()">📂 上传私有材料 / 讲义</button>
             </div>
-            <div style="background:#090d16; border:1px solid var(--card-border); border-radius:6px; padding:12px;">
-              <div style="padding:8px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between;">
-                <span>📄 2026政府工作报告核心金句摘录.md</span>
-                <span style="font-size:11px; color:#4ade80;">本地已存 (支持划词入库)</span>
-              </div>
-              <div style="padding:8px; display:flex; justify-content:space-between;">
-                <span>📄 基层治理经典案例与制度创新汇编.txt</span>
-                <span style="font-size:11px; color:#4ade80;">本地已存 (支持划词入库)</span>
-              </div>
+            <div style="background:#090d16; border:1px solid var(--card-border); border-radius:6px; padding:12px;" id="private-kb-list">
+              <!-- 动态由 app.js 渲染 -->
             </div>
           </div>
         </div>
@@ -370,14 +363,81 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">上传或粘贴讲义/笔记文本</label>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <label class="form-label" style="margin-bottom:0;">上传或粘贴讲义/笔记文本</label>
+            <button class="btn btn-outline" style="padding:2px 8px; font-size:11px;" onclick="document.getElementById('skill-file-input').click()">📂 从本地文件导入 (.txt/.md)</button>
+            <input type="file" id="skill-file-input" accept=".txt,.md,.markdown" style="display:none" onchange="handleSkillFileSelected(event)">
+          </div>
           <textarea class="form-textarea" id="custom-skill-text" style="min-height:120px;" placeholder="粘贴你的讲义核心论述、判分原则...">第一讲：寻找主题和观点。标题必须包含核心主题词，开头段尾句亮明总论点，正文三段首句亮明分论点。每一段事例之后必须跟进多维度分析，不可单摆浮搁案例...</textarea>
         </div>
 
-        <button class="btn btn-primary" onclick="alert('已模拟两步提炼！已成功生成并在本地注册该自定义 Skill，你可在批改题型下拉中选择此专家！')">⚡ 一键提炼并注册本地 Skill</button>
+        <button class="btn btn-primary" onclick="extractAndSaveCustomSkill()">⚡ 一键提炼并注册本地 Skill</button>
       </div>
     </div>
   </main>
+
+  <!-- 模态框：上传私有资料文档 -->
+  <div class="modal-overlay" id="upload-doc-modal">
+    <div class="modal" style="width: 580px;">
+      <div class="modal-header">
+        <div class="modal-title">📂 上传私有学习资料 / 讲义 (存入 IndexedDB)</div>
+        <div class="modal-close" onclick="closeUploadDocModal()">✕</div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+        资料 100% 保存在你的浏览器本地，服务端绝不存储。上传后支持在网页端阅读并鼠标划词一键存入记忆库。
+      </p>
+
+      <div class="form-group" style="background: rgba(56,189,248,0.06); border: 1px dashed rgba(56,189,248,0.3); border-radius: 6px; padding: 14px; text-align: center;">
+        <input type="file" id="doc-file-input" accept=".txt,.md,.markdown,.json" style="display:none;" onchange="handleDocFileSelected(event)">
+        <button class="btn btn-primary" type="button" onclick="document.getElementById('doc-file-input').click()">
+          <span>📁 选择本地文件 (.txt / .md / .json)</span>
+        </button>
+        <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;" id="file-chosen-tip">支持各类时政报告、名师讲义文本、个人整理笔记</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">资料标题</label>
+        <input type="text" class="form-input" id="upload-doc-title" placeholder="例如：2026年政府工作报告生态与基层治理金句汇总">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">分类标签</label>
+        <input type="text" class="form-input" id="upload-doc-tag" value="时政理论" placeholder="例如：基层治理 / 生态文明 / 经济发展">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">资料正文内容 (选文件自动填入，亦可直接粘贴)</label>
+        <textarea class="form-textarea" id="upload-doc-content" style="min-height: 140px;" placeholder="粘贴或载入文章正文..."></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeUploadDocModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveUploadedDoc()">💾 确认存入本地知识库</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 模态框：私有资料阅读与划词入库 Viewer -->
+  <div class="modal-overlay" id="doc-viewer-modal">
+    <div class="modal" style="width: 720px; max-height: 85vh; display: flex; flex-direction: column;">
+      <div class="modal-header">
+        <div class="modal-title" id="viewer-doc-title">📖 文档阅读</div>
+        <div class="modal-close" onclick="closeDocViewer()">✕</div>
+      </div>
+      <div style="background: rgba(34,197,94,0.08); border: 1px dashed rgba(34,197,94,0.3); border-radius: 4px; padding: 6px 10px; font-size: 11px; color: #86efac; margin-bottom: 10px;">
+        💡 <strong>高效背诵秘诀</strong>：在下方文章中用鼠标选中任意精彩金句或对策短语，即可弹出气泡一键加入【个人申论记忆库】！
+      </div>
+      <div id="viewer-doc-content" style="flex: 1; overflow-y: auto; background: #090d16; border: 1px solid var(--card-border); border-radius: 6px; padding: 14px; font-size: 13.5px; line-height: 1.8; white-space: pre-wrap;"></div>
+      <div class="modal-footer" style="margin-top: 12px;">
+        <button class="btn btn-outline" onclick="closeDocViewer()">关闭阅读器</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 划词入库浮动悬浮按钮 -->
+  <div id="selection-float-btn" style="display:none; position:absolute; z-index:300; background:#38bdf8; color:#0f172a; padding:4px 10px; border-radius:4px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.5);">
+    ➕ 存入申论记忆库
+  </div>
 
   <!-- 模型配置 BYOK 弹窗 -->
   <div class="modal-overlay" id="setting-modal">

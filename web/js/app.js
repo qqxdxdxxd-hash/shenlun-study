@@ -145,6 +145,7 @@ async function initApp() {
   // 3. 渲染首屏
   renderSkillOptions('essay');
   renderMemoryDeck();
+  renderPrivateKBDocs();
   renderDossierList();
 
   // 4. 绑定色谱 Popover
@@ -481,6 +482,217 @@ function openSettingModal() {
 
 function closeSettingModal() {
   document.getElementById('setting-modal').classList.remove('show');
+}
+
+// ================= 私有知识库上传、管理与划词入库 =================
+
+const SAMPLE_PRIVATE_DOCS = [
+  {
+    id: "doc_default_1",
+    title: "2026年政府工作报告生态文明与新质生产力要点.md",
+    tag: "权威时政",
+    content: "【新质生产力与生态文明战略指引】\n大力推进现代化产业体系建设，加快发展新质生产力。充分发挥创新主导作用，以科技创新推动产业创新，加快推进新型工业化，提高全要素生产率，不断塑造发展新动能新优势。\n\n加强生态文明建设，推进绿色低碳发展。协同推进降碳、减污、扩绿、增长，建设人与自然和谐共生的美丽中国。推动产业链供应链绿色化转型，培育壮大绿色低碳新兴产业。深入实施空气质量持续改善行动计划，统筹水资源、水环境、水生态治理。\n\n【基层治理深化要求】\n提高基层治理现代化水平。坚持和发展新时代“枫桥经验”，推进矛盾纠纷预防化解法治化。坚决克服形式主义、官僚主义，持续为基层减负松绑，让基层干部把更多精力投入到为民办实事中。",
+    createdAt: Date.now() - 86400000 * 2
+  },
+  {
+    id: "doc_default_2",
+    title: "基层治理典型经验与对策模板汇编.txt",
+    tag: "对策经验",
+    content: "【经验一：红色物业赋能基层协商】\n某街道推行“红色物业”模式，以社区党组织为核心，组建由网格员、物业代表、业主委员会三方协同的民主协商平台。实行“月评季考”与服务公示制度，推动物业收缴率由 40% 跃升至 92%，有效化解了停车难、飞线充电等群众烦心事。\n\n【经验二：积分银行激发群众内生动力】\n建立生态积分兑换超市，把村民房前屋后清洁、垃圾分类投放、志愿巡查纳入积分档案。实行红黑榜月度评比，杜绝“干部干、群众看”的被动局面，实现了乡村环境从“倒逼整治”到“自治自觉”的根本跃迁。",
+    createdAt: Date.now() - 86400000 * 5
+  }
+];
+
+async function renderPrivateKBDocs() {
+  const container = document.getElementById('private-kb-list');
+  if (!container) return;
+
+  let docs = await window.clientDB.getAll('private_kb');
+  if (!docs || docs.length === 0) {
+    for (const d of SAMPLE_PRIVATE_DOCS) {
+      await window.clientDB.put('private_kb', d);
+    }
+    docs = SAMPLE_PRIVATE_DOCS;
+  }
+
+  container.innerHTML = docs.map(doc => `
+    <div style="padding:10px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div style="font-size:13px; font-weight:600; color:#f8fafc;">📄 ${doc.title}</div>
+        <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">
+          <span class="card-tag tag-blue" style="padding:1px 6px;">#${doc.tag || '私有资料'}</span>
+          <span style="margin-left:6px;">${doc.content.length} 字</span>
+          <span style="margin-left:6px; color:#4ade80;">本地已存</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="btn btn-outline" style="padding:2px 8px; font-size:11px;" onclick="openDocViewer('${doc.id}')">📖 查看与划词</button>
+        <button class="btn btn-outline" style="padding:2px 6px; font-size:11px; color:#f87171;" onclick="deletePrivateDoc('${doc.id}')">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openUploadDocModal() {
+  document.getElementById('upload-doc-title').value = '';
+  document.getElementById('upload-doc-content').value = '';
+  document.getElementById('file-chosen-tip').innerText = '支持各类时政报告、名师讲义文本、个人整理笔记';
+  document.getElementById('upload-doc-modal').classList.add('show');
+}
+
+function closeUploadDocModal() {
+  document.getElementById('upload-doc-modal').classList.remove('show');
+}
+
+// 本地文件选择读取
+function handleDocFileSelected(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const text = e.target.result;
+    document.getElementById('upload-doc-title').value = file.name;
+    document.getElementById('upload-doc-content').value = text;
+    document.getElementById('file-chosen-tip').innerText = `已成功加载文件: ${file.name} (${text.length} 字)`;
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+async function saveUploadedDoc() {
+  const title = document.getElementById('upload-doc-title').value.trim();
+  const tag = document.getElementById('upload-doc-tag').value.trim() || '私有资料';
+  const content = document.getElementById('upload-doc-content').value.trim();
+
+  if (!title || !content) {
+    alert('请填写资料标题并提供内容或选择文件！');
+    return;
+  }
+
+  const newDoc = {
+    id: `doc_${Date.now()}`,
+    title,
+    tag,
+    content,
+    createdAt: Date.now()
+  };
+
+  await window.clientDB.put('private_kb', newDoc);
+  alert(`成功存入本地知识库: 《${title}》！`);
+  closeUploadDocModal();
+  renderPrivateKBDocs();
+}
+
+async function deletePrivateDoc(id) {
+  if (!confirm('确定从本地 IndexedDB 中删除该篇学习资料吗？')) return;
+  await window.clientDB.delete('private_kb', id);
+  renderPrivateKBDocs();
+}
+
+// 文档阅读与划词入库
+let currentViewingDoc = null;
+async function openDocViewer(id) {
+  const docs = await window.clientDB.getAll('private_kb');
+  const doc = docs.find(d => d.id === id);
+  if (!doc) return;
+
+  currentViewingDoc = doc;
+  document.getElementById('viewer-doc-title').innerText = `📖 ${doc.title}`;
+  const contentEl = document.getElementById('viewer-doc-content');
+  contentEl.innerText = doc.content;
+  document.getElementById('doc-viewer-modal').classList.add('show');
+
+  // 绑定鼠标划词事件
+  contentEl.onmouseup = handleTextSelection;
+}
+
+function closeDocViewer() {
+  document.getElementById('doc-viewer-modal').classList.remove('show');
+  hideFloatSelectionBtn();
+}
+
+function handleTextSelection(e) {
+  const selection = window.getSelection();
+  const text = selection.toString().trim();
+  const floatBtn = document.getElementById('selection-float-btn');
+
+  if (text.length >= 4) {
+    floatBtn.style.display = 'block';
+    floatBtn.style.top = (e.pageY - 38) + 'px';
+    floatBtn.style.left = (e.pageX + 8) + 'px';
+    floatBtn.onclick = async () => {
+      await saveSelectedTextAsMemory(text);
+    };
+  } else {
+    hideFloatSelectionBtn();
+  }
+}
+
+function hideFloatSelectionBtn() {
+  const floatBtn = document.getElementById('selection-float-btn');
+  if (floatBtn) floatBtn.style.display = 'none';
+}
+
+async function saveSelectedTextAsMemory(text) {
+  const title = prompt("请输入此条记忆卡片的标题（如：新质生产力核心句）：", text.slice(0, 16) + "...");
+  if (!title) return;
+
+  const newCard = {
+    id: `mem_${Date.now()}`,
+    category: currentViewingDoc?.tag || "时政背诵",
+    tag: currentViewingDoc?.title?.slice(0, 8) || "资料摘录",
+    title: title.trim(),
+    content: text,
+    repetitions: 0,
+    interval: 0,
+    ease: 2.5,
+    nextReview: Date.now(),
+    createdAt: Date.now()
+  };
+
+  await window.clientDB.put('memories', newCard);
+  alert(`✓ 成功将精彩金句一键存入【个人申论记忆库】！\n已自动安排今日进入 SM-2 艾宾浩斯复习流。`);
+  hideFloatSelectionBtn();
+  renderMemoryDeck();
+}
+
+// Skill 提炼工坊文件读取
+function handleSkillFileSelected(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const text = e.target.result;
+    document.getElementById('custom-skill-name').value = file.name.replace(/\.[^/.]+$/, "") + "批改专家";
+    document.getElementById('custom-skill-text').value = text;
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+async function extractAndSaveCustomSkill() {
+  const name = document.getElementById('custom-skill-name').value.trim();
+  const text = document.getElementById('custom-skill-text').value.trim();
+  if (!name || !text) {
+    alert("请填写 Skill 名称并提供讲义文本！");
+    return;
+  }
+
+  try {
+    const res = await window.ApiClient.extractCustomSkill(name, text);
+    // 存入 IndexedDB
+    await window.clientDB.put('custom_skills', {
+      id: `custom_${Date.now()}`,
+      name: res.name,
+      description: res.description,
+      prompt: res.prompt,
+      questionType: "essay",
+      createdAt: Date.now()
+    });
+    alert(`⚡ 提炼成功！已成功在本地 IndexedDB 注册私有批改专家【${name}】！\n你可在作答页面的【批改专家】下拉菜单中直接选择它进行针对性阅卷。`);
+  } catch (err) {
+    alert(`提炼失败: ${err.message}`);
+  }
 }
 
 // 启动

@@ -877,19 +877,12 @@
           </div>
 
           <div>
-            <div class="form-label" style="display:flex; justify-content:space-between;">
+            <div class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
               <span>【私有库】我的个性化讲义与时政文件 (100% 存浏览器)</span>
-              <button class="btn btn-outline" style="padding:2px 8px; font-size:11px;" onclick="alert('可上传本地 TXT/Markdown/PDF 资料，完全存储在 IndexedDB 中')">➕ 上传私有材料</button>
+              <button class="btn btn-primary" style="padding:3px 10px; font-size:12px;" onclick="openUploadDocModal()">📂 上传私有材料 / 讲义</button>
             </div>
-            <div style="background:#090d16; border:1px solid var(--card-border); border-radius:6px; padding:12px;">
-              <div style="padding:8px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between;">
-                <span>📄 2026政府工作报告核心金句摘录.md</span>
-                <span style="font-size:11px; color:#4ade80;">本地已存 (支持划词入库)</span>
-              </div>
-              <div style="padding:8px; display:flex; justify-content:space-between;">
-                <span>📄 基层治理经典案例与制度创新汇编.txt</span>
-                <span style="font-size:11px; color:#4ade80;">本地已存 (支持划词入库)</span>
-              </div>
+            <div style="background:#090d16; border:1px solid var(--card-border); border-radius:6px; padding:12px;" id="preview-private-kb-list">
+              <!-- 动态渲染私有资料列表 -->
             </div>
           </div>
         </div>
@@ -960,14 +953,81 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">上传或粘贴讲义/笔记文本</label>
-          <textarea class="form-textarea" style="min-height:120px;" placeholder="粘贴你的名师讲义核心论述、判分原则...">第一讲：寻找主题和观点。标题必须包含核心主题词，开头段尾句亮明总论点，正文三段首句亮明分论点。每一段事例之后必须跟进多维度分析，不可单摆浮搁案例...</textarea>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <label class="form-label" style="margin-bottom:0;">上传或粘贴讲义/笔记文本</label>
+            <button class="btn btn-outline" style="padding:2px 8px; font-size:11px;" onclick="document.getElementById('skill-file-input').click()">📂 从本地文件导入 (.txt/.md)</button>
+            <input type="file" id="skill-file-input" accept=".txt,.md,.markdown" style="display:none" onchange="handleSkillFileSelected(event)">
+          </div>
+          <textarea class="form-textarea" id="custom-skill-text" style="min-height:120px;" placeholder="粘贴你的讲义核心论述、判分原则...">第一讲：寻找主题和观点。标题必须包含核心主题词，开头段尾句亮明总论点，正文三段首句亮明分论点。每一段事例之后必须跟进多维度分析，不可单摆浮搁案例...</textarea>
         </div>
 
-        <button class="btn btn-primary" onclick="alert('已模拟两步提炼！已成功生成并在本地注册该自定义 Skill，你可在批改题型下拉中选择此专家！')">⚡ 一键提炼并注册本地 Skill</button>
+        <button class="btn btn-primary" onclick="extractAndSaveCustomSkill()">⚡ 一键提炼并注册本地 Skill</button>
       </div>
     </div>
   </main>
+
+  <!-- 模态框：上传私有资料文档 -->
+  <div class="modal-overlay" id="upload-doc-modal">
+    <div class="modal" style="width: 580px;">
+      <div class="modal-header">
+        <div class="modal-title">📂 上传私有学习资料 / 讲义 (存入 IndexedDB)</div>
+        <div class="modal-close" onclick="closeUploadDocModal()">✕</div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+        资料 100% 保存在你的浏览器本地，服务端绝不存储。上传后支持在网页端阅读并鼠标划词一键存入记忆库。
+      </p>
+
+      <div class="form-group" style="background: rgba(56,189,248,0.06); border: 1px dashed rgba(56,189,248,0.3); border-radius: 6px; padding: 14px; text-align: center;">
+        <input type="file" id="doc-file-input" accept=".txt,.md,.markdown,.json" style="display:none;" onchange="handleDocFileSelected(event)">
+        <button class="btn btn-primary" type="button" onclick="document.getElementById('doc-file-input').click()">
+          <span>📁 选择本地文件 (.txt / .md / .json)</span>
+        </button>
+        <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;" id="file-chosen-tip">支持各类时政报告、名师讲义文本、个人整理笔记</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">资料标题</label>
+        <input type="text" class="form-input" id="upload-doc-title" placeholder="例如：2026年政府工作报告生态与基层治理金句汇总">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">分类标签</label>
+        <input type="text" class="form-input" id="upload-doc-tag" value="时政理论" placeholder="例如：基层治理 / 生态文明 / 经济发展">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">资料正文内容 (选文件自动填入，亦可直接粘贴)</label>
+        <textarea class="form-textarea" id="upload-doc-content" style="min-height: 140px;" placeholder="粘贴或载入文章正文..."></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeUploadDocModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveUploadedDoc()">💾 确认存入本地知识库</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 模态框：私有资料阅读与划词入库 Viewer -->
+  <div class="modal-overlay" id="doc-viewer-modal">
+    <div class="modal" style="width: 720px; max-height: 85vh; display: flex; flex-direction: column;">
+      <div class="modal-header">
+        <div class="modal-title" id="viewer-doc-title">📖 文档阅读</div>
+        <div class="modal-close" onclick="closeDocViewer()">✕</div>
+      </div>
+      <div style="background: rgba(34,197,94,0.08); border: 1px dashed rgba(34,197,94,0.3); border-radius: 4px; padding: 6px 10px; font-size: 11px; color: #86efac; margin-bottom: 10px;">
+        💡 <strong>高效背诵秘诀</strong>：在下方文章中用鼠标选中任意精彩金句或对策短语，即可弹出气泡一键加入【个人申论记忆库】！
+      </div>
+      <div id="viewer-doc-content" style="flex: 1; overflow-y: auto; background: #090d16; border: 1px solid var(--card-border); border-radius: 6px; padding: 14px; font-size: 13.5px; line-height: 1.8; white-space: pre-wrap;"></div>
+      <div class="modal-footer" style="margin-top: 12px;">
+        <button class="btn btn-outline" onclick="closeDocViewer()">关闭阅读器</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 划词入库浮动悬浮按钮 -->
+  <div id="selection-float-btn" style="display:none; position:absolute; z-index:300; background:#38bdf8; color:#0f172a; padding:4px 10px; border-radius:4px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.5);">
+    ➕ 存入申论记忆库
+  </div>
 
   <!-- 模型配置 BYOK 弹窗 -->
   <div class="modal-overlay" id="setting-modal">
@@ -1373,10 +1433,156 @@
       }
     }
 
+    // ================= 私有知识库上传、管理与划词入库 =================
+    let previewPrivateDocs = [
+      {
+        id: "doc_1",
+        title: "2026年政府工作报告生态文明与新质生产力要点.md",
+        tag: "权威时政",
+        content: "【新质生产力与生态文明战略指引】\n大力推进现代化产业体系建设，加快发展新质生产力。充分发挥创新主导作用，以科技创新推动产业创新，加快推进新型工业化，提高全要素生产率，不断塑造发展新动能新优势。\n\n加强生态文明建设，推进绿色低碳发展。协同推进降碳、减污、扩绿、增长，建设人与自然和谐共生的美丽中国。推动产业链供应链绿色化转型，培育壮大绿色低碳新兴产业。深入实施空气质量持续改善行动计划，统筹水资源、水环境、水生态治理。\n\n【基层治理深化要求】\n提高基层治理现代化水平。坚持和发展新时代“枫桥经验”，推进矛盾纠纷预防化解法治化。坚决克服形式主义、官僚主义，持续为基层减负松绑，让基层干部把更多精力投入到为民办实事中。"
+      },
+      {
+        id: "doc_2",
+        title: "基层治理典型经验与对策模板汇编.txt",
+        tag: "对策经验",
+        content: "【经验一：红色物业赋能基层协商】\n某街道推行“红色物业”模式，以社区党组织为核心，组建由网格员、物业代表、业主委员会三方协同的民主协商平台。实行“月评季考”与服务公示制度，推动物业收缴率由 40% 跃升至 92%，有效化解了停车难、飞线充电等群众烦心事。\n\n【经验二：积分银行激发群众内生动力】\n建立生态积分兑换超市，把村民房前屋后清洁、垃圾分类投放、志愿巡查纳入积分档案。实行红黑榜月度评比，杜绝“干部干、群众看”的被动局面，实现了乡村环境从“倒逼整治”到“自治自觉”的根本跃迁。"
+      }
+    ];
+
+    function renderPreviewPrivateDocs() {
+      const container = document.getElementById('preview-private-kb-list');
+      if (!container) return;
+      container.innerHTML = previewPrivateDocs.map(doc => `
+        <div style="padding:10px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:13px; font-weight:600; color:#f8fafc;">📄 ${doc.title}</div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">
+              <span class="card-tag tag-blue" style="padding:1px 6px;">#${doc.tag}</span>
+              <span style="margin-left:6px;">${doc.content.length} 字</span>
+              <span style="margin-left:6px; color:#4ade80;">本地已存</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:6px;">
+            <button class="btn btn-outline" style="padding:2px 8px; font-size:11px;" onclick="openDocViewer('${doc.id}')">📖 查看与划词</button>
+            <button class="btn btn-outline" style="padding:2px 6px; font-size:11px; color:#f87171;" onclick="deletePreviewDoc('${doc.id}')">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openUploadDocModal() {
+      document.getElementById('upload-doc-title').value = '';
+      document.getElementById('upload-doc-content').value = '';
+      document.getElementById('file-chosen-tip').innerText = '支持各类时政报告、名师讲义文本、个人整理笔记';
+      document.getElementById('upload-doc-modal').classList.add('show');
+    }
+
+    function closeUploadDocModal() {
+      document.getElementById('upload-doc-modal').classList.remove('show');
+    }
+
+    function handleDocFileSelected(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target.result;
+        document.getElementById('upload-doc-title').value = file.name;
+        document.getElementById('upload-doc-content').value = text;
+        document.getElementById('file-chosen-tip').innerText = `已成功加载文件: ${file.name} (${text.length} 字)`;
+      };
+      reader.readAsText(file, 'utf-8');
+    }
+
+    function saveUploadedDoc() {
+      const title = document.getElementById('upload-doc-title').value.trim();
+      const tag = document.getElementById('upload-doc-tag').value.trim() || '私有资料';
+      const content = document.getElementById('upload-doc-content').value.trim();
+      if (!title || !content) {
+        alert('请填写资料标题并提供内容或选择文件！');
+        return;
+      }
+      previewPrivateDocs.unshift({
+        id: `doc_${Date.now()}`,
+        title,
+        tag,
+        content
+      });
+      alert(`成功存入本地知识库: 《${title}》！`);
+      closeUploadDocModal();
+      renderPreviewPrivateDocs();
+    }
+
+    function deletePreviewDoc(id) {
+      if (!confirm('确定从本地删除该篇学习资料吗？')) return;
+      previewPrivateDocs = previewPrivateDocs.filter(d => d.id !== id);
+      renderPreviewPrivateDocs();
+    }
+
+    let currentDoc = null;
+    function openDocViewer(id) {
+      const doc = previewPrivateDocs.find(d => d.id === id);
+      if (!doc) return;
+      currentDoc = doc;
+      document.getElementById('viewer-doc-title').innerText = `📖 ${doc.title}`;
+      const contentEl = document.getElementById('viewer-doc-content');
+      contentEl.innerText = doc.content;
+      document.getElementById('doc-viewer-modal').classList.add('show');
+      contentEl.onmouseup = handleTextSelection;
+    }
+
+    function closeDocViewer() {
+      document.getElementById('doc-viewer-modal').classList.remove('show');
+      hideFloatBtn();
+    }
+
+    function handleTextSelection(e) {
+      const text = window.getSelection().toString().trim();
+      const btn = document.getElementById('selection-float-btn');
+      if (text.length >= 4) {
+        btn.style.display = 'block';
+        btn.style.top = (e.pageY - 38) + 'px';
+        btn.style.left = (e.pageX + 8) + 'px';
+        btn.onclick = () => {
+          alert(`✓ 成功将精彩句子：“${text.slice(0, 20)}...”一键存入【个人申论记忆库】！\n已自动安排今日进入 SM-2 艾宾浩斯复习流。`);
+          hideFloatBtn();
+        };
+      } else {
+        hideFloatBtn();
+      }
+    }
+
+    function hideFloatBtn() {
+      const btn = document.getElementById('selection-float-btn');
+      if (btn) btn.style.display = 'none';
+    }
+
+    function handleSkillFileSelected(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        document.getElementById('custom-skill-name').value = file.name.replace(/\.[^/.]+$/, "") + "批改专家";
+        document.getElementById('custom-skill-text').value = e.target.result;
+      };
+      reader.readAsText(file, 'utf-8');
+    }
+
+    function extractAndSaveCustomSkill() {
+      const name = document.getElementById('custom-skill-name').value.trim();
+      const text = document.getElementById('custom-skill-text').value.trim();
+      if (!name || !text) {
+        alert("请填写 Skill 名称并提供讲义文本！");
+        return;
+      }
+      alert(`⚡ 提炼成功！已成功在本地注册私有批改专家【${name}】！\n你可在作答页面的【批改专家】下拉菜单中直接选择它进行针对性阅卷。`);
+    }
+
     // 页面初始化
     document.addEventListener('DOMContentLoaded', () => {
       // 默认按大作文初始化 Skill 列表与描述
       renderSkillOptions('essay');
+      renderPreviewPrivateDocs();
 
       const pop = document.getElementById('span-popover');
       document.querySelectorAll('.c-span').forEach(span => {
