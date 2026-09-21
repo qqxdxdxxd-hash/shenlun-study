@@ -159,10 +159,13 @@ async function initApp() {
   await renderExamSelector();
   renderMemoryDeck();
   renderPrivateKBDocs();
-  renderDossierList();
+  await renderDossierList();
+  await renderDossierWarningOnReviewPage();
 
-  // 4. 绑定色谱 Popover
+  // 4. 绑定色谱 Popover 与范文划词入库
   window.ChromaRenderer.bindPopovers('chroma-text-container', 'span-popover');
+  const exemplarEl = document.getElementById('exemplar-content');
+  if (exemplarEl) exemplarEl.onmouseup = handleTextSelection;
 
   // 5. 检查温和备份提示
   if (window.BackupManager.checkBackupReminder()) {
@@ -461,6 +464,11 @@ async function runFullReview() {
       ...result,
       createdAt: Date.now()
     });
+
+    // 真正沉淀进认知病灶图谱 (自反性记忆闭环)
+    await recordDossierDefects(subId, qType, userText, result);
+    await renderDossierList();
+    await renderDossierWarningOnReviewPage();
   } catch (err) {
     alert(`批改遇到错误: ${err.message}`);
   } finally {
@@ -527,6 +535,8 @@ function renderReviewResult(userText, res) {
 
   // 3. 渲染逐句给分/扣分穿透清单 (#itemized-attribution-list)
   const spans = res.chroma_spans || [];
+  currentReviewSpans = spans;
+  currentReviewText = userText;
   const listEl = document.getElementById('itemized-attribution-list');
   if (listEl) {
     if (spans.length === 0) {
@@ -540,7 +550,10 @@ function renderReviewResult(userText, res) {
           <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-left: 4px solid ${borderColor}; border-radius: 6px; padding: 10px 12px; font-size: 12.5px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
               <span style="font-weight: 700; color: ${badgeColor}; font-size: 13px;">${s.label || '诊断点'}</span>
-              <span style="font-size: 11px; color: var(--text-muted); font-family: monospace;">位置: 第 ${s.start}~${s.end} 字</span>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 11px; color: var(--text-muted); font-family: monospace;">位置: 第 ${s.start}~${s.end} 字</span>
+                <button class="btn btn-outline" style="padding: 1px 6px; font-size: 11px; color: #facc15;" onclick="saveAttributionCardAsAntiPattern(${idx})">📥 存为避坑卡</button>
+              </div>
             </div>
             <div style="color: #94a3b8; font-style: italic; margin-bottom: 6px; border-left: 2px solid rgba(255,255,255,0.15); padding-left: 8px;">“${window.ChromaRenderer.escapeHtml(snippet.slice(0, 80))}${snippet.length > 80 ? '...' : ''}”</div>
             <div style="color: #e2e8f0; line-height: 1.6;"><strong style="color:#38bdf8;">判定与归因</strong>：${window.ChromaRenderer.escapeHtml(s.comment)}</div>
@@ -634,9 +647,195 @@ async function rateCard(id, rating) {
   renderMemoryDeck();
 }
 
-// 渲染病灶列表
-function renderDossierList() {
-  // 演示真实病灶数据
+let currentReviewSpans = [];
+let currentReviewText = "";
+
+// ================= 认知病灶追踪与自反性联动 =================
+
+async function recordDossierDefects(subId, qType, userText, res) {
+  const db = window.clientDB;
+  const now = Date.now();
+
+  // 1. 材料过度依附/抄袭
+  if (res.copy_redline_exceeded || (res.copy_ratio > 0.18)) {
+    await db.put('dossier', {
+      id: `dos_copy_${subId}`,
+      submissionId: subId,
+      errorDimension: "材料原文直接依附度",
+      errorCode: "ERR_COPY_OVER_20",
+      severity: "level_1_critical",
+      quoteText: `抄袭率 ${(res.copy_ratio * 100).toFixed(1)}%`,
+      diagnosis: "连续摘抄材料原文超过扣分警戒线，论证沦为事实搬运，缺乏个人提炼",
+      cleared: 0,
+      createdAt: now
+    });
+  }
+
+  // 2. 口语大白话语病
+  const colloquialSpans = (res.chroma_spans || []).filter(s => s.type === 'colloquial_flaw');
+  if (colloquialSpans.length > 0) {
+    for (const span of colloquialSpans) {
+      const quote = userText.slice(span.start, span.end);
+      await db.put('dossier', {
+        id: `dos_colloquial_${subId}_${span.start}`,
+        submissionId: subId,
+        errorDimension: "对策口语大白话语病",
+        errorCode: "ERR_COLLOQUIAL",
+        severity: "level_2",
+        quoteText: quote,
+        diagnosis: span.comment || "口语化聊天表达，缺乏政务动宾大词提炼",
+        cleared: 0,
+        createdAt: now
+      });
+    }
+  }
+
+  // 3. 骨架与结构残缺
+  if (res.grade?.includes("四类") || (res.score < 20 && qType === 'essay')) {
+    await db.put('dossier', {
+      id: `dos_struct_${subId}`,
+      submissionId: subId,
+      errorDimension: "论点隐蔽与骨架残缺",
+      errorCode: "ERR_STRUCTURE_DEFECT",
+      severity: "level_1_critical",
+      quoteText: `得分 ${res.score}分 (${res.grade})`,
+      diagnosis: "总论点或正文分论点不完整（未满足1+3大五段骨架），或字数严重不足",
+      cleared: 0,
+      createdAt: now
+    });
+  }
+}
+
+async function renderDossierList() {
+  const db = window.clientDB;
+  const dossiers = await db.getAll('dossier') || [];
+  const submissions = await db.getAll('submissions') || [];
+
+  const countEl = document.getElementById('dossier-total-count');
+  if (countEl) countEl.innerText = `累计分析：${submissions.length} 篇作答`;
+
+  const alertBox = document.getElementById('dossier-dynamic-alert-box');
+  const listEl = document.getElementById('dossier-dynamic-list');
+
+  if (submissions.length === 0) {
+    if (alertBox) alertBox.innerHTML = '';
+    if (listEl) {
+      listEl.innerHTML = `
+        <div style="text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 13px;">
+          🌱 目前暂无作答历史记录。在【作答与色谱批改】页面完成一次真实批改后，系统将在此自动建档分析你的思维基因缺陷。
+        </div>
+      `;
+    }
+    return;
+  }
+
+  // 统计各维度缺陷发生率
+  const copyErrors = dossiers.filter(d => d.errorCode === 'ERR_COPY_OVER_20');
+  const colloquialErrors = dossiers.filter(d => d.errorCode === 'ERR_COLLOQUIAL');
+  const structErrors = dossiers.filter(d => d.errorCode === 'ERR_STRUCTURE_DEFECT');
+
+  const total = Math.max(submissions.length, 1);
+  const copyRate = Math.round((copyErrors.length / total) * 100);
+  const colloquialRate = Math.round((colloquialErrors.length / total) * 100);
+  const structRate = Math.round((structErrors.length / total) * 100);
+
+  // 动态判断顽固病灶
+  let criticalHtml = '';
+  let criticalNames = [];
+  if (copyErrors.length >= 1) criticalNames.push("材料抄袭依赖过重");
+  if (structErrors.length >= 1) criticalNames.push("论点骨架不全/字数偏少");
+  if (colloquialErrors.length >= 2) criticalNames.push("口语大白话高频泛滥");
+
+  if (criticalNames.length > 0) {
+    criticalHtml = `
+      <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid var(--danger); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
+        <strong style="color: #f87171; font-size: 14px;">⚠️ 系统置顶警报：你已触碰【一级顽固病灶】！</strong>
+        <p style="font-size: 13px; color: #fca5a5; margin-top: 6px; line-height: 1.6;">
+          在最近的作答中，你频繁触发<strong>【${criticalNames.join('、')}】</strong>！下次下笔前，系统已在作答界面为你置顶防护提醒，请务必针对性纠偏。
+        </p>
+      </div>
+    `;
+  }
+  if (alertBox) alertBox.innerHTML = criticalHtml;
+
+  // 渲染 3 大缺陷真实发生率列表
+  const items = [
+    {
+      name: "1. 材料原文直接依附度 (超20%红线频率)",
+      count: copyErrors.length,
+      rate: `${copyRate}% 犯错率`,
+      severity: copyErrors.length >= 2 ? "一级顽固病灶" : (copyErrors.length === 1 ? "二级病灶关注" : "良好安全"),
+      color: copyErrors.length >= 2 ? "#ef4444" : (copyErrors.length === 1 ? "#facc15" : "#4ade80")
+    },
+    {
+      name: "2. 论点隐蔽与骨架残缺 (未满足1+3或字数偏少)",
+      count: structErrors.length,
+      rate: `${structRate}% 犯错率`,
+      severity: structErrors.length >= 2 ? "一级顽固病灶" : (structErrors.length === 1 ? "重点关注" : "已克服"),
+      color: structErrors.length >= 2 ? "#ef4444" : (structErrors.length === 1 ? "#facc15" : "#4ade80")
+    },
+    {
+      name: "3. 语言口语化与大白话语病 (缺乏政务大词提炼)",
+      count: colloquialErrors.length,
+      rate: `${colloquialRate}% 触发率`,
+      severity: colloquialErrors.length >= 2 ? "高频语言病灶" : (colloquialErrors.length === 1 ? "偶发语病" : "公文规范"),
+      color: colloquialErrors.length >= 2 ? "#ef4444" : (colloquialErrors.length === 1 ? "#facc15" : "#4ade80")
+    }
+  ];
+
+  if (listEl) {
+    listEl.innerHTML = items.map(it => `
+      <div class="dossier-item" style="background:#0f172a; border:1px solid var(--card-border); padding:12px 16px; border-radius:6px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+        <div class="dossier-name" style="font-size:13.5px; font-weight:600; color:#f8fafc; display:flex; align-items:center; gap:8px;">
+          <span>${it.name}</span>
+          <span style="font-size:11px; padding:2px 6px; border-radius:4px; border:1px solid ${it.color}; color:${it.color}; background:rgba(255,255,255,0.05);">${it.severity}</span>
+        </div>
+        <div class="dossier-rate" style="font-size:14px; font-weight:700; color:${it.color};">${it.rate}</div>
+      </div>
+    `).join('');
+  }
+}
+
+// 在作答页面置顶显示系统自反性历史病灶警报
+async function renderDossierWarningOnReviewPage() {
+  const db = window.clientDB;
+  const dossiers = await db.getAll('dossier') || [];
+  const alertEl = document.getElementById('dossier-review-alert');
+  const textEl = document.getElementById('dossier-review-alert-text');
+  if (!alertEl || !textEl) return;
+
+  const criticals = dossiers.filter(d => d.severity === 'level_1_critical');
+  if (criticals.length > 0) {
+    const dimensions = [...new Set(criticals.map(c => c.errorDimension))];
+    textEl.innerText = `根据你历史作答沉淀，系统检测到你存在【${dimensions.join('、')}】缺陷，本次作答请务必按大五段标准规范展开，注意提炼政务大词！`;
+    alertEl.style.display = 'block';
+  } else {
+    alertEl.style.display = 'none';
+  }
+}
+
+// 扣分归因项一键存为“避坑错题卡”
+async function saveAttributionCardAsAntiPattern(idx) {
+  const span = currentReviewSpans[idx];
+  if (!span) return;
+  const quote = currentReviewText.slice(span.start, span.end);
+
+  const newCard = {
+    id: `mem_anti_${Date.now()}`,
+    category: "错题避坑",
+    tag: "考场避坑",
+    title: `避坑：${span.label || '扣分病灶'}`,
+    content: `【原错语病】：${quote}\n【扣分归因】：${span.comment}\n【纠偏指引】：考场下笔严禁口语化或机械搬运，必须转化为规范政务动宾大词。`,
+    repetitions: 0,
+    interval: 0,
+    ease: 2.3,
+    nextReview: Date.now(),
+    createdAt: Date.now()
+  };
+
+  await window.clientDB.put('memories', newCard);
+  alert(`✓ 成功将该扣分项存入【个人申论记忆库】错题避坑分类！\n已自动排入今日 SM-2 艾宾浩斯复习流。`);
+  renderMemoryDeck();
 }
 
 // BYOK 设置保存
