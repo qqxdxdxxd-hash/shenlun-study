@@ -2,6 +2,7 @@ import json
 import httpx
 import re
 from typing import Dict, Any, List, Optional
+from fastapi import HTTPException
 from src.models import ReviewRequest, ReviewResponse, ChromaSpan
 from src.skill_loader import SkillRegistry, NeutralSkill
 from src.chroma_scanner import ChromaScanner
@@ -42,15 +43,22 @@ class ShenlunEvaluator:
             req.user_answer, req.recalled_memories
         )
 
-        # 3. 检查是否有客户端传入的 BYOK Key
-        if req.api_key and req.base_url:
-            try:
-                return await self._evaluate_with_llm(req, pre_info, memory_audit)
-            except Exception as e:
-                # 若大模型网络失败，回退到本地高保真智能推导
-                return self._evaluate_fallback(req, pre_info, memory_audit, error_msg=str(e))
-        else:
-            return self._evaluate_fallback(req, pre_info, memory_audit)
+        # 3. 获取客户端透传的 BYOK Key 或使用默认已配置的真实 DeepSeek Key
+        api_key = req.api_key or "sk-2d4efe752dd542fb9a9a859052eb40cc"
+        base_url = req.base_url or "https://api.deepseek.com/v1"
+        model_id = req.model_id or "deepseek-chat"
+
+        req.api_key = api_key
+        req.base_url = base_url
+        req.model_id = model_id
+
+        # 始终执行真实大模型推理，保证 100% 真实调用
+        try:
+            return await self._evaluate_with_llm(req, pre_info, memory_audit)
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            raise HTTPException(status_code=500, detail=f"大模型调用失败: {str(e)}")
 
     async def _evaluate_with_llm(self, req: ReviewRequest, pre_info: Dict[str, Any], memory_audit: Dict[str, Any]) -> Dict[str, Any]:
         """

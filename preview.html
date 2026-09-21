@@ -676,7 +676,7 @@
 蓝图已经绘就，奋进正当其时。让我们以久久为功的韧劲，持之以恒抓好生态文明建设，绘就人与自然和谐共生的壮丽画卷！</textarea>
             </div>
 
-            <button class="btn btn-primary" style="width: 100%; padding: 10px;" onclick="simulateReview()">
+            <button class="btn btn-primary" id="btn-start-review" style="width: 100%; padding: 10px;" onclick="runFullReview()">
               <span>🚀 开始全真多维色谱穿透批改</span>
             </button>
           </div>
@@ -1232,9 +1232,161 @@
       }
     }
 
-    // 模拟批改
-    function simulateReview() {
-      alert('已触发全真多维色谱批改！正在调用无状态大模型引擎进行原词踩点、大词提炼与记忆库激活率审计...');
+    // 真实全链路批改提交 (调用 DeepSeek)
+    async function runFullReview() {
+      const userText = document.getElementById('user-essay-input').value.trim();
+      const qType = document.getElementById('q-type').value;
+      const skillId = document.getElementById('skill-selector').value;
+      let topic = document.getElementById('prompt-text').innerText;
+      let materials = currentActiveMaterialText || document.getElementById('materials-panel').innerText;
+
+      if (isCustomPrompt) {
+        topic = document.getElementById('custom-prompt-input').value || topic;
+        materials = document.getElementById('custom-mat-input').value || materials;
+      }
+
+      const payload = {
+        question_type: qType,
+        question_title: topic,
+        materials: materials,
+        user_answer: userText,
+        target_score: 35,
+        skill_id: skillId,
+        recalled_memories: [
+          { id: "m1", category: "生态文明", tag: "双碳", title: "降碳四字协同", content: "降碳、减污、扩绿、增长" }
+        ],
+        api_key: localStorage.getItem('shenlun_api_key') || "sk-2d4efe752dd542fb9a9a859052eb40cc",
+        base_url: localStorage.getItem('shenlun_base_url') || "https://api.deepseek.com/v1",
+        model_id: localStorage.getItem('shenlun_model_id') || "deepseek-chat"
+      };
+
+      const btn = document.getElementById('btn-start-review');
+      btn.innerText = '🤖 正在向 DeepSeek-V3 请求实时考场审判（耗时约 3~6 秒）...';
+      btn.disabled = true;
+
+      // 展示加载态
+      document.getElementById('chroma-text-container').innerHTML = `
+        <div style="padding: 40px 20px; text-align: center; color: #38bdf8;">
+          <div style="font-size: 32px; margin-bottom: 12px;">🤖</div>
+          <div style="font-size: 16px; font-weight: 700;">DeepSeek-V3 正在逐句阅卷审判中...</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">模型正在执行：官方考规审查 ➔ 原词踩点 ➔ 抄袭红线核算 ➔ 4维量化赋分 ➔ 记忆库重塑一类文</div>
+          <div style="font-size: 11px; color: #4ade80; margin-top: 6px;">预计耗时 3~6 秒，请稍候</div>
+        </div>
+      `;
+
+      try {
+        const res = await fetch('http://127.0.0.1:8789/api/review/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.detail || "批改请求失败");
+        }
+        const data = await res.json();
+
+        // 1. 分数与定档
+        document.getElementById('score-val').innerText = data.score;
+        document.getElementById('score-grade').innerText = data.grade;
+        document.getElementById('copy-ratio-val').innerText = `${(data.copy_ratio * 100).toFixed(1)}% (${data.copy_redline_exceeded ? '⚠️超标' : '安全'})`;
+
+        // 2. 渲染色谱高亮
+        let sorted = [...data.chroma_spans].sort((a, b) => a.start - b.start);
+        let html = "";
+        let cursor = 0;
+        sorted.forEach(span => {
+          let start = Math.max(0, span.start);
+          let end = Math.min(userText.length, span.end);
+          if (start > cursor) html += userText.slice(cursor, start).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+          if (start < end) {
+            let snip = userText.slice(start, end).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+            let cls = span.type === 'main_thesis' ? 'c-hit' : (span.type === 'colloquial_flaw' ? 'c-fake' : (span.type === 'copy_redline' ? 'c-redline' : (span.type === 'story_narrative_leak' ? 'c-story' : 'c-formal')));
+            let tip = `【${span.label}】${span.comment}`;
+            html += `<span class="c-span ${cls}" data-tip="${tip}">${snip}</span>`;
+            cursor = end;
+          }
+        });
+        if (cursor < userText.length) html += userText.slice(cursor).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+        document.getElementById('chroma-text-container').innerHTML = html;
+        bindPopoverHover();
+
+        // 3. 渲染四维量化得分表
+        const radar = data.radar_scores || {};
+        const dimensions = [
+          { key: "立意与总分论点", max: 12, desc: (data.grade?.includes("四类") || data.score < 20) ? "总论点或分论点不完整（未满足1+3骨架），或字数严重不足扣分" : "立意100%源于材料，首段末句亮明总论点，三分论点醒目" },
+          { key: "结构与段落布局", max: 8, desc: (data.grade?.includes("四类")) ? "分论点仅设两个，正文论证段未达三段标杆，结构残缺" : "五段大五段匀称，段落字数控制在250字左右" },
+          { key: "论据与论证深度", max: 10, desc: (data.copy_redline_exceeded || data.copy_ratio > 0.15) ? "存在大段照抄材料原句现象，论证沦为事实搬运缺乏深度制度剖析" : "道理论证与事例论证结合紧密，具备事后深度分析" },
+          { key: "语言与公文规范", max: 5, desc: data.chroma_spans?.some(s => s.type === 'colloquial_flaw') ? "存在口语化聊天大白话，需强化政务动宾大词提炼与短句对仗" : "公文语体规范严谨，短句对仗工整" }
+        ];
+        let tbodyHtml = '';
+        dimensions.forEach(d => {
+          let scoreVal = (radar[d.key] !== undefined) ? radar[d.key] : Math.round(d.max * (data.score / 35) * 10) / 10;
+          let color = scoreVal >= d.max * 0.8 ? '#4ade80' : (scoreVal >= d.max * 0.6 ? '#facc15' : '#f87171');
+          tbodyHtml += `
+            <tr style="border-bottom: 1px solid var(--card-border);">
+              <td style="padding: 8px 10px; font-weight: 600; color: #f8fafc;">${d.key}</td>
+              <td style="padding: 8px 10px; text-align: center; color: var(--text-muted);">${d.max}分</td>
+              <td style="padding: 8px 10px; text-align: center; font-weight: 700; color: ${color};">${scoreVal}分</td>
+              <td style="padding: 8px 10px; color: #cbd5e1; font-size: 12px; line-height: 1.5;">${d.desc}</td>
+            </tr>
+          `;
+        });
+        document.getElementById('score-breakdown-tbody').innerHTML = tbodyHtml;
+
+        // 4. 渲染多视角判语
+        const p = data.perspectives || {};
+        let phtml = '';
+        if (p.examiner) phtml += `<div style="margin-bottom: 8px;"><strong style="color:#38bdf8;">【考场考官前10秒第一眼定档】</strong>：${p.examiner}</div>`;
+        if (p.structure_expert) phtml += `<div style="margin-bottom: 8px;"><strong style="color:#a855f7;">【大五段骨架与对策论证诊断】</strong>：${p.structure_expert}</div>`;
+        if (p.style_expert) phtml += `<div><strong style="color:#f59e0b;">【政务文风与语汇质检诊断】</strong>：${p.style_expert}</div>`;
+        if (!phtml) phtml = '<div style="color:var(--text-muted);">暂无名师判语。</div>';
+        document.getElementById('perspectives-container').innerHTML = phtml;
+
+        // 5. 渲染逐句给分/扣分清单
+        document.getElementById('itemized-attribution-list').innerHTML = data.chroma_spans.map(s => {
+          let snip = userText.slice(s.start, s.end);
+          let borderColor = s.color === 'green' ? '#22c55e' : (s.color === 'purple' ? '#c084fc' : (s.color === 'yellow' ? '#eab308' : '#64748b'));
+          let badgeColor = s.color === 'green' ? '#4ade80' : (s.color === 'purple' ? '#d8b4fe' : (s.color === 'yellow' ? '#fde047' : '#94a3b8'));
+          return `
+            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-left: 4px solid ${borderColor}; border-radius: 6px; padding: 10px 12px; font-size: 12.5px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <span style="font-weight: 700; color: ${badgeColor}; font-size: 13px;">${s.label || '诊断点'}</span>
+                <span style="font-size: 11px; color: var(--text-muted); font-family: monospace;">位置: 第 ${s.start}~${s.end} 字</span>
+              </div>
+              <div style="color: #94a3b8; font-style: italic; margin-bottom: 6px; border-left: 2px solid rgba(255,255,255,0.15); padding-left: 8px;">“${snip.slice(0, 80)}${snip.length > 80 ? '...' : ''}”</div>
+              <div style="color: #e2e8f0; line-height: 1.6;"><strong style="color:#38bdf8;">判定与归因</strong>：${s.comment}</div>
+            </div>
+          `;
+        }).join('');
+
+        // 6. 范文重塑
+        document.getElementById('exemplar-content').innerText = data.rewritten_exemplar;
+
+      } catch (err) {
+        alert(`DeepSeek 批改执行失败: ${err.message}`);
+      } finally {
+        btn.innerText = '🚀 开始全真多维色谱穿透批改';
+        btn.disabled = false;
+      }
+    }
+
+    function bindPopoverHover() {
+      const pop = document.getElementById('span-popover');
+      document.querySelectorAll('.c-span').forEach(span => {
+        span.addEventListener('mouseenter', (e) => {
+          const tip = span.getAttribute('data-tip');
+          if (!tip) return;
+          pop.innerHTML = tip;
+          pop.style.display = 'block';
+          const rect = span.getBoundingClientRect();
+          pop.style.top = (window.scrollY + rect.bottom + 6) + 'px';
+          pop.style.left = (window.scrollX + rect.left) + 'px';
+        });
+        span.addEventListener('mouseleave', () => {
+          pop.style.display = 'none';
+        });
+      });
     }
 
     // 关联真题切换联动

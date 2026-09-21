@@ -129,6 +129,17 @@ let currentActiveMaterialText = "";
 async function initApp() {
   await window.clientDB.init();
 
+  // 0. 自动就绪真实 DeepSeek API 凭据
+  if (!localStorage.getItem('shenlun_api_key')) {
+    localStorage.setItem('shenlun_api_key', 'sk-2d4efe752dd542fb9a9a859052eb40cc');
+  }
+  if (!localStorage.getItem('shenlun_base_url')) {
+    localStorage.setItem('shenlun_base_url', 'https://api.deepseek.com/v1');
+  }
+  if (!localStorage.getItem('shenlun_model_id')) {
+    localStorage.setItem('shenlun_model_id', 'deepseek-chat');
+  }
+
   // 1. 若记忆库为空，初始化 3 张种子卡片
   const existingMemories = await window.clientDB.getAll('memories');
   if (!existingMemories || existingMemories.length === 0) {
@@ -409,12 +420,25 @@ async function runFullReview() {
     user_answer: userText,
     target_score: 35,
     skill_id: skillId,
-    recalled_memories: recalled
+    recalled_memories: recalled,
+    api_key: localStorage.getItem('shenlun_api_key') || 'sk-2d4efe752dd542fb9a9a859052eb40cc',
+    base_url: localStorage.getItem('shenlun_base_url') || 'https://api.deepseek.com/v1',
+    model_id: localStorage.getItem('shenlun_model_id') || 'deepseek-chat'
   };
 
   const btn = document.getElementById('btn-start-review');
-  btn.innerText = '⏳ 正在进行全真多维色谱穿透与记忆审计...';
+  btn.innerText = '🤖 正在向 DeepSeek-V3 请求实时考场审判（耗时约 3~6 秒）...';
   btn.disabled = true;
+
+  // 在右侧展示清晰的加载态，告知大模型正在实时推理
+  document.getElementById('chroma-text-container').innerHTML = `
+    <div style="padding: 40px 20px; text-align: center; color: #38bdf8;">
+      <div style="font-size: 32px; margin-bottom: 12px;">🤖</div>
+      <div style="font-size: 16px; font-weight: 700;">DeepSeek-V3 正在逐句阅卷审判中...</div>
+      <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">模型正在执行：官方考规审查 ➔ 原词踩点 ➔ 抄袭红线核算 ➔ 4维量化赋分 ➔ 记忆库重塑一类文</div>
+      <div style="font-size: 11px; color: #4ade80; margin-top: 6px;">预计耗时 3~6 秒，请稍候</div>
+    </div>
+  `;
 
   try {
     const result = await window.ApiClient.submitReview(payload);
