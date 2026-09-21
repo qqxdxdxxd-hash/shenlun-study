@@ -333,20 +333,12 @@
         </div>
         <div class="grid-2col">
           <div>
-            <div class="form-label">【公共库】近10年国考/省考官方真题与标准采分底稿 (只读秒开)</div>
-            <div style="background:#090d16; border:1px solid var(--card-border); border-radius:6px; padding:12px;">
-              <div style="padding:8px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between;">
-                <span>2026年国考副省 (材料作文+公文+单一题)</span>
-                <span class="tag-blue card-tag">官方原卷+底稿</span>
-              </div>
-              <div style="padding:8px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between;">
-                <span>2025年江苏省考A类 (综合分析+公文题)</span>
-                <span class="tag-blue card-tag">官方原卷+底稿</span>
-              </div>
-              <div style="padding:8px; display:flex; justify-content:space-between;">
-                <span>2025年事业单位联考综合应用能力(A类)</span>
-                <span class="tag-blue card-tag">官方原卷+底稿</span>
-              </div>
+            <div class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>【公共库】历年国考/省考/事业单位官方真题 (纯前端分片秒开)</span>
+              <span class="tag-blue card-tag" id="public-kb-count">共 200 套真题</span>
+            </div>
+            <div style="background:#090d16; border:1px solid var(--card-border); border-radius:6px; padding:8px; max-height: 420px; overflow-y: auto;" id="public-kb-list">
+              <div style="padding:12px; text-align:center; color:var(--text-muted);">正在加载真题分片索引...</div>
             </div>
           </div>
 
@@ -517,10 +509,17 @@
   <!-- 浮动提示 Popover -->
   <div id="span-popover"></div>
 
-  <!-- 脚本引入 -->
+  <!-- 外部解析库 (Mozilla PDF.js CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <!-- 客户端核心算法与无状态数据层 -->
   <script src="js/db.js"></script>
   <script src="js/sm2.js"></script>
   <script src="js/retrieval.js"></script>
+  <script src="js/local_scanner.js"></script>
+  <script src="js/local_drill.js"></script>
+  <script src="js/local_pdf.js"></script>
+  <script src="js/exams_loader.js"></script>
   <script src="js/chroma_renderer.js"></script>
   <script src="js/backup.js"></script>
   <script src="js/api_client.js"></script>

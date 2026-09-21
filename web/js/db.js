@@ -3,7 +3,7 @@
  * 100% 运行于当前浏览器本地，服务端零存储
  */
 const DB_NAME = 'ShenlunStudyDB';
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 
 class ClientDB {
   constructor() {
@@ -76,6 +76,12 @@ class ClientDB {
           const store = db.createObjectStore('private_kb', { keyPath: 'id' });
           store.createIndex('createdAt', 'createdAt', { unique: false });
         }
+
+        // 7. 离线/真题库缓存 (exams)
+        if (!db.objectStoreNames.contains('exams')) {
+          const store = db.createObjectStore('exams', { keyPath: 'id' });
+          store.createIndex('questionType', 'questionType', { unique: false });
+        }
       };
 
       request.onsuccess = () => {
@@ -85,6 +91,25 @@ class ClientDB {
 
       request.onerror = () => reject(request.error);
     });
+  }
+
+  async get(storeName, key) {
+    const db = await this.init();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(storeName, 'readonly');
+      const store = tx.objectStore(storeName);
+      const req = store.get(key);
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async getExamById(examId) {
+    return await this.get('exams', examId);
+  }
+
+  async saveExam(exam) {
+    return await this.put('exams', exam);
   }
 
   async getAll(storeName) {

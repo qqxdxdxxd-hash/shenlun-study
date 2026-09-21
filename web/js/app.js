@@ -156,6 +156,10 @@ const FALLBACK_DEFAULT_EXAMS = [
   }
 ];
 
+if (typeof window !== 'undefined') {
+  window.FALLBACK_DEFAULT_EXAMS = FALLBACK_DEFAULT_EXAMS;
+}
+
 let currentExams = [...FALLBACK_DEFAULT_EXAMS];
 let currentActiveMaterialText = "";
 
@@ -179,10 +183,14 @@ async function initApp() {
     }
   }
 
-  // 2. 加载真题
-  const fetchedExams = await window.ApiClient.getExams();
-  if (fetchedExams && fetchedExams.length > 0) {
-    currentExams = fetchedExams;
+  // 2. 加载真题轻量索引 (分片秒开架构)
+  try {
+    const fetchedExams = await (window.ExamsLoader ? window.ExamsLoader.loadIndex() : window.ApiClient.getExams());
+    if (fetchedExams && fetchedExams.length > 0) {
+      currentExams = fetchedExams;
+    }
+  } catch (err) {
+    console.warn("加载真题分片索引异常，使用保底真题库", err);
   }
 
   // 3. 渲染首屏
@@ -190,6 +198,7 @@ async function initApp() {
   await renderExamSelector();
   renderMemoryDeck();
   renderPrivateKBDocs();
+  renderPublicKBList();
   await renderDossierList();
   await renderDossierWarningOnReviewPage();
 
@@ -222,9 +231,19 @@ function changeQuestionType() {
   renderSkillOptions(qType);
 
   const examSelector = document.getElementById('exam-selector');
-  if (qType === 'essay') examSelector.value = 'gk2026_essay';
-  else if (qType === 'single') examSelector.value = 'js2025_single';
-  else if (qType === 'doc') examSelector.value = 'sydw2025_doc';
+  if (qType === 'essay' && examSelector.querySelector('option[value="gk2026_essay"]')) {
+    examSelector.value = 'gk2026_essay';
+  } else if (qType === 'single' && examSelector.querySelector('option[value="js2025_single"]')) {
+    examSelector.value = 'js2025_single';
+  } else if (qType === 'doc' && examSelector.querySelector('option[value="sydw2025_doc"]')) {
+    examSelector.value = 'sydw2025_doc';
+  } else {
+    // 自动寻找当前题型的首个真题
+    const matched = currentExams.find(e => e.question_type === qType);
+    if (matched && examSelector.querySelector(`option[value="${matched.id}"]`)) {
+      examSelector.value = matched.id;
+    }
+  }
   onExamSelectChange();
 
   // 动态联动刷新作答页短板警报
@@ -360,19 +379,34 @@ ${window.ChromaRenderer.escapeHtml(cleanContent)}
   }
 
   // 2. 否则判定为官方预置真题
-  const exam = currentExams.find(e => e.id === key);
+  let exam = currentExams.find(e => e.id === key);
   if (!exam) return;
 
-  currentActiveMaterialText = exam.materials;
+  // 若材料尚未加载（首屏分片懒加载架构），按需拉取单卷 (~25KB)
+  if (!exam.materials || !exam.prompt_text) {
+    document.getElementById('materials-panel').innerHTML = `
+      <div style="font-size: 13.5px; color: #94a3b8; padding: 14px; text-align: center;">
+        ⏳ 正在按需懒加载《${exam.question_title}》真题资料与采分底稿 (~25KB)...
+      </div>
+    `;
+    if (window.ExamsLoader) {
+      const fullExam = await window.ExamsLoader.getExamDetail(key);
+      if (fullExam) {
+        Object.assign(exam, fullExam);
+      }
+    }
+  }
+
+  currentActiveMaterialText = exam.materials || '';
   document.getElementById('exam-title-badge').innerText = `🏛️ ${exam.exam_name}`;
-  document.getElementById('exam-score-badge').innerText = `满分 ${exam.target_score} 分`;
-  document.getElementById('prompt-text').innerText = exam.prompt_text;
-  document.getElementById('prompt-reqs').innerHTML = `<strong>作答要求：</strong>${exam.prompt_reqs}`;
+  document.getElementById('exam-score-badge').innerText = `满分 ${exam.target_score || 35} 分`;
+  document.getElementById('prompt-text').innerText = exam.prompt_text || exam.question_title;
+  document.getElementById('prompt-reqs').innerHTML = `<strong>作答要求：</strong>${exam.prompt_reqs || '按申论规范要求作答'}`;
   
   // 优雅呈现完整原文
   document.getElementById('materials-panel').innerHTML = `
     <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
-${window.ChromaRenderer.escapeHtml(exam.materials)}
+${window.ChromaRenderer.escapeHtml(exam.materials || '')}
     </div>
   `;
   if (isCustomPrompt) toggleCustomPromptMode();
@@ -1321,6 +1355,70 @@ async function renderPrivateKBDocs() {
       </div>
     </div>
   `).join('');
+}
+
+// 动态渲染 200 套公共官方真题列表
+function renderPublicKBList() {
+  const container = document.getElementById('public-kb-list');
+  const countBadge = document.getElementById('public-kb-count');
+  if (!container) return;
+
+  if (countBadge) {
+    countBadge.innerText = `共 ${currentExams.length} 套真题 (分片秒开)`;
+  }
+
+  if (!currentExams || currentExams.length === 0) {
+    container.innerHTML = `<div style="padding:12px; text-align:center; color:var(--text-muted);">暂无真题数据</div>`;
+    return;
+  }
+
+  let html = '';
+  currentExams.forEach(exam => {
+    let typeTag = '大作文';
+    let tagColor = '#38bdf8';
+    if (exam.question_type === 'doc') {
+      typeTag = '公文题';
+      tagColor = '#a855f7';
+    } else if (exam.question_type === 'single') {
+      typeTag = '单一题';
+      tagColor = '#22c55e';
+    }
+
+    html += `
+      <div style="padding: 8px 10px; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; transition: background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background='transparent'">
+        <div style="flex:1; margin-right:8px; overflow:hidden;">
+          <div style="font-size: 13px; font-weight: 600; color: #f1f5f9; display: flex; align-items: center; gap: 6px;">
+            <span>🏛️ ${exam.exam_name}</span>
+            <span style="font-size: 11px; padding: 1px 6px; border-radius: 4px; background: rgba(255,255,255,0.08); color: ${tagColor}; border: 1px solid ${tagColor}44;">${typeTag}</span>
+            <span style="font-size: 11px; color: var(--text-muted);">${exam.target_score || 35}分</span>
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            ${exam.question_title}
+          </div>
+        </div>
+        <button class="btn btn-outline" style="padding: 2px 8px; font-size: 11px; white-space: nowrap;" onclick="selectExamForStudy('${exam.id}', '${exam.question_type || 'essay'}')">
+          ✍️ 一键选用
+        </button>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+// 从公共题库一键选用并跳转到做题界面
+async function selectExamForStudy(examId, qType) {
+  switchTab('review');
+  const typeSelect = document.getElementById('q-type');
+  if (typeSelect && qType) {
+    typeSelect.value = qType;
+    renderSkillOptions(qType);
+  }
+  const selector = document.getElementById('exam-selector');
+  if (selector) {
+    selector.value = examId;
+    await onExamSelectChange();
+  }
 }
 
 function openUploadDocModal() {
