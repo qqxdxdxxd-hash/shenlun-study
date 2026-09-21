@@ -1,7 +1,14 @@
+import sys
+from pathlib import Path
+
+# 将 server 目录加入 sys.path，保证无论在任何工作目录下均能正常解析 src
+server_dir = Path(__file__).resolve().parent.parent
+if str(server_dir) not in sys.path:
+    sys.path.insert(0, str(server_dir))
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from pathlib import Path
 from src.api import router
 
 app = FastAPI(
@@ -10,7 +17,7 @@ app = FastAPI(
     version="2.0.0"
 )
 
-# 允许跨域（方便开发与前端静态部署调用）
+# 允许跨域
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -22,11 +29,11 @@ app.add_middleware(
 app.include_router(router)
 
 # 挂载前端静态目录
-web_dir = Path(__file__).parent.parent.parent / "web"
+web_dir = Path(__file__).resolve().parent.parent.parent / "web"
 if web_dir.exists():
     app.mount("/", StaticFiles(directory=str(web_dir), html=True), name="web")
 
 if __name__ == "__main__":
     import uvicorn
     print("🚀 启动申论智能研习台: http://127.0.0.1:8789")
-    uvicorn.run("src.main:app", host="127.0.0.1", port=8789, reload=True)
+    uvicorn.run(app, host="127.0.0.1", port=8789)
