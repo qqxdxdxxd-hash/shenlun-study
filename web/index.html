@@ -38,7 +38,7 @@
       <div class="tab-item active" onclick="switchTab('review')">✏️ 纸面作答与色谱批改</div>
       <div class="tab-item" onclick="switchTab('memory')">📖 个人申论记忆库 (SM-2)</div>
       <div class="tab-item" onclick="switchTab('kb')">🏛️ 官方真题与知识库</div>
-      <div class="tab-item" onclick="switchTab('dossier')">🧬 认知病灶图谱</div>
+      <div class="tab-item" onclick="switchTab('dossier')">🎯 作答短板档案</div>
       <div class="tab-item" onclick="switchTab('workshop')">🛠️ Skill 提炼工坊</div>
     </div>
   </header>
@@ -60,9 +60,9 @@
               <span>📝 <strong>考场原则</strong>：请在实体方格纸上手写作答后敲入系统。打字无法培养考场肌肉记忆与时间掌控力。</span>
             </div>
 
-            <!-- 认知病灶动态置顶警报条 (根据历史批改自反性提醒) -->
+            <!-- 作答短板前置动态提醒条 (根据历史批改自反性提醒) -->
             <div id="dossier-review-alert" style="display:none; background: rgba(239, 68, 68, 0.08); border: 1px solid var(--danger); border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #fca5a5; margin-bottom: 12px;">
-              <strong style="color: #f87171;">⚠️ 【系统历史病灶置顶警报】：</strong>
+              <strong style="color: #f87171;">⚠️ 【作答短板前置提醒】：</strong>
               <span id="dossier-review-alert-text"></span>
             </div>
 
@@ -358,12 +358,20 @@
       </div>
     </div>
 
-    <!-- TAB 4: 认知病灶图谱 -->
+    <!-- TAB 4: 作答短板档案 -->
     <div id="tab-dossier" class="tab-panel">
       <div class="card">
         <div class="card-title">
-          <span>🧬 跨试卷申论思维认知病灶图谱 (追踪你的基因缺陷)</span>
+          <span>🎯 作答短板档案 (洞察高频失分弱项，精准阻断思维盲区)</span>
           <span style="font-size:12px; color:var(--text-muted);" id="dossier-total-count">累计分析：0 篇作答</span>
+        </div>
+
+        <!-- 题型分类过滤 Tab 按钮组 -->
+        <div class="dossier-filter-tabs" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; border-bottom:1px solid var(--card-border); padding-bottom:12px;">
+          <button class="btn btn-sm btn-primary" id="dossier-filter-all" onclick="switchDossierFilter('all')">🌐 全部总览</button>
+          <button class="btn btn-sm btn-outline" id="dossier-filter-essay" onclick="switchDossierFilter('essay')">✍️ 申论大作文</button>
+          <button class="btn btn-sm btn-outline" id="dossier-filter-doc" onclick="switchDossierFilter('doc')">📜 贯彻执行公文</button>
+          <button class="btn btn-sm btn-outline" id="dossier-filter-single" onclick="switchDossierFilter('single')">🎯 单一采分题</button>
         </div>
 
         <div id="dossier-dynamic-alert-box" style="margin-bottom: 16px;">

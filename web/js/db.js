@@ -3,7 +3,7 @@
  * 100% 运行于当前浏览器本地，服务端零存储
  */
 const DB_NAME = 'ShenlunStudyDB';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 
 class ClientDB {
   constructor() {
@@ -39,11 +39,30 @@ class ClientDB {
           store.createIndex('createdAt', 'createdAt', { unique: false });
         }
 
-        // 4. 认知病灶图谱
+        // 4. 作答短板档案 (Dossier) - 升级支持题型与通用元维度索引
+        let dossierStore;
         if (!db.objectStoreNames.contains('dossier')) {
-          const store = db.createObjectStore('dossier', { keyPath: 'id' });
-          store.createIndex('errorDimension', 'errorDimension', { unique: false });
-          store.createIndex('severity', 'severity', { unique: false });
+          dossierStore = db.createObjectStore('dossier', { keyPath: 'id' });
+        } else {
+          dossierStore = event.target.transaction.objectStore('dossier');
+        }
+        if (!dossierStore.indexNames.contains('errorDimension')) {
+          dossierStore.createIndex('errorDimension', 'errorDimension', { unique: false });
+        }
+        if (!dossierStore.indexNames.contains('severity')) {
+          dossierStore.createIndex('severity', 'severity', { unique: false });
+        }
+        if (!dossierStore.indexNames.contains('questionType')) {
+          dossierStore.createIndex('questionType', 'questionType', { unique: false });
+        }
+        if (!dossierStore.indexNames.contains('dimensionKey')) {
+          dossierStore.createIndex('dimensionKey', 'dimensionKey', { unique: false });
+        }
+        if (!dossierStore.indexNames.contains('cleared')) {
+          dossierStore.createIndex('cleared', 'cleared', { unique: false });
+        }
+        if (!dossierStore.indexNames.contains('submissionId')) {
+          dossierStore.createIndex('submissionId', 'submissionId', { unique: false });
         }
 
         // 5. 自定义私有 Skill

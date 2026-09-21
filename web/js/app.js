@@ -195,6 +195,9 @@ function changeQuestionType() {
   else if (qType === 'single') examSelector.value = 'js2025_single';
   else if (qType === 'doc') examSelector.value = 'sydw2025_doc';
   onExamSelectChange();
+
+  // 动态联动刷新作答页短板警报
+  renderDossierWarningOnReviewPage(qType);
 }
 
 // 动态渲染 Skill 下拉
@@ -465,10 +468,10 @@ async function runFullReview() {
       createdAt: Date.now()
     });
 
-    // 真正沉淀进认知病灶图谱 (自反性记忆闭环)
-    await recordDossierDefects(subId, qType, userText, result);
+    // 真正沉淀进作答短板档案 (自反性记忆闭环)
+    await recordDossierDefects(subId, qType, topic, userText, result);
     await renderDossierList();
-    await renderDossierWarningOnReviewPage();
+    await renderDossierWarningOnReviewPage(qType);
   } catch (err) {
     alert(`批改遇到错误: ${err.message}`);
   } finally {
@@ -650,164 +653,523 @@ async function rateCard(id, rating) {
 let currentReviewSpans = [];
 let currentReviewText = "";
 
-// ================= 认知病灶追踪与自反性联动 =================
+// ================= 作答短板档案 (Universal Weakness Dossier) =================
 
-async function recordDossierDefects(subId, qType, userText, res) {
+// 1. 五大通用元维度定义 (完全中立，不写死任何名师或流派教研偏称)
+const UNIVERSAL_DEFECT_DIMENSIONS = {
+  DIM_THEME: {
+    key: "DIM_THEME",
+    name: "审题立意与核心观点",
+    desc: "是否切中题目核心任务、主旨观点醒目度、总论点是否前置明确",
+    icon: "🎯"
+  },
+  DIM_STRUCTURE: {
+    key: "DIM_STRUCTURE",
+    name: "段落布局与结构逻辑",
+    desc: "段落比例匀称度、行文逻辑层次（总分/递进/并列）及公文必备格式完整度",
+    icon: "📐"
+  },
+  DIM_ANALYSIS: {
+    key: "DIM_ANALYSIS",
+    name: "论证深度与要点提炼",
+    desc: "是否深入制度因果剖析（拒流水账）、材料核心采分要点覆盖与概括深度",
+    icon: "🔍"
+  },
+  DIM_EXPRESSION: {
+    key: "DIM_EXPRESSION",
+    name: "政务规范与语言洗练",
+    desc: "杜绝口语大白话与随意表达，规范使用政务公文动宾大词与概括大词",
+    icon: "🖋️"
+  },
+  DIM_COMPLIANCE: {
+    key: "DIM_COMPLIANCE",
+    name: "客观合规与规程红线",
+    desc: "议论文材料连续抄袭率（>20%红线）、字数底线要求与标点书名号规范",
+    icon: "⚖️"
+  }
+};
+
+let currentDossierFilter = 'all'; // 'all' | 'essay' | 'doc' | 'single'
+let expandedDossierKeys = new Set(); // 展开查看详细记录的维度 key
+
+// 切换题型筛选 Tab
+function switchDossierFilter(filterType) {
+  currentDossierFilter = filterType;
+  
+  // 更新按钮高亮
+  const buttons = ['all', 'essay', 'doc', 'single'];
+  buttons.forEach(t => {
+    const btn = document.getElementById(`dossier-filter-${t}`);
+    if (btn) {
+      if (t === filterType) {
+        btn.className = 'btn btn-sm btn-primary';
+      } else {
+        btn.className = 'btn btn-sm btn-outline';
+      }
+    }
+  });
+
+  renderDossierList();
+}
+
+// 记录与萃取短板数据 (通用化五大元维度)
+async function recordDossierDefects(subId, qType, examTitle, userText, res) {
   const db = window.clientDB;
   const now = Date.now();
+  const title = examTitle || "未命名作答";
 
-  // 1. 材料过度依附/抄袭
-  if (res.copy_redline_exceeded || (res.copy_ratio > 0.18)) {
+  // 1. DIM_COMPLIANCE (客观合规红线)
+  // 1.1 大作文材料抄袭检测（单一题/公文因需要摘抄采分原词，不计入恶意抄袭）
+  if (qType === 'essay' && (res.copy_redline_exceeded || (res.copy_ratio > 0.18))) {
     await db.put('dossier', {
-      id: `dos_copy_${subId}`,
+      id: `dos_compliance_copy_${subId}`,
       submissionId: subId,
-      errorDimension: "材料原文直接依附度",
+      questionType: qType,
+      examTitle: title,
+      dimensionKey: "DIM_COMPLIANCE",
+      errorDimension: "客观合规与规程红线",
       errorCode: "ERR_COPY_OVER_20",
       severity: "level_1_critical",
       quoteText: `抄袭率 ${(res.copy_ratio * 100).toFixed(1)}%`,
-      diagnosis: "连续摘抄材料原文超过扣分警戒线，论证沦为事实搬运，缺乏个人提炼",
+      diagnosis: `连续摘抄材料原文达 ${(res.copy_ratio * 100).toFixed(1)}%（触碰 20% 警戒线），议论文论证沦为事实搬运，缺乏个人提炼`,
       cleared: 0,
+      clearedAt: null,
+      createdAt: now
+    });
+  }
+  // 1.2 标题书名号等格式硬伤
+  if (res.title_issues && res.title_issues.length > 0) {
+    await db.put('dossier', {
+      id: `dos_compliance_title_${subId}`,
+      submissionId: subId,
+      questionType: qType,
+      examTitle: title,
+      dimensionKey: "DIM_COMPLIANCE",
+      errorDimension: "客观合规与规程红线",
+      errorCode: "ERR_TITLE_FORMAT",
+      severity: "level_2",
+      quoteText: res.title_issues.join('；'),
+      diagnosis: `标题存在格式硬伤（如误用书名号或字数失衡）：${res.title_issues.join('；')}`,
+      cleared: 0,
+      clearedAt: null,
+      createdAt: now
+    });
+  }
+  // 1.3 大作文字数严重不足（<800字）
+  if (qType === 'essay' && res.word_count < 800) {
+    await db.put('dossier', {
+      id: `dos_compliance_words_${subId}`,
+      submissionId: subId,
+      questionType: qType,
+      examTitle: title,
+      dimensionKey: "DIM_COMPLIANCE",
+      errorDimension: "客观合规与规程红线",
+      errorCode: "ERR_WORD_COUNT_DEFICIT",
+      severity: "level_1_critical",
+      quoteText: `实测字数 ${res.word_count} 字`,
+      diagnosis: `答卷仅 ${res.word_count} 字，未达申论大作文 1000 字考场基本字数红线（低于800字重扣结构与立意分）`,
+      cleared: 0,
+      clearedAt: null,
       createdAt: now
     });
   }
 
-  // 2. 口语大白话语病
+  // 2. DIM_EXPRESSION (政务规范与语言洗练)
   const colloquialSpans = (res.chroma_spans || []).filter(s => s.type === 'colloquial_flaw');
-  if (colloquialSpans.length > 0) {
-    for (const span of colloquialSpans) {
-      const quote = userText.slice(span.start, span.end);
-      await db.put('dossier', {
-        id: `dos_colloquial_${subId}_${span.start}`,
-        submissionId: subId,
-        errorDimension: "对策口语大白话语病",
-        errorCode: "ERR_COLLOQUIAL",
-        severity: "level_2",
-        quoteText: quote,
-        diagnosis: span.comment || "口语化聊天表达，缺乏政务动宾大词提炼",
-        cleared: 0,
-        createdAt: now
-      });
-    }
+  for (let i = 0; i < colloquialSpans.length; i++) {
+    const span = colloquialSpans[i];
+    const quote = userText.slice(span.start, span.end);
+    await db.put('dossier', {
+      id: `dos_expr_${subId}_${span.start}`,
+      submissionId: subId,
+      questionType: qType,
+      examTitle: title,
+      dimensionKey: "DIM_EXPRESSION",
+      errorDimension: "政务规范与语言洗练",
+      errorCode: "ERR_COLLOQUIAL",
+      severity: "level_2",
+      quoteText: quote,
+      diagnosis: span.comment || "口语化表达缺乏政务动宾大词提炼",
+      cleared: 0,
+      clearedAt: null,
+      createdAt: now
+    });
   }
 
-  // 3. 骨架与结构残缺
-  if (res.grade?.includes("四类") || (res.score < 20 && qType === 'essay')) {
+  // 3. DIM_ANALYSIS (论证深度与要点提炼)
+  // 3.1 案例故事流水账
+  const storySpans = (res.chroma_spans || []).filter(s => s.type === 'story_narrative_leak');
+  for (let i = 0; i < storySpans.length; i++) {
+    const span = storySpans[i];
+    const quote = userText.slice(span.start, span.end);
     await db.put('dossier', {
-      id: `dos_struct_${subId}`,
+      id: `dos_analysis_story_${subId}_${span.start}`,
       submissionId: subId,
-      errorDimension: "论点隐蔽与骨架残缺",
+      questionType: qType,
+      examTitle: title,
+      dimensionKey: "DIM_ANALYSIS",
+      errorDimension: "论证深度与要点提炼",
+      errorCode: "ERR_STORY_NARRATIVE",
+      severity: "level_2",
+      quoteText: quote.length > 50 ? quote.slice(0, 50) + "..." : quote,
+      diagnosis: span.comment || "案例叙述篇幅过长流水账，缺乏深入因果制度剖析",
+      cleared: 0,
+      clearedAt: null,
+      createdAt: now
+    });
+  }
+  // 3.2 论证深度扣分严重 (打分低于满分的 60%)
+  if (res.radar_scores && res.radar_scores["论据与论证深度"] !== undefined && res.radar_scores["论据与论证深度"] < 5.5) {
+    await db.put('dossier', {
+      id: `dos_analysis_score_${subId}`,
+      submissionId: subId,
+      questionType: qType,
+      examTitle: title,
+      dimensionKey: "DIM_ANALYSIS",
+      errorDimension: "论证深度与要点提炼",
+      errorCode: "ERR_ANALYSIS_SHALLOW",
+      severity: "level_1_critical",
+      quoteText: `论证深度得分 ${res.radar_scores["论据与论证深度"]} 分`,
+      diagnosis: "论点推导论证深度不足，事例浮于表面或核心采分要点覆盖不全",
+      cleared: 0,
+      clearedAt: null,
+      createdAt: now
+    });
+  }
+
+  // 4. DIM_STRUCTURE (段落布局与结构逻辑)
+  if (res.grade?.includes("四类") || (res.radar_scores && res.radar_scores["结构与段落布局"] !== undefined && res.radar_scores["结构与段落布局"] < 5.0)) {
+    await db.put('dossier', {
+      id: `dos_structure_${subId}`,
+      submissionId: subId,
+      questionType: qType,
+      examTitle: title,
+      dimensionKey: "DIM_STRUCTURE",
+      errorDimension: "段落布局与结构逻辑",
       errorCode: "ERR_STRUCTURE_DEFECT",
       severity: "level_1_critical",
-      quoteText: `得分 ${res.score}分 (${res.grade})`,
-      diagnosis: "总论点或正文分论点不完整（未满足1+3大五段骨架），或字数严重不足",
+      quoteText: `结构得分 ${res.radar_scores ? res.radar_scores["结构与段落布局"] : res.score}分 (${res.grade || ''})`,
+      diagnosis: qType === 'doc'
+        ? "公文格式要素不全或行文逻辑层次错位，未符合三轨阅卷规范"
+        : (qType === 'single'
+          ? "采分点未按逻辑要素分类归纳，行文呈现无序一锅粥"
+          : "文章结构层次逻辑不畅、段落失衡或各层次分论点不清晰"),
       cleared: 0,
+      clearedAt: null,
+      createdAt: now
+    });
+  }
+
+  // 5. DIM_THEME (审题立意与核心观点)
+  if (res.radar_scores && res.radar_scores["立意与总分论点"] !== undefined && res.radar_scores["立意与总分论点"] < 7.0) {
+    await db.put('dossier', {
+      id: `dos_theme_${subId}`,
+      submissionId: subId,
+      questionType: qType,
+      examTitle: title,
+      dimensionKey: "DIM_THEME",
+      errorDimension: "审题立意与核心观点",
+      errorCode: "ERR_THEME_DEFECT",
+      severity: "level_1_critical",
+      quoteText: `立意得分 ${res.radar_scores["立意与总分论点"]}分`,
+      diagnosis: "未完全紧扣题干主旨，核心总观点隐蔽模糊或立意高度不足",
+      cleared: 0,
+      clearedAt: null,
       createdAt: now
     });
   }
 }
 
+// 计算量纲严谨的统计指标与滑动窗口
+function calculateDossierMetrics(dossiers, submissions, filterType = 'all') {
+  // 1. 过滤对应题型的作答记录
+  const filteredSubmissions = submissions.filter(s => filterType === 'all' || s.questionType === filterType);
+  const totalSubmissions = filteredSubmissions.length;
+
+  // 2. 取最近 5 篇作答作为动态滑动窗口
+  const recentSubmissions = filteredSubmissions.slice(-5);
+  const recentSubIds = new Set(recentSubmissions.map(s => s.id));
+
+  // 3. 统计五大元维度
+  const dimStats = [];
+  const criticals = [];
+
+  for (const [dimKey, meta] of Object.entries(UNIVERSAL_DEFECT_DIMENSIONS)) {
+    const dimDossiers = dossiers.filter(d => {
+      const matchDim = d.dimensionKey === dimKey;
+      const matchType = (filterType === 'all' || d.questionType === filterType || (!d.questionType && filterType === 'essay'));
+      return matchDim && matchType;
+    });
+
+    const totalInstances = dimDossiers.length;
+    // 独立作答篇数触碰（分子），确保不会大于分母
+    const distinctSubIds = new Set(dimDossiers.map(d => d.submissionId));
+    const distinctCount = distinctSubIds.size;
+    const occurrenceRate = totalSubmissions > 0 ? Math.min(100, Math.round((distinctCount / totalSubmissions) * 100)) : 0;
+    const density = totalSubmissions > 0 ? (totalInstances / totalSubmissions).toFixed(1) : "0.0";
+
+    // 滑动窗口统计（最近 5 篇）
+    const recentUnclearedDossiers = dimDossiers.filter(d => recentSubIds.has(d.submissionId) && !d.cleared);
+    const recentDistinctSubHits = new Set(recentUnclearedDossiers.map(d => d.submissionId)).size;
+    const unclearedCount = dimDossiers.filter(d => !d.cleared).length;
+
+    // 状态定级
+    let status = "良好达标";
+    let statusColor = "#4ade80";
+    let severityRank = 3;
+
+    if (totalInstances > 0 && unclearedCount === 0) {
+      status = "已切除克服";
+      statusColor = "#38bdf8";
+      severityRank = 4;
+    } else if (recentDistinctSubHits >= 2 || dimDossiers.some(d => d.severity === 'level_1_critical' && recentSubIds.has(d.submissionId) && !d.cleared)) {
+      status = "一级顽固短板";
+      statusColor = "#ef4444";
+      severityRank = 1;
+      criticals.push(meta.name);
+    } else if (recentDistinctSubHits === 1 || unclearedCount > 0) {
+      status = "二级关注短板";
+      statusColor = "#facc15";
+      severityRank = 2;
+    }
+
+    dimStats.push({
+      key: dimKey,
+      name: meta.name,
+      desc: meta.desc,
+      icon: meta.icon,
+      items: dimDossiers,
+      totalCount: totalInstances,
+      distinctCount: distinctCount,
+      rate: occurrenceRate,
+      density: density,
+      recentHits: recentDistinctSubHits,
+      unclearedCount: unclearedCount,
+      status: status,
+      statusColor: statusColor,
+      severityRank: severityRank
+    });
+  }
+
+  // 按严重度升序排序（一级顽固排最前）
+  dimStats.sort((a, b) => a.severityRank - b.severityRank);
+
+  return {
+    totalSubmissions,
+    recentCount: recentSubmissions.length,
+    criticals: [...new Set(criticals)],
+    dimensions: dimStats
+  };
+}
+
+// 切换单个短板项的切除/未切除状态
+async function toggleDefectClearance(dossierId) {
+  const db = window.clientDB;
+  const all = await db.getAll('dossier') || [];
+  const target = all.find(d => d.id === dossierId);
+  if (!target) return;
+
+  target.cleared = target.cleared ? 0 : 1;
+  target.clearedAt = target.cleared ? Date.now() : null;
+  await db.put('dossier', target);
+
+  await renderDossierList();
+  await renderDossierWarningOnReviewPage();
+}
+
+// 展开/折叠维度详细记录
+function toggleDossierExpand(dimKey) {
+  if (expandedDossierKeys.has(dimKey)) {
+    expandedDossierKeys.delete(dimKey);
+  } else {
+    expandedDossierKeys.add(dimKey);
+  }
+  renderDossierList();
+}
+
+// 从短板溯源跳转回原卷批改报告
+async function jumpToSubmissionReport(submissionId) {
+  const db = window.clientDB;
+  const submissions = await db.getAll('submissions') || [];
+  const reports = await db.getAll('reports') || [];
+
+  const sub = submissions.find(s => s.id === submissionId);
+  const rep = reports.find(r => r.submissionId === submissionId);
+  if (!sub || !rep) {
+    alert("未找到该答卷对应的批改底稿");
+    return;
+  }
+
+  // 切换到 review Tab
+  switchTab('review');
+
+  // 回填题目与文本
+  const qTypeEl = document.getElementById('q-type');
+  if (qTypeEl && sub.questionType) {
+    qTypeEl.value = sub.questionType;
+  }
+  const titleEl = document.getElementById('question-title-input');
+  if (titleEl && sub.questionTitle) titleEl.value = sub.questionTitle;
+  const textEl = document.getElementById('user-answer-input');
+  if (textEl) {
+    textEl.value = sub.userAnswer;
+    updateWordCount();
+  }
+
+  // 渲染当次报告
+  renderReviewResult(sub.userAnswer, rep);
+}
+
+// 渲染短板档案面板
 async function renderDossierList() {
   const db = window.clientDB;
   const dossiers = await db.getAll('dossier') || [];
   const submissions = await db.getAll('submissions') || [];
 
+  const typeLabels = {
+    all: "全部题型",
+    essay: "申论大作文",
+    doc: "贯彻执行公文",
+    single: "单一采分题"
+  };
+  const currentLabel = typeLabels[currentDossierFilter] || "全部题型";
+
+  const metrics = calculateDossierMetrics(dossiers, submissions, currentDossierFilter);
+
   const countEl = document.getElementById('dossier-total-count');
-  if (countEl) countEl.innerText = `累计分析：${submissions.length} 篇作答`;
+  if (countEl) countEl.innerText = `累计分析：${metrics.totalSubmissions} 篇作答 (${currentLabel} · 最近${metrics.recentCount}篇动态窗口)`;
 
   const alertBox = document.getElementById('dossier-dynamic-alert-box');
   const listEl = document.getElementById('dossier-dynamic-list');
 
-  if (submissions.length === 0) {
+  if (metrics.totalSubmissions === 0) {
     if (alertBox) alertBox.innerHTML = '';
     if (listEl) {
       listEl.innerHTML = `
-        <div style="text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 13px;">
-          🌱 目前暂无作答历史记录。在【作答与色谱批改】页面完成一次真实批改后，系统将在此自动建档分析你的思维基因缺陷。
+        <div style="text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 13.5px; line-height: 1.8;">
+          🌱 <strong>当前【${currentLabel}】暂无作答历史记录。</strong><br>
+          在【纸面作答与色谱批改】页面完成该题型作答并批改后，系统将自动建立专属短板档案并分析失分盲区。
         </div>
       `;
     }
     return;
   }
 
-  // 统计各维度缺陷发生率
-  const copyErrors = dossiers.filter(d => d.errorCode === 'ERR_COPY_OVER_20');
-  const colloquialErrors = dossiers.filter(d => d.errorCode === 'ERR_COLLOQUIAL');
-  const structErrors = dossiers.filter(d => d.errorCode === 'ERR_STRUCTURE_DEFECT');
-
-  const total = Math.max(submissions.length, 1);
-  const copyRate = Math.round((copyErrors.length / total) * 100);
-  const colloquialRate = Math.round((colloquialErrors.length / total) * 100);
-  const structRate = Math.round((structErrors.length / total) * 100);
-
-  // 动态判断顽固病灶
-  let criticalHtml = '';
-  let criticalNames = [];
-  if (copyErrors.length >= 1) criticalNames.push("材料抄袭依赖过重");
-  if (structErrors.length >= 1) criticalNames.push("论点骨架不全/字数偏少");
-  if (colloquialErrors.length >= 2) criticalNames.push("口语大白话高频泛滥");
-
-  if (criticalNames.length > 0) {
-    criticalHtml = `
-      <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid var(--danger); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
-        <strong style="color: #f87171; font-size: 14px;">⚠️ 系统置顶警报：你已触碰【一级顽固病灶】！</strong>
-        <p style="font-size: 13px; color: #fca5a5; margin-top: 6px; line-height: 1.6;">
-          在最近的作答中，你频繁触发<strong>【${criticalNames.join('、')}】</strong>！下次下笔前，系统已在作答界面为你置顶防护提醒，请务必针对性纠偏。
+  // 动态警报横幅
+  let alertHtml = '';
+  if (metrics.criticals.length > 0) {
+    alertHtml = `
+      <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid var(--danger); border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+          <span style="font-size:16px;">⚠️</span>
+          <strong style="color: #f87171; font-size: 14.5px;">【${currentLabel}】检测到高频顽固短板：${metrics.criticals.join('、')}</strong>
+        </div>
+        <p style="font-size: 13px; color: #fca5a5; margin: 0; line-height: 1.6;">
+          在最近的作答中，你在上述维度频繁失分。系统已在作答页面为您前置置顶针对性纠偏提醒，请结合避坑错题卡与微练习重点突破！
         </p>
       </div>
     `;
-  }
-  if (alertBox) alertBox.innerHTML = criticalHtml;
-
-  // 渲染 3 大缺陷真实发生率列表
-  const items = [
-    {
-      name: "1. 材料原文直接依附度 (超20%红线频率)",
-      count: copyErrors.length,
-      rate: `${copyRate}% 犯错率`,
-      severity: copyErrors.length >= 2 ? "一级顽固病灶" : (copyErrors.length === 1 ? "二级病灶关注" : "良好安全"),
-      color: copyErrors.length >= 2 ? "#ef4444" : (copyErrors.length === 1 ? "#facc15" : "#4ade80")
-    },
-    {
-      name: "2. 论点隐蔽与骨架残缺 (未满足1+3或字数偏少)",
-      count: structErrors.length,
-      rate: `${structRate}% 犯错率`,
-      severity: structErrors.length >= 2 ? "一级顽固病灶" : (structErrors.length === 1 ? "重点关注" : "已克服"),
-      color: structErrors.length >= 2 ? "#ef4444" : (structErrors.length === 1 ? "#facc15" : "#4ade80")
-    },
-    {
-      name: "3. 语言口语化与大白话语病 (缺乏政务大词提炼)",
-      count: colloquialErrors.length,
-      rate: `${colloquialRate}% 触发率`,
-      severity: colloquialErrors.length >= 2 ? "高频语言病灶" : (colloquialErrors.length === 1 ? "偶发语病" : "公文规范"),
-      color: colloquialErrors.length >= 2 ? "#ef4444" : (colloquialErrors.length === 1 ? "#facc15" : "#4ade80")
-    }
-  ];
-
-  if (listEl) {
-    listEl.innerHTML = items.map(it => `
-      <div class="dossier-item" style="background:#0f172a; border:1px solid var(--card-border); padding:12px 16px; border-radius:6px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
-        <div class="dossier-name" style="font-size:13.5px; font-weight:600; color:#f8fafc; display:flex; align-items:center; gap:8px;">
-          <span>${it.name}</span>
-          <span style="font-size:11px; padding:2px 6px; border-radius:4px; border:1px solid ${it.color}; color:${it.color}; background:rgba(255,255,255,0.05);">${it.severity}</span>
-        </div>
-        <div class="dossier-rate" style="font-size:14px; font-weight:700; color:${it.color};">${it.rate}</div>
+  } else {
+    alertHtml = `
+      <div style="background: rgba(74, 222, 128, 0.08); border: 1px solid rgba(74, 222, 128, 0.3); border-radius: 8px; padding: 12px 18px; margin-bottom: 16px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:16px;">✅</span>
+        <span style="font-size: 13px; color: #4ade80;"><strong>状态良好</strong>：最近作答未发现高频严重短板，请保持规范文风与严谨逻辑！</span>
       </div>
-    `).join('');
+    `;
+  }
+  if (alertBox) alertBox.innerHTML = alertHtml;
+
+  // 渲染五大元维度卡片
+  if (listEl) {
+    listEl.innerHTML = metrics.dimensions.map(dim => {
+      const isExpanded = expandedDossierKeys.has(dim.key);
+      const itemsHtml = (dim.items && dim.items.length > 0)
+        ? dim.items.slice().reverse().map(it => {
+            const dateStr = new Date(it.createdAt).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+            const isCleared = it.cleared === 1;
+            return `
+              <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid ${isCleared ? 'rgba(255,255,255,0.08)' : 'rgba(239, 68, 68, 0.25)'}; border-radius: 6px; padding: 10px 14px; margin-top: 8px; opacity: ${isCleared ? '0.6' : '1'};">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:12px;">
+                  <span style="color:#94a3b8; font-weight:600;">📝 《${it.examTitle || '未命名试题'}》 <span style="font-weight:normal; color:#64748b; margin-left:6px;">${dateStr}</span></span>
+                  <div style="display:flex; gap:8px; align-items:center;">
+                    <span style="font-size:11px; padding:1px 6px; border-radius:3px; ${isCleared ? 'color:#38bdf8; border:1px solid #38bdf8;' : (it.severity === 'level_1_critical' ? 'color:#ef4444; border:1px solid #ef4444;' : 'color:#facc15; border:1px solid #facc15;')}">${isCleared ? '已切除' : (it.severity === 'level_1_critical' ? '重度扣分' : '一般瑕疵')}</span>
+                    <button class="btn btn-sm btn-outline" style="font-size:11px; padding:1px 6px;" onclick="toggleDefectClearance('${it.id}')">${isCleared ? '↩️ 撤销切除' : '✅ 标记克服'}</button>
+                    <button class="btn btn-sm btn-outline" style="font-size:11px; padding:1px 6px;" onclick="jumpToSubmissionReport('${it.submissionId}')">🔍 回看原卷</button>
+                  </div>
+                </div>
+                ${it.quoteText ? `<div style="background:rgba(0,0,0,0.25); border-left:3px solid #f59e0b; padding:4px 8px; font-size:12.5px; color:#fde68a; margin-bottom:6px; font-family:monospace;">${it.quoteText}</div>` : ''}
+                <div style="font-size:12px; color:#cbd5e1; line-height:1.5;">💡 <strong>考官诊断</strong>：${it.diagnosis}</div>
+              </div>
+            `;
+          }).join('')
+        : `<div style="padding:10px; color:#64748b; font-size:12px; text-align:center;">暂无扣分记录，该维度表现优异</div>`;
+
+      return `
+        <div class="dossier-card" style="background:#0f172a; border:1px solid var(--card-border); padding:14px 18px; border-radius:8px; margin-bottom:12px; transition:all 0.2s ease;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:20px;">${dim.icon}</span>
+              <div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <strong style="font-size:14.5px; color:#f8fafc;">${dim.name}</strong>
+                  <span style="font-size:11.5px; font-weight:600; padding:2px 8px; border-radius:4px; border:1px solid ${dim.statusColor}; color:${dim.statusColor}; background:rgba(255,255,255,0.04);">${dim.status}</span>
+                </div>
+                <div style="font-size:12px; color:#94a3b8; margin-top:2px;">${dim.desc}</div>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div style="text-align:right;">
+                <div style="font-size:15px; font-weight:700; color:${dim.statusColor};">${dim.rate}% 触碰率</div>
+                <div style="font-size:11px; color:#64748b;">单篇平均 ${dim.density} 处 · 待克服 ${dim.unclearedCount} 项</div>
+              </div>
+              <button class="btn btn-sm btn-outline" style="font-size:11.5px; padding:4px 10px;" onclick="toggleDossierExpand('${dim.key}')">
+                ${isExpanded ? '▲ 收起' : `▼ 溯源 (${dim.totalCount}条)`}
+              </button>
+            </div>
+          </div>
+
+          ${isExpanded ? `
+            <div style="margin-top:12px; padding-top:12px; border-top:1px dashed rgba(255,255,255,0.1);">
+              <div style="font-size:12px; font-weight:600; color:#94a3b8; margin-bottom:4px;">📜 历史答卷扣分切片溯源 (近${metrics.recentCount}篇优先)：</div>
+              ${itemsHtml}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
   }
 }
 
-// 在作答页面置顶显示系统自反性历史病灶警报
-async function renderDossierWarningOnReviewPage() {
+// 在作答页面置顶显示作答短板前置动态提醒条
+async function renderDossierWarningOnReviewPage(specifiedQType) {
   const db = window.clientDB;
   const dossiers = await db.getAll('dossier') || [];
   const alertEl = document.getElementById('dossier-review-alert');
   const textEl = document.getElementById('dossier-review-alert-text');
   if (!alertEl || !textEl) return;
 
-  const criticals = dossiers.filter(d => d.severity === 'level_1_critical');
+  const qType = specifiedQType || document.getElementById('q-type')?.value || 'essay';
+
+  // 仅筛选对应题型、严重级别为 critical 且未切除克服的短板项
+  const criticals = dossiers.filter(d => {
+    const matchType = (d.questionType === qType || (!d.questionType && qType === 'essay'));
+    return matchType && d.severity === 'level_1_critical' && !d.cleared;
+  });
+
   if (criticals.length > 0) {
-    const dimensions = [...new Set(criticals.map(c => c.errorDimension))];
-    textEl.innerText = `根据你历史作答沉淀，系统检测到你存在【${dimensions.join('、')}】缺陷，本次作答请务必按大五段标准规范展开，注意提炼政务大词！`;
+    const dimNames = [...new Set(criticals.map(c => c.errorDimension || c.dimensionKey))];
+    
+    let advice = "";
+    if (qType === 'doc') {
+      advice = `本次下笔请务必核对公文五要素（标题、主送对象、正文逻辑层次、发文主体与日期），杜绝要素缺漏！`;
+    } else if (qType === 'single') {
+      advice = `本次作答请紧扣给定材料核心采分词，按要素分类归纳并提炼政务大词，切忌无序罗列！`;
+    } else {
+      advice = `本次下笔请务必先稳立意、布骨架，事例叙述后务必跟进深入制度与因果深析，杜绝照抄材料与口水话！`;
+    }
+
+    textEl.innerText = `检测到你在该题型中高频出现【${dimNames.join('、')}】失分弱项。${advice}`;
     alertEl.style.display = 'block';
   } else {
     alertEl.style.display = 'none';

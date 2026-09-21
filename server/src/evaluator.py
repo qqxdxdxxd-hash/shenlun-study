@@ -43,10 +43,15 @@ class ShenlunEvaluator:
             req.user_answer, req.recalled_memories
         )
 
-        # 3. 获取客户端透传的 BYOK Key 或使用默认已配置的真实 DeepSeek Key
-        api_key = req.api_key or "sk-2d4efe752dd542fb9a9a859052eb40cc"
-        base_url = req.base_url or "https://api.deepseek.com/v1"
-        model_id = req.model_id or "deepseek-chat"
+        # 3. 严格执行 ADR 0004 纯客户端自持密钥 (Strict BYOK)：服务端零默认 Key
+        api_key = (req.api_key or "").strip()
+        if not api_key:
+            raise HTTPException(
+                status_code=401,
+                detail="【严格自持密钥 (Strict BYOK)】未检测到大模型 API Key。请在网页端【⚙️ 模型配置】中输入您的 API Key（支持 DeepSeek / 火山方舟 / OpenAI 兼容端点）后发起批改。"
+            )
+        base_url = (req.base_url or "https://api.deepseek.com/v1").strip()
+        model_id = (req.model_id or "deepseek-chat").strip()
 
         req.api_key = api_key
         req.base_url = base_url

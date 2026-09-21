@@ -423,8 +423,11 @@ main {
 .btn-sm2-2 { background: #3b82f6; color: #fff; }
 .btn-sm2-3 { background: #22c55e; color: #fff; }
 
-/* 认知病灶列表 */
-.dossier-list { display: flex; flex-direction: column; gap: 10px; }
+/* 作答短板档案 */
+.dossier-list { display: flex; flex-direction: column; gap: 12px; }
+.dossier-card:hover {
+  border-color: rgba(56, 189, 248, 0.4) !important;
+}
 .dossier-item {
   display: flex;
   justify-content: space-between;
