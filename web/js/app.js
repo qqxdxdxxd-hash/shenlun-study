@@ -129,10 +129,7 @@ let currentActiveMaterialText = "";
 async function initApp() {
   await window.clientDB.init();
 
-  // 0. 自动就绪真实 DeepSeek API 凭据
-  if (!localStorage.getItem('shenlun_api_key')) {
-    localStorage.setItem('shenlun_api_key', 'sk-2d4efe752dd542fb9a9a859052eb40cc');
-  }
+  // 0. 初始化默认模型配置端点 (严格自持密钥 Strict BYOK: 密钥由用户在【⚙️ 模型配置】自主输入)
   if (!localStorage.getItem('shenlun_base_url')) {
     localStorage.setItem('shenlun_base_url', 'https://api.deepseek.com/v1');
   }
@@ -419,15 +416,22 @@ async function runFullReview() {
   const allMemories = await window.clientDB.getAll('memories');
   const recalled = window.MiniRAG.recallTopK(allMemories, topic, userText, 3);
 
+  const apiKey = (localStorage.getItem('shenlun_api_key') || '').trim();
+  if (!apiKey) {
+    openModelConfigModal();
+    alert("【请先配置大模型密钥】\n本项目遵循 Strict BYOK (自持密钥) 规范，不设集中式商业服务器。\n请在弹出的【⚙️ 模型配置】窗口中填入您的 DeepSeek / 火山方舟 / OpenAI 兼容 API Key 后开始批改。");
+    return;
+  }
+
   const payload = {
     question_type: qType,
     question_title: topic,
     materials: materials,
     user_answer: userText,
-    target_score: 35,
+    target_score: targetScore,
     skill_id: skillId,
     recalled_memories: recalled,
-    api_key: localStorage.getItem('shenlun_api_key') || 'sk-2d4efe752dd542fb9a9a859052eb40cc',
+    api_key: apiKey,
     base_url: localStorage.getItem('shenlun_base_url') || 'https://api.deepseek.com/v1',
     model_id: localStorage.getItem('shenlun_model_id') || 'deepseek-chat'
   };
