@@ -3,7 +3,7 @@
  * 100% 运行于当前浏览器本地，服务端零存储
  */
 const DB_NAME = 'ShenlunStudyDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 class ClientDB {
   constructor() {

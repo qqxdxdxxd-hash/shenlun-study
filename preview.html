@@ -1434,20 +1434,31 @@
     }
 
     // ================= 私有知识库上传、管理与划词入库 =================
-    let previewPrivateDocs = [
-      {
-        id: "doc_1",
-        title: "2026年政府工作报告生态文明与新质生产力要点.md",
-        tag: "权威时政",
-        content: "【新质生产力与生态文明战略指引】\n大力推进现代化产业体系建设，加快发展新质生产力。充分发挥创新主导作用，以科技创新推动产业创新，加快推进新型工业化，提高全要素生产率，不断塑造发展新动能新优势。\n\n加强生态文明建设，推进绿色低碳发展。协同推进降碳、减污、扩绿、增长，建设人与自然和谐共生的美丽中国。推动产业链供应链绿色化转型，培育壮大绿色低碳新兴产业。深入实施空气质量持续改善行动计划，统筹水资源、水环境、水生态治理。\n\n【基层治理深化要求】\n提高基层治理现代化水平。坚持和发展新时代“枫桥经验”，推进矛盾纠纷预防化解法治化。坚决克服形式主义、官僚主义，持续为基层减负松绑，让基层干部把更多精力投入到为民办实事中。"
-      },
-      {
-        id: "doc_2",
-        title: "基层治理典型经验与对策模板汇编.txt",
-        tag: "对策经验",
-        content: "【经验一：红色物业赋能基层协商】\n某街道推行“红色物业”模式，以社区党组织为核心，组建由网格员、物业代表、业主委员会三方协同的民主协商平台。实行“月评季考”与服务公示制度，推动物业收缴率由 40% 跃升至 92%，有效化解了停车难、飞线充电等群众烦心事。\n\n【经验二：积分银行激发群众内生动力】\n建立生态积分兑换超市，把村民房前屋后清洁、垃圾分类投放、志愿巡查纳入积分档案。实行红黑榜月度评比，杜绝“干部干、群众看”的被动局面，实现了乡村环境从“倒逼整治”到“自治自觉”的根本跃迁。"
-      }
-    ];
+    function loadPreviewDocs() {
+      try {
+        const saved = localStorage.getItem('shenlun_preview_private_kb');
+        if (saved) return JSON.parse(saved);
+      } catch (e) {}
+      return [
+        {
+          id: "doc_1",
+          title: "2026年政府工作报告生态文明与新质生产力要点.md",
+          tag: "权威时政",
+          content: "【新质生产力与生态文明战略指引】\n大力推进现代化产业体系建设，加快发展新质生产力。充分发挥创新主导作用，以科技创新推动产业创新，加快推进新型工业化，提高全要素生产率，不断塑造发展新动能新优势。\n\n加强生态文明建设，推进绿色低碳发展。协同推进降碳、减污、扩绿、增长，建设人与自然和谐共生的美丽中国。推动产业链供应链绿色化转型，培育壮大绿色低碳新兴产业。深入实施空气质量持续改善行动计划，统筹水资源、水环境、水生态治理。\n\n【基层治理深化要求】\n提高基层治理现代化水平。坚持和发展新时代“枫桥经验”，推进矛盾纠纷预防化解法治化。坚决克服形式主义、官僚主义，持续为基层减负松绑，让基层干部把更多精力投入到为民办实事中。"
+        },
+        {
+          id: "doc_2",
+          title: "基层治理典型经验与对策模板汇编.txt",
+          tag: "对策经验",
+          content: "【经验一：红色物业赋能基层协商】\n某街道推行“红色物业”模式，以社区党组织为核心，组建由网格员、物业代表、业主委员会三方协同的民主协商平台。实行“月评季考”与服务公示制度，推动物业收缴率由 40% 跃升至 92%，有效化解了停车难、飞线充电等群众烦心事。\n\n【经验二：积分银行激发群众内生动力】\n建立生态积分兑换超市，把村民房前屋后清洁、垃圾分类投放、志愿巡查纳入积分档案。实行红黑榜月度评比，杜绝“干部干、群众看”的被动局面，实现了乡村环境从“倒逼整治”到“自治自觉”的根本跃迁。"
+        }
+      ];
+    }
+    let previewPrivateDocs = loadPreviewDocs();
+
+    function savePreviewDocsToDisk() {
+      localStorage.setItem('shenlun_preview_private_kb', JSON.stringify(previewPrivateDocs));
+    }
 
     function renderPreviewPrivateDocs() {
       const container = document.getElementById('preview-private-kb-list');
@@ -1508,6 +1519,7 @@
         tag,
         content
       });
+      savePreviewDocsToDisk();
       alert(`成功存入本地知识库: 《${title}》！`);
       closeUploadDocModal();
       renderPreviewPrivateDocs();
@@ -1516,6 +1528,7 @@
     function deletePreviewDoc(id) {
       if (!confirm('确定从本地删除该篇学习资料吗？')) return;
       previewPrivateDocs = previewPrivateDocs.filter(d => d.id !== id);
+      savePreviewDocsToDisk();
       renderPreviewPrivateDocs();
     }
 
