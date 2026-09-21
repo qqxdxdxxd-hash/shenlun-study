@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from typing import List, Dict, Any, Optional
-from fastapi import APIRouter, HTTPException, Header
+from fastapi import APIRouter, HTTPException, Header, UploadFile, File
 from src.models import ReviewRequest, PreScanResponse, DrillVerifyRequest, DrillVerifyResponse
 from src.skill_loader import SkillRegistry
 from src.evaluator import ShenlunEvaluator
@@ -106,3 +106,30 @@ metadata:
 """
     }
     return extracted
+
+@router.post("/extract-pdf")
+async def extract_pdf_endpoint(file: UploadFile = File(...)):
+    """
+    接收用户上传的 PDF 讲义/试卷，在内存中极速提取文本图层并返回，服务端零落盘
+    """
+    if not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(status_code=400, detail="仅支持 PDF 文件解析")
+    
+    content = await file.read()
+    try:
+        import pymupdf
+        doc = pymupdf.open(stream=content, filetype="pdf")
+        pages_text = []
+        for page_idx, page in enumerate(doc, 1):
+            t = page.get_text().strip()
+            if t:
+                pages_text.append(f"--- [第 {page_idx} 页] ---\n{t}")
+        full_text = "\n\n".join(pages_text)
+        return {
+            "filename": file.filename,
+            "page_count": len(doc),
+            "char_count": len(full_text),
+            "text": full_text
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"PDF 解析失败: {str(e)}")

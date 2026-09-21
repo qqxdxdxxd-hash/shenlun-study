@@ -365,8 +365,8 @@
         <div class="form-group">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
             <label class="form-label" style="margin-bottom:0;">上传或粘贴讲义/笔记文本</label>
-            <button class="btn btn-outline" style="padding:2px 8px; font-size:11px;" onclick="document.getElementById('skill-file-input').click()">📂 从本地文件导入 (.txt/.md)</button>
-            <input type="file" id="skill-file-input" accept=".txt,.md,.markdown" style="display:none" onchange="handleSkillFileSelected(event)">
+            <button class="btn btn-outline" style="padding:2px 8px; font-size:11px;" onclick="document.getElementById('skill-file-input').click()">📂 从本地文件导入 (.pdf/.txt/.md)</button>
+            <input type="file" id="skill-file-input" accept=".txt,.md,.markdown,.pdf" style="display:none" onchange="handleSkillFileSelected(event)">
           </div>
           <textarea class="form-textarea" id="custom-skill-text" style="min-height:120px;" placeholder="粘贴你的讲义核心论述、判分原则...">第一讲：寻找主题和观点。标题必须包含核心主题词，开头段尾句亮明总论点，正文三段首句亮明分论点。每一段事例之后必须跟进多维度分析，不可单摆浮搁案例...</textarea>
         </div>
@@ -388,9 +388,9 @@
       </p>
 
       <div class="form-group" style="background: rgba(56,189,248,0.06); border: 1px dashed rgba(56,189,248,0.3); border-radius: 6px; padding: 14px; text-align: center;">
-        <input type="file" id="doc-file-input" accept=".txt,.md,.markdown,.json" style="display:none;" onchange="handleDocFileSelected(event)">
+        <input type="file" id="doc-file-input" accept=".txt,.md,.markdown,.json,.pdf" style="display:none;" onchange="handleDocFileSelected(event)">
         <button class="btn btn-primary" type="button" onclick="document.getElementById('doc-file-input').click()">
-          <span>📁 选择本地文件 (.txt / .md / .json)</span>
+          <span>📁 选择本地文件 (.pdf / .txt / .md)</span>
         </button>
         <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;" id="file-chosen-tip">支持各类时政报告、名师讲义文本、个人整理笔记</div>
       </div>

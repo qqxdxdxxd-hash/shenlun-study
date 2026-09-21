@@ -544,19 +544,40 @@ function closeUploadDocModal() {
   document.getElementById('upload-doc-modal').classList.remove('show');
 }
 
-// 本地文件选择读取
-function handleDocFileSelected(event) {
+// 本地文件选择读取 (支持 .txt, .md, .json 以及带文字图层的 .pdf)
+async function handleDocFileSelected(event) {
   const file = event.target.files[0];
   if (!file) return;
 
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const text = e.target.result;
-    document.getElementById('upload-doc-title').value = file.name;
-    document.getElementById('upload-doc-content').value = text;
-    document.getElementById('file-chosen-tip').innerText = `已成功加载文件: ${file.name} (${text.length} 字)`;
-  };
-  reader.readAsText(file, 'utf-8');
+  const tip = document.getElementById('file-chosen-tip');
+  const titleInput = document.getElementById('upload-doc-title');
+  const contentInput = document.getElementById('upload-doc-content');
+
+  titleInput.value = file.name;
+
+  if (file.name.toLowerCase().endsWith('.pdf')) {
+    tip.innerText = `⏳ 正在极速提取 PDF 文本图层... (${file.name})`;
+    tip.style.color = '#38bdf8';
+    try {
+      const res = await window.ApiClient.extractPDF(file);
+      contentInput.value = res.text;
+      tip.innerText = `✓ 成功提取 PDF 文本图层：共 ${res.page_count} 页 · ${res.char_count} 字！`;
+      tip.style.color = '#4ade80';
+    } catch (err) {
+      alert(`PDF 文本提取失败: ${err.message}`);
+      tip.innerText = `❌ 提取失败: ${err.message}`;
+      tip.style.color = '#f87171';
+    }
+  } else {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target.result;
+      contentInput.value = text;
+      tip.innerText = `已成功加载文本文件: ${file.name} (${text.length} 字)`;
+      tip.style.color = '#4ade80';
+    };
+    reader.readAsText(file, 'utf-8');
+  }
 }
 
 async function saveUploadedDoc() {
@@ -656,18 +677,30 @@ async function saveSelectedTextAsMemory(text) {
   renderMemoryDeck();
 }
 
-// Skill 提炼工坊文件读取
-function handleSkillFileSelected(event) {
+// Skill 提炼工坊文件读取 (支持 .txt, .md, 以及带文字图层的 .pdf)
+async function handleSkillFileSelected(event) {
   const file = event.target.files[0];
   if (!file) return;
 
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const text = e.target.result;
-    document.getElementById('custom-skill-name').value = file.name.replace(/\.[^/.]+$/, "") + "批改专家";
-    document.getElementById('custom-skill-text').value = text;
-  };
-  reader.readAsText(file, 'utf-8');
+  document.getElementById('custom-skill-name').value = file.name.replace(/\.[^/.]+$/, "") + "批改专家";
+  const skillTextArea = document.getElementById('custom-skill-text');
+
+  if (file.name.toLowerCase().endsWith('.pdf')) {
+    skillTextArea.value = "⏳ 正在提取 PDF 讲义文本图层...";
+    try {
+      const res = await window.ApiClient.extractPDF(file);
+      skillTextArea.value = res.text;
+    } catch (err) {
+      alert(`PDF 解析失败: ${err.message}`);
+      skillTextArea.value = "";
+    }
+  } else {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      skillTextArea.value = e.target.result;
+    };
+    reader.readAsText(file, 'utf-8');
+  }
 }
 
 async function extractAndSaveCustomSkill() {

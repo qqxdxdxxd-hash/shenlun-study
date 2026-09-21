@@ -70,6 +70,20 @@ class ApiClient {
     if (!res.ok) throw new Error("提炼 Skill 失败");
     return await res.json();
   }
+
+  static async extractPDF(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await fetch(`${this.getBaseUrl()}/api/extract-pdf`, {
+      method: 'POST',
+      body: formData
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || "PDF 提取失败");
+    }
+    return await res.json();
+  }
 }
 
 window.ApiClient = ApiClient;
