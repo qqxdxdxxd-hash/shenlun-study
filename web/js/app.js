@@ -587,27 +587,63 @@ function updateWordCount() {
 // 核心批改提交
 async function runFullReview() {
   const userText = document.getElementById('user-essay-input').value.trim();
+  if (!userText) {
+    alert("请在左侧作答输入框内录入或粘贴您的答卷内容后再点击开始批改！");
+    return;
+  }
+
   const qType = document.getElementById('q-type').value;
-  const skillId = document.getElementById('skill-selector').value;
+  const skillSelector = document.getElementById('skill-selector');
+  const skillId = skillSelector ? skillSelector.value : 'shenlun-essay-expert';
   
   let topic = currentQuestion ? currentQuestion.question_title : document.getElementById('prompt-text').innerText;
   let targetScore = currentQuestion ? (currentQuestion.target_score || currentQuestion.score) : (qType === 'essay' ? 35 : (qType === 'doc' ? 25 : 20));
   let materials = currentActiveMaterialText;
+
+  if (!materials) {
+    if (currentPaper) materials = currentPaper.materials_text || currentPaper.materials || '';
+    if (!materials && currentQuestion) materials = currentQuestion.materials || '';
+    if (!materials) {
+      const matPanel = document.getElementById('materials-panel');
+      if (matPanel) materials = matPanel.innerText.trim();
+    }
+  }
 
   if (isCustomPrompt) {
     topic = document.getElementById('custom-prompt-input').value || topic;
     materials = document.getElementById('custom-mat-input').value || currentActiveMaterialText;
   }
 
-  // 1. 本地 Mini-RAG 智能召回匹配记忆
-  const allMemories = await window.clientDB.getAll('memories');
-  const recalled = window.MiniRAG.recallTopK(allMemories, topic, userText, 3);
-
   const apiKey = (localStorage.getItem('shenlun_api_key') || '').trim();
   if (!apiKey) {
-    openModelConfigModal();
-    alert("【请先配置大模型密钥】\n本项目遵循 Strict BYOK (自持密钥) 规范，不设集中式商业服务器。\n请在弹出的【⚙️ 模型配置】窗口中填入您的 DeepSeek / 火山方舟 / OpenAI 兼容 API Key 后开始批改。");
+    openSettingModal();
+    const chromaEl = document.getElementById('chroma-text-container');
+    if (chromaEl) {
+      chromaEl.innerHTML = `
+        <div style="padding: 30px 20px; text-align: center; background: rgba(56, 189, 248, 0.06); border: 1px dashed rgba(56, 189, 248, 0.4); border-radius: 8px;">
+          <div style="font-size: 32px; margin-bottom: 10px;">⚙️</div>
+          <div style="font-size: 15px; font-weight: 700; color: #38bdf8; margin-bottom: 6px;">请先填入大模型 API Key</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6; max-width: 440px; margin: 0 auto 14px auto;">
+            本项目遵循 <strong>Strict BYOK (自持密钥)</strong> 军工级隐私规范，不设集中式商业服务器。<br>
+            密钥仅保存在当前浏览器本地，支持 <strong>DeepSeek / 火山方舟 / 硅基流动 / OpenAI 兼容端点</strong>。
+          </div>
+          <button class="btn btn-primary" onclick="openSettingModal()" style="padding: 6px 18px; font-size: 12px;">⚙️ 立即打开配置窗口填入 Key</button>
+        </div>
+      `;
+    }
+    alert("【请先配置大模型密钥 (Strict BYOK)】\n本项目为纯前端无状态架构，数据不留存任何集中式服务器。\n请在右上角【⚙️ 模型配置】窗口填入您的 API Key（如 DeepSeek sk-...）后即可开始智能批改！");
     return;
+  }
+
+  // 1. 本地 Mini-RAG 智能召回匹配记忆
+  let recalled = [];
+  try {
+    const allMemories = await window.clientDB.getAll('memories');
+    if (window.MiniRAG && typeof window.MiniRAG.recallTopK === 'function') {
+      recalled = window.MiniRAG.recallTopK(allMemories, topic, userText, 3);
+    }
+  } catch (e) {
+    console.warn("MiniRAG recall error:", e);
   }
 
   const payload = {
@@ -626,18 +662,27 @@ async function runFullReview() {
   };
 
   const btn = document.getElementById('btn-start-review');
-  btn.innerText = '🤖 正在向 DeepSeek-V3 请求实时考场审判（耗时约 3~6 秒）...';
+  btn.innerText = '🤖 正在向大模型请求考场审判（耗时约 3~6 秒）...';
   btn.disabled = true;
 
   // 在右侧展示清晰的加载态，告知大模型正在实时推理
   document.getElementById('chroma-text-container').innerHTML = `
     <div style="padding: 40px 20px; text-align: center; color: #38bdf8;">
-      <div style="font-size: 32px; margin-bottom: 12px;">🤖</div>
-      <div style="font-size: 16px; font-weight: 700;">DeepSeek-V3 正在逐句阅卷审判中...</div>
-      <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">模型正在执行：官方考规审查 ➔ 原词踩点 ➔ 抄袭红线核算 ➔ 4维量化赋分 ➔ 记忆库重塑一类文</div>
-      <div style="font-size: 11px; color: #4ade80; margin-top: 6px;">预计耗时 3~6 秒，请稍候</div>
+      <div style="font-size: 36px; margin-bottom: 12px;">🤖</div>
+      <div style="font-size: 16px; font-weight: 700; color: #f1f5f9;">大模型考场审判进行中...</div>
+      <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        正在对标官方采分底稿 ➔ 原词采点 ➔ 15-gram 抄袭检测 ➔ 4维量化赋分 ➔ 记忆库一类文重塑
+      </div>
+      <div style="font-size: 11px; color: #4ade80; margin-top: 8px;">
+        ⏳ 直连 ${payload.base_url.includes('deepseek') ? 'DeepSeek' : 'OpenAI兼容端点'} 推理中，请稍候...
+      </div>
     </div>
   `;
+
+  const emptyBox = document.getElementById('score-empty-box');
+  if (emptyBox) {
+    emptyBox.innerHTML = `<span>⏳ <strong>正在批改</strong>：已向大模型发起考场四维量化评判与采分点比对...</span>`;
+  }
 
   try {
     const result = await window.ApiClient.submitReview(payload);
@@ -666,6 +711,24 @@ async function runFullReview() {
     await renderDossierList();
     await renderDossierWarningOnReviewPage(qType);
   } catch (err) {
+    console.error("批改异常:", err);
+    const chromaEl = document.getElementById('chroma-text-container');
+    if (chromaEl) {
+      chromaEl.innerHTML = `
+        <div style="padding: 30px 20px; text-align: center; background: rgba(239, 68, 68, 0.08); border: 1px solid var(--danger); border-radius: 8px;">
+          <div style="font-size: 32px; margin-bottom: 8px;">⚠️</div>
+          <div style="font-size: 15px; font-weight: 700; color: #f87171; margin-bottom: 6px;">批改未能成功完成</div>
+          <div style="font-size: 12.5px; color: #cbd5e1; margin-bottom: 14px; line-height: 1.6; max-width: 480px; margin-left:auto; margin-right:auto; white-space: pre-wrap;">${window.ChromaRenderer ? window.ChromaRenderer.escapeHtml(err.message) : err.message}</div>
+          <div style="display:flex; justify-content:center; gap:10px;">
+            <button class="btn btn-outline" onclick="openSettingModal()" style="padding: 5px 14px; font-size: 12px;">⚙️ 检查模型配置</button>
+            <button class="btn btn-primary" onclick="runFullReview()" style="padding: 5px 14px; font-size: 12px;">🔄 重新发起批改</button>
+          </div>
+        </div>
+      `;
+    }
+    if (emptyBox) {
+      emptyBox.innerHTML = `<span>⚠️ <strong>批改失败</strong>：${window.ChromaRenderer ? window.ChromaRenderer.escapeHtml(err.message) : err.message}</span>`;
+    }
     alert(`批改遇到错误: ${err.message}`);
   } finally {
     btn.innerText = '🚀 开始批改';
@@ -1737,5 +1800,14 @@ async function extractAndSaveCustomSkill() {
   }
 }
 
-// 启动
+// 启动与全局暴露
+window.openSettingModal = openSettingModal;
+window.openModelConfigModal = openSettingModal;
+window.closeSettingModal = closeSettingModal;
+window.saveSettings = saveSettings;
+window.runFullReview = runFullReview;
+window.selectSubQuestion = selectSubQuestion;
+window.toggleScoringCriteria = toggleScoringCriteria;
+window.selectExamForStudy = selectExamForStudy;
+
 document.addEventListener('DOMContentLoaded', initApp);

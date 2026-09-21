@@ -241,25 +241,33 @@ ${marPromptStr}
 `;
 
     // 5. 直连大模型 OpenAPI
-    const baseUrl = (payload.base_url || 'https://api.deepseek.com/v1').replace(/\/+$/, '');
+    let baseUrl = (payload.base_url || 'https://api.deepseek.com/v1').trim().replace(/\/+$/, '');
+    if (baseUrl.endsWith('/chat/completions')) {
+      baseUrl = baseUrl.replace(/\/chat\/completions$/, '');
+    }
     const endpoint = `${baseUrl}/chat/completions`;
     const model = payload.model_id || 'deepseek-chat';
 
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${payload.api_key}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: model,
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt }
-        ],
-        temperature: 0.2
-      })
-    });
+    let res;
+    try {
+      res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${payload.api_key}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt }
+          ],
+          temperature: 0.2
+        })
+      });
+    } catch (netErr) {
+      throw new Error(`无法连接大模型端点 (${endpoint})：${netErr.message}。\n请检查网络连接、Base URL 是否正确，或该端点是否支持浏览器跨域(CORS)请求。`);
+    }
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
