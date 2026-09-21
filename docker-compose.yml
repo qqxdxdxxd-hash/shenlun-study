@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  shenlun-study:
+    build: .
+    container_name: shenlun-study-app
+    restart: unless-stopped
+    ports:
+      - "8789:8789"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8789

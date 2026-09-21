@@ -34,6 +34,9 @@ if web_dir.exists():
     app.mount("/", StaticFiles(directory=str(web_dir), html=True), name="web")
 
 if __name__ == "__main__":
+    import os
     import uvicorn
-    print("🚀 启动申论智能研习台: http://127.0.0.1:8789")
-    uvicorn.run(app, host="127.0.0.1", port=8789)
+    host = os.getenv("HOST", "127.0.0.1")
+    port = int(os.getenv("PORT", "8789"))
+    print(f"🚀 启动申论智能研习台: http://{host}:{port}")
+    uvicorn.run(app, host=host, port=port)

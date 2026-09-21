@@ -1,0 +1,12 @@
+.git
+.gitignore
+.hermes
+docs
+preview.html
+IDEA.md
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+*.log
