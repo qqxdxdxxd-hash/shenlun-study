@@ -458,6 +458,74 @@ function renderReviewResult(userText, res) {
   container.innerHTML = html;
   window.ChromaRenderer.bindPopovers('chroma-text-container', 'span-popover');
 
+  // 1. 渲染四维量化得分明细表与扣分依据 (#score-breakdown-tbody)
+  const radar = res.radar_scores || {};
+  const dimensions = [
+    { key: "立意与总分论点", max: 12, desc: (res.grade?.includes("四类") || res.score < 20) ? "总论点或分论点不完整（未满足1+3骨架），或字数严重不足扣分" : "立意100%源于材料，首段末句亮明总论点，三分论点醒目" },
+    { key: "结构与段落布局", max: 8, desc: (res.grade?.includes("四类")) ? "分论点仅设两个，正文论证段未达三段标杆，结构残缺" : "五段大五段匀称，段落字数控制在250字左右" },
+    { key: "论据与论证深度", max: 10, desc: (res.copy_redline_exceeded || res.copy_ratio > 0.15) ? "存在大段照抄材料原句现象，论证沦为事实搬运缺乏深度制度剖析" : "道理论证与事例论证结合紧密，具备事后深度分析" },
+    { key: "语言与公文规范", max: 5, desc: res.chroma_spans?.some(s => s.type === 'colloquial_flaw') ? "存在口语化聊天大白话，需强化政务动宾大词提炼与短句对仗" : "公文语体规范严谨，短句对仗工整" }
+  ];
+
+  let tbodyHtml = '';
+  dimensions.forEach(d => {
+    const scoreVal = (radar[d.key] !== undefined) ? radar[d.key] : Math.round(d.max * (res.score / 35) * 10) / 10;
+    const color = scoreVal >= d.max * 0.8 ? '#4ade80' : (scoreVal >= d.max * 0.6 ? '#facc15' : '#f87171');
+    tbodyHtml += `
+      <tr style="border-bottom: 1px solid var(--card-border);">
+        <td style="padding: 8px 10px; font-weight: 600; color: #f8fafc;">${d.key}</td>
+        <td style="padding: 8px 10px; text-align: center; color: var(--text-muted);">${d.max}分</td>
+        <td style="padding: 8px 10px; text-align: center; font-weight: 700; color: ${color};">${scoreVal}分</td>
+        <td style="padding: 8px 10px; color: #cbd5e1; font-size: 12px; line-height: 1.5;">${d.desc}</td>
+      </tr>
+    `;
+  });
+  const tbodyEl = document.getElementById('score-breakdown-tbody');
+  if (tbodyEl) tbodyEl.innerHTML = tbodyHtml;
+
+  // 2. 渲染多视角名师与考官判语 (#perspectives-container)
+  const p = res.perspectives || {};
+  let phtml = '';
+  if (p.examiner) {
+    phtml += `<div style="margin-bottom: 8px;"><strong style="color:#38bdf8;">【考场考官前10秒第一眼定档】</strong>：${window.ChromaRenderer.escapeHtml(p.examiner)}</div>`;
+  }
+  if (p.structure_expert) {
+    phtml += `<div style="margin-bottom: 8px;"><strong style="color:#a855f7;">【大五段骨架与对策论证诊断】</strong>：${window.ChromaRenderer.escapeHtml(p.structure_expert)}</div>`;
+  }
+  if (p.style_expert) {
+    phtml += `<div><strong style="color:#f59e0b;">【政务文风与语汇质检诊断】</strong>：${window.ChromaRenderer.escapeHtml(p.style_expert)}</div>`;
+  }
+  if (!phtml) {
+    phtml = '<div style="color:var(--text-muted);">暂无名师判语，系统已依据官方阅卷规范执行评分。</div>';
+  }
+  const persEl = document.getElementById('perspectives-container');
+  if (persEl) persEl.innerHTML = phtml;
+
+  // 3. 渲染逐句给分/扣分穿透清单 (#itemized-attribution-list)
+  const spans = res.chroma_spans || [];
+  const listEl = document.getElementById('itemized-attribution-list');
+  if (listEl) {
+    if (spans.length === 0) {
+      listEl.innerHTML = '<div style="font-size:12px; color:var(--text-muted); padding:6px;">文章整体平稳，未检测到显著异常扣分点或高分命中点。</div>';
+    } else {
+      listEl.innerHTML = spans.map((s, idx) => {
+        const snippet = userText.slice(s.start, s.end);
+        const borderColor = s.color === 'green' ? '#22c55e' : (s.color === 'purple' ? '#c084fc' : (s.color === 'yellow' ? '#eab308' : '#64748b'));
+        const badgeColor = s.color === 'green' ? '#4ade80' : (s.color === 'purple' ? '#d8b4fe' : (s.color === 'yellow' ? '#fde047' : '#94a3b8'));
+        return `
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-left: 4px solid ${borderColor}; border-radius: 6px; padding: 10px 12px; font-size: 12.5px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-weight: 700; color: ${badgeColor}; font-size: 13px;">${s.label || '诊断点'}</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: monospace;">位置: 第 ${s.start}~${s.end} 字</span>
+            </div>
+            <div style="color: #94a3b8; font-style: italic; margin-bottom: 6px; border-left: 2px solid rgba(255,255,255,0.15); padding-left: 8px;">“${window.ChromaRenderer.escapeHtml(snippet.slice(0, 80))}${snippet.length > 80 ? '...' : ''}”</div>
+            <div style="color: #e2e8f0; line-height: 1.6;"><strong style="color:#38bdf8;">判定与归因</strong>：${window.ChromaRenderer.escapeHtml(s.comment)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
   // 记忆审计
   const audit = res.memory_audit || {};
   let auditHtml = `

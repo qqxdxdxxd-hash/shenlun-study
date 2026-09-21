@@ -211,6 +211,50 @@
               点击左侧【开始全真多维色谱穿透批改】后，系统将在此处以字符级精准色谱高亮呈现您的作答。
             </div>
 
+            <!-- 考场量化赋分与给分/扣分归因穿透面板 -->
+            <div id="attribution-panel" style="margin-top: 18px;">
+              <!-- 1. 四维量化得分明细表 -->
+              <div class="form-label" style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <span>🏆 考场四维量化判分明细表</span>
+                <span style="font-size: 11px; color: #4ade80;">官方阅卷考纲标准</span>
+              </div>
+              <table style="width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 16px; background: #090d16; border: 1px solid var(--card-border); border-radius: 6px; overflow: hidden;">
+                <thead>
+                  <tr style="background: rgba(30, 41, 59, 0.9); color: var(--text-muted); border-bottom: 1px solid var(--card-border);">
+                    <th style="padding: 8px 10px; text-align: left; width: 140px;">评价维度</th>
+                    <th style="padding: 8px 10px; text-align: center; width: 60px;">满分</th>
+                    <th style="padding: 8px 10px; text-align: center; width: 60px;">实得</th>
+                    <th style="padding: 8px 10px; text-align: left;">核心扣分 / 得分归因依据</th>
+                  </tr>
+                </thead>
+                <tbody id="score-breakdown-tbody">
+                  <tr>
+                    <td colspan="4" style="padding: 12px; text-align: center; color: var(--text-muted);">提交作答后将在此处呈现四维判分明细与扣分归因</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- 2. 多视角考官与名师定档判语卡片 -->
+              <div style="background: rgba(30, 41, 59, 0.7); border: 1px solid var(--card-border); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
+                <div style="font-size: 13px; font-weight: 700; color: #38bdf8; margin-bottom: 8px; display: flex; justify-content: space-between;">
+                  <span>👨‍🏫 考官与名师多视角定档深度判语</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">三重视角联合把关</span>
+                </div>
+                <div id="perspectives-container" style="font-size: 13px; line-height: 1.8; color: #cbd5e1;">
+                  提交作答后将在此处呈现考官第一眼定档、大五段骨架深度诊断与行政文风质检判语。
+                </div>
+              </div>
+
+              <!-- 3. 逐条色谱给分与扣分穿透归因清单 -->
+              <div class="form-label" style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <span>🔍 逐句诊断与扣分点穿透清单</span>
+                <span style="font-size: 11px; color: var(--text-muted);">含原词命中、大白话、流水账与抄袭项</span>
+              </div>
+              <div id="itemized-attribution-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+                <div style="font-size: 12px; color: var(--text-muted); padding: 8px;">提交作答后将逐条穿透呈现每处失分/得分原句与具体原因</div>
+              </div>
+            </div>
+
             <!-- 记忆库双向复利审计卡片 -->
             <div class="memory-audit-card" id="memory-audit-container">
               <div class="audit-stat">

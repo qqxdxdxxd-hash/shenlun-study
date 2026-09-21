@@ -737,6 +737,96 @@
 蓝图已经绘就，奋进正当其时。让我们以久久为功的韧劲，持之以恒抓好生态文明建设，绘就人与自然和谐共生的壮丽画卷！
             </div>
 
+            <!-- 考场量化赋分与给分/扣分归因穿透面板 -->
+            <div id="attribution-panel" style="margin-top: 18px;">
+              <!-- 1. 四维量化得分明细表 -->
+              <div class="form-label" style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <span>🏆 考场四维量化判分明细表</span>
+                <span style="font-size: 11px; color: #4ade80;">官方阅卷考纲标准</span>
+              </div>
+              <table style="width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 16px; background: #090d16; border: 1px solid var(--card-border); border-radius: 6px; overflow: hidden;">
+                <thead>
+                  <tr style="background: rgba(30, 41, 59, 0.9); color: var(--text-muted); border-bottom: 1px solid var(--card-border);">
+                    <th style="padding: 8px 10px; text-align: left; width: 140px;">评价维度</th>
+                    <th style="padding: 8px 10px; text-align: center; width: 60px;">满分</th>
+                    <th style="padding: 8px 10px; text-align: center; width: 60px;">实得</th>
+                    <th style="padding: 8px 10px; text-align: left;">核心扣分 / 得分归因依据</th>
+                  </tr>
+                </thead>
+                <tbody id="score-breakdown-tbody">
+                  <tr style="border-bottom: 1px solid var(--card-border);">
+                    <td style="padding: 8px 10px; font-weight: 600; color: #f8fafc;">立意与总分论点</td>
+                    <td style="padding: 8px 10px; text-align: center; color: var(--text-muted);">12分</td>
+                    <td style="padding: 8px 10px; text-align: center; font-weight: 700; color: #facc15;">10.5分</td>
+                    <td style="padding: 8px 10px; color: #cbd5e1; font-size: 12px; line-height: 1.5;">立意符合绿色发展主线，首段末句亮明中心论点，三分论点对仗醒目；略扣总论点摘抄直接度。</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--card-border);">
+                    <td style="padding: 8px 10px; font-weight: 600; color: #f8fafc;">结构与段落布局</td>
+                    <td style="padding: 8px 10px; text-align: center; color: var(--text-muted);">8分</td>
+                    <td style="padding: 8px 10px; text-align: center; font-weight: 700; color: #4ade80;">7.5分</td>
+                    <td style="padding: 8px 10px; color: #cbd5e1; font-size: 12px; line-height: 1.5;">大五段骨架严整，正文三段篇幅相对匀称，首尾段呼应紧密。</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--card-border);">
+                    <td style="padding: 8px 10px; font-weight: 600; color: #f8fafc;">论据与论证深度</td>
+                    <td style="padding: 8px 10px; text-align: center; color: var(--text-muted);">10分</td>
+                    <td style="padding: 8px 10px; text-align: center; font-weight: 700; color: #4ade80;">9.0分</td>
+                    <td style="padding: 8px 10px; color: #cbd5e1; font-size: 12px; line-height: 1.5;">第二段化工案例叙述略微偏长（流水账灰底），但后文制度与社会协同论证有较好深度。</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--card-border);">
+                    <td style="padding: 8px 10px; font-weight: 600; color: #f8fafc;">语言与公文规范</td>
+                    <td style="padding: 8px 10px; text-align: center; color: var(--text-muted);">5分</td>
+                    <td style="padding: 8px 10px; text-align: center; font-weight: 700; color: #f87171;">3.5分</td>
+                    <td style="padding: 8px 10px; color: #cbd5e1; font-size: 12px; line-height: 1.5;">第三段出现‘上面天天发文件，村里没钱做不了事’等大白话聊天口语，扣语言规范分，已触发微练习。</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- 2. 多视角考官与名师定档判语卡片 -->
+              <div style="background: rgba(30, 41, 59, 0.7); border: 1px solid var(--card-border); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
+                <div style="font-size: 13px; font-weight: 700; color: #38bdf8; margin-bottom: 8px; display: flex; justify-content: space-between;">
+                  <span>👨‍🏫 考官与名师多视角定档深度判语</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">三重视角联合把关</span>
+                </div>
+                <div id="perspectives-container" style="font-size: 13px; line-height: 1.8; color: #cbd5e1;">
+                  <div style="margin-bottom: 8px;"><strong style="color:#38bdf8;">【考场考官前10秒第一眼定档】</strong>：模拟考官视线扫描：标题16字工整合格；首段末句亮明中心论点；正文三段首句亮明动宾分论点。初定一类下（31~32分档）。</div>
+                  <div style="margin-bottom: 8px;"><strong style="color:#a855f7;">【大五段骨架与对策论证诊断】</strong>：大五段结构完整，正文论证段包含了“理念先行+制度保障+社会共治”的层层递进与对策要素，但第二段案例叙述文字偏长，缺乏更深入的制度与因果剖析。</div>
+                  <div><strong style="color:#f59e0b;">【政务文风与语汇质检诊断】</strong>：整体行政公文用词密度尚可，但在第三段对策段中出现了口语大白话瑕疵，建议通过下方生成的微练习当场转化为规范政务动宾大词。</div>
+                </div>
+              </div>
+
+              <!-- 3. 逐条色谱给分与扣分穿透归因清单 -->
+              <div class="form-label" style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <span>🔍 逐句诊断与扣分点穿透清单</span>
+                <span style="font-size: 11px; color: var(--text-muted);">含原词命中、大白话、流水账与抄袭项</span>
+              </div>
+              <div id="itemized-attribution-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-left: 4px solid #22c55e; border-radius: 6px; padding: 10px 12px; font-size: 12.5px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-weight: 700; color: #4ade80; font-size: 13px;">高分对仗标题</span>
+                    <span style="font-size: 11px; color: var(--text-muted); font-family: monospace;">位置: 第 0~17 字</span>
+                  </div>
+                  <div style="color: #94a3b8; font-style: italic; margin-bottom: 6px; border-left: 2px solid rgba(255,255,255,0.15); padding-left: 8px;">“以绿色发展绘就中国式现代化生态底色”</div>
+                  <div style="color: #e2e8f0; line-height: 1.6;"><strong style="color:#38bdf8;">判定与归因</strong>：包含核心主题词‘绿色发展’与‘中国式现代化’，16字工整对仗，无书名号，完全符合公考考场标题规范。</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-left: 4px solid #64748b; border-radius: 6px; padding: 10px 12px; font-size: 12.5px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-weight: 700; color: #cbd5e1; font-size: 13px;">纯叙述流水账 (缺深析)</span>
+                    <span style="font-size: 11px; color: var(--text-muted); font-family: monospace;">位置: 第 160~240 字</span>
+                  </div>
+                  <div style="color: #94a3b8; font-style: italic; margin-bottom: 6px; border-left: 2px solid rgba(255,255,255,0.15); padding-left: 8px;">“某地曾为了眼前的GDP指标，盲目上马高能耗、高污染化工项目，老百姓天天抱怨环境脏乱差...”</div>
+                  <div style="color: #e2e8f0; line-height: 1.6;"><strong style="color:#38bdf8;">判定与归因</strong>：纯事实叙述文字占比过高，缺乏事后深刻的制度、因果与机制剖析，建议将具体事例叙事压缩至30字以内。</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-left: 4px solid #c084fc; border-radius: 6px; padding: 10px 12px; font-size: 12.5px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-weight: 700; color: #d8b4fe; font-size: 13px;">大白话口语语病</span>
+                    <span style="font-size: 11px; color: var(--text-muted); font-family: monospace;">位置: 第 260~285 字</span>
+                  </div>
+                  <div style="color: #94a3b8; font-style: italic; margin-bottom: 6px; border-left: 2px solid rgba(255,255,255,0.15); padding-left: 8px;">“上面天天发文件，村里没钱做不了事”</div>
+                  <div style="color: #e2e8f0; line-height: 1.6;"><strong style="color:#38bdf8;">判定与归因</strong>：严重口语化聊天表达，缺乏政务大词提炼，已触发下方 3 分钟微练习补丁。</div>
+                </div>
+              </div>
+            </div>
+
             <!-- 记忆库双向复利审计卡片 -->
             <div class="memory-audit-card">
               <div class="audit-stat">
