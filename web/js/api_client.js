@@ -94,9 +94,13 @@ class ApiClient {
     const materials = payload.materials || '';
 
     let titleIssues = [];
-    const lines = userText.split('\n').map(l => l.trim()).filter(Boolean);
-    if (lines.length > 0 && typeof LocalChromaScanner !== 'undefined') {
-      titleIssues = LocalChromaScanner.scanTitleIssues(lines[0]);
+    const qType = payload.question_type || 'essay';
+    // 单一题客观采点无独立文章标题，不将第一行当作标题做格式检查
+    if (qType !== 'single') {
+      const lines = userText.split('\n').map(l => l.trim()).filter(Boolean);
+      if (lines.length > 0 && typeof LocalChromaScanner !== 'undefined') {
+        titleIssues = LocalChromaScanner.scanTitleIssues(lines[0]);
+      }
     }
 
     let copySpans = [];
@@ -109,8 +113,11 @@ class ApiClient {
       copyExceeded = copyRes.exceeded;
     }
 
+    // 实测字数：剔除换行与多余空格，精准反映考生实际格子填涂字符数
+    const actualCharCount = userText.replace(/\s+/g, '').length;
+
     return {
-      word_count: userText.trim().length,
+      word_count: actualCharCount,
       copy_ratio: copyRatio,
       copy_redline_exceeded: copyExceeded,
       title_issues: titleIssues,

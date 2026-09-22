@@ -18,13 +18,15 @@ class ShenlunEvaluator:
         纯本地 1ms 确定性规则扫描
         """
         title_issues = []
-        lines = [line.strip() for line in req.user_answer.splitlines() if line.strip()]
-        if lines:
-            title_issues = ChromaScanner.scan_title_issues(lines[0])
+        if req.question_type in ("essay", "doc"):
+            lines = [line.strip() for line in req.user_answer.splitlines() if line.strip()]
+            if lines:
+                title_issues = ChromaScanner.scan_title_issues(lines[0])
 
         spans, copy_ratio = ChromaScanner.detect_copy_redline(req.user_answer, req.materials, min_chars=15)
+        actual_chars = len(re.sub(r"\s+", "", req.user_answer))
         return {
-            "word_count": len(req.user_answer.strip()),
+            "word_count": actual_chars,
             "copy_ratio": copy_ratio,
             "copy_redline_exceeded": copy_ratio > 0.20,
             "title_issues": title_issues,
