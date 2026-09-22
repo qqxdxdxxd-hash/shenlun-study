@@ -250,7 +250,7 @@ class ShenlunEvaluator:
                 break
 
         resolved = ChromaScanner.resolve_quotes_to_spans(req.user_answer, quotes)
-        all_spans = pre_info["copy_spans"] + resolved
+        all_spans = pre_info.get("copy_spans", []) + resolved
 
         drills = DrillGenerator.extract_remediation_drills(colloquial_flaws)
 
