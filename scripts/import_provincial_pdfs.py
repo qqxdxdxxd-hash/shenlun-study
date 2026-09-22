@@ -46,13 +46,16 @@ class ProvincialPdfParser:
         if len(full_text) < 1500:
             return None
 
+        meta = self._extract_metadata(pdf_path.name, province)
+        if meta["year"] < 2020:
+            return None
+
         clean_text = self._clean_raw_text(full_text)
         mat_text, q_text = self._split_materials_and_questions(clean_text)
 
         if len(mat_text) < 2000 or len(q_text) < 100:
             return None
 
-        meta = self._extract_metadata(pdf_path.name, province)
         questions = self._parse_questions(q_text, meta["id"])
 
         if len(questions) < 2:

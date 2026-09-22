@@ -153,6 +153,272 @@
     ]
   },
   {
+    "id": "sk_fj_2024_town",
+    "exam_name": "2024年福建申论（县乡级）真题及参考答案",
+    "year": 2024,
+    "category": "福建",
+    "tier": "乡镇级",
+    "char_count": 6766,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_fj_2024_town_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 15,
+        "char_limit": "300字"
+      },
+      {
+        "id": "sk_fj_2024_town_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "400字"
+      },
+      {
+        "id": "sk_fj_2024_town_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 25,
+        "char_limit": "500字"
+      },
+      {
+        "id": "sk_fj_2024_town_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "字数800字左右"
+      }
+    ]
+  },
+  {
+    "id": "js2024_a",
+    "exam_name": "2024年江苏省公务员考试申论真题（A类）",
+    "year": 2024,
+    "category": "江苏",
+    "tier": "省考A类",
+    "char_count": 430,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "js2024_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "无锡物联网创新联合体培育经验（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "js2024_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "宿迁农村电商赋能乡村振兴路径（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "js2024_a_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "推行“综合查一次”柔性执法倡议书（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "js2024_a_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "大作文：在推进中国式现代化中走在前做示范（议论文）",
+        "target_score": 40,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2024_c",
+    "exam_name": "2024 年公务员江苏省考《申论》题（C卷）及参考答案",
+    "year": 2024,
+    "category": "江苏",
+    "tier": "C类/乡镇",
+    "char_count": 6381,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "sk_js_2024_c_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2024_c_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 15,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2024_c_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "第3题（doc）",
+        "target_score": 25,
+        "char_limit": "篇幅400 字左右"
+      },
+      {
+        "id": "sk_js_2024_c_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      },
+      {
+        "id": "sk_js_2024_c_q5",
+        "q_index": 5,
+        "type": "single",
+        "question_title": "第5题（single）",
+        "target_score": 0,
+        "char_limit": ""
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2024_b",
+    "exam_name": "2024 年公务员江苏省考《申论》题（B卷）及参考答案",
+    "year": 2024,
+    "category": "江苏",
+    "tier": "B类/行政执法",
+    "char_count": 6953,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2024_b_q1",
+        "q_index": 1,
+        "type": "essay",
+        "question_title": "第1题（essay）",
+        "target_score": 0,
+        "char_limit": ""
+      },
+      {
+        "id": "sk_js_2024_b_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 0,
+        "char_limit": ""
+      },
+      {
+        "id": "sk_js_2024_b_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 0,
+        "char_limit": ""
+      },
+      {
+        "id": "sk_js_2024_b_q4",
+        "q_index": 4,
+        "type": "doc",
+        "question_title": "第4题（doc）",
+        "target_score": 0,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2024_a",
+    "exam_name": "2024 年公务员江苏省考《申论》题（A卷）及参考答案",
+    "year": 2024,
+    "category": "江苏",
+    "tier": "A类/省级",
+    "char_count": 7821,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2024_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2024_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "300 字左右"
+      },
+      {
+        "id": "sk_js_2024_a_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2024_a_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
+    "id": "gd2024_county",
+    "exam_name": "2024年广东省公务员考试申论真题（县级）",
+    "year": 2024,
+    "category": "广东",
+    "tier": "省考县级",
+    "char_count": 395,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "gd2024_county_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "粤北山区县飞地经济发展经验（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gd2024_county_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "现代海洋牧场全产业链发展路径（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gd2024_county_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "“粤治美”数字基层治理经验推广通知（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gd2024_county_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "大作文：日日行不怕千万里 常常做不怕千万事（议论文）",
+        "target_score": 40,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
     "id": "gk2024_law",
     "exam_name": "2024年国家公务员考试《申论》真题（行政执法卷）",
     "year": 2024,
@@ -302,6 +568,280 @@
         "question_title": "“我们要用积极的态度对旧事物的价值进行最大挖...（议论文）",
         "target_score": 35,
         "char_limit": "字数1000～1200 字"
+      }
+    ]
+  },
+  {
+    "id": "bj2024_district",
+    "exam_name": "2024年北京市公务员考试申论真题（区级及以上）",
+    "year": 2024,
+    "category": "北京",
+    "tier": "北京市考",
+    "char_count": 441,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "bj2024_dist_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "中关村颠覆性硬科技孵化机制分析（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "bj2024_dist_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "“接诉即办”向“未诉先办”延伸治理经验（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "bj2024_dist_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "“拆栏透绿”花园城市无界公园宣传稿（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "bj2024_dist_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "大作文：首善标准铸就卓越之城（议论文）",
+        "target_score": 40,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "sk_sh_2024_b",
+    "exam_name": "2024年上海市公考《申论》（B卷）题及参考答案",
+    "year": 2024,
+    "category": "上海",
+    "tier": "B类/行政执法",
+    "char_count": 10251,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_sh_2024_b_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 15,
+        "char_limit": "200 字"
+      },
+      {
+        "id": "sk_sh_2024_b_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2024_b_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 15,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2024_b_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 50,
+        "char_limit": "字数800-1000 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_sh_2024_a",
+    "exam_name": "2024年上海市公考《申论》（A卷）题及参考答案",
+    "year": 2024,
+    "category": "上海",
+    "tier": "A类/省级",
+    "char_count": 9275,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_sh_2024_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 15,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2024_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 15,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2024_a_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2024_a_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 50,
+        "char_limit": "字数800-1000 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2023_c",
+    "exam_name": "2023年江苏省公考《申论》真题（C类）及参考答案",
+    "year": 2023,
+    "category": "江苏",
+    "tier": "C类/乡镇",
+    "char_count": 7458,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2023_c_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2023_c_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2023_c_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2023_c_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2023_b",
+    "exam_name": "2023年江苏省公考《申论》真题（B类）及参考答案",
+    "year": 2023,
+    "category": "江苏",
+    "tier": "B类/行政执法",
+    "char_count": 7081,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "sk_js_2023_b_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 0,
+        "char_limit": ""
+      },
+      {
+        "id": "sk_js_2023_b_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2023_b_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 15,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2023_b_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "第4题（single）",
+        "target_score": 25,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2023_b_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "第5题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2023_a",
+    "exam_name": "2023年江苏省公考《申论》真题（A类）及参考答案",
+    "year": 2023,
+    "category": "江苏",
+    "tier": "A类/省级",
+    "char_count": 8031,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "sk_js_2023_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 0,
+        "char_limit": ""
+      },
+      {
+        "id": "sk_js_2023_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2023_a_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2023_a_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "第4题（single）",
+        "target_score": 20,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2023_a_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "第5题（essay）",
+        "target_score": 40,
+        "char_limit": "1000 字左右"
       }
     ]
   },
@@ -459,6 +999,245 @@
     ]
   },
   {
+    "id": "sk_bj_2023",
+    "exam_name": "2023年北京市公考《申论》真题与答案",
+    "year": 2023,
+    "category": "北京",
+    "tier": "通用",
+    "char_count": 7318,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "sk_bj_2023_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 0,
+        "char_limit": ""
+      },
+      {
+        "id": "sk_bj_2023_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_bj_2023_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 15,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_bj_2023_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "第4题（single）",
+        "target_score": 25,
+        "char_limit": "400 字"
+      },
+      {
+        "id": "sk_bj_2023_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "第5题（essay）",
+        "target_score": 40,
+        "char_limit": "在800-1000 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_sh_2023_a",
+    "exam_name": "2023年上海市公考《申论》（A卷）真题及答案",
+    "year": 2023,
+    "category": "上海",
+    "tier": "A类/省级",
+    "char_count": 10171,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "sk_sh_2023_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 0,
+        "char_limit": ""
+      },
+      {
+        "id": "sk_sh_2023_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 15,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2023_a_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2023_a_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "第4题（single）",
+        "target_score": 15,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2023_a_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "第5题（essay）",
+        "target_score": 50,
+        "char_limit": "字数800-1000 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2022_c",
+    "exam_name": "2022年江苏公务员考试申论真题试卷（C卷）及答案",
+    "year": 2022,
+    "category": "江苏",
+    "tier": "C类/乡镇",
+    "char_count": 6783,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2022_c_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 15,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2022_c_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2022_c_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 25,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2022_c_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2022_b",
+    "exam_name": "2022年江苏公务员考试申论真题试卷（B卷）及答案",
+    "year": 2022,
+    "category": "江苏",
+    "tier": "B类/行政执法",
+    "char_count": 7367,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "sk_js_2022_b_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 10,
+        "char_limit": "200 字"
+      },
+      {
+        "id": "sk_js_2022_b_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 15,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2022_b_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "篇幅300 字左右"
+      },
+      {
+        "id": "sk_js_2022_b_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 15,
+        "char_limit": "篇幅200 字左右"
+      },
+      {
+        "id": "sk_js_2022_b_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "第5题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2022_a",
+    "exam_name": "2022年江苏公务员考试申论真题试卷（A卷）及答案",
+    "year": 2022,
+    "category": "江苏",
+    "tier": "A类/省级",
+    "char_count": 7878,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2022_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2022_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2022_a_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2022_a_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
     "id": "gk2022_law",
     "exam_name": "2022年国家公务员考试《申论》真题（行政执法卷）",
     "year": 2022,
@@ -612,6 +1391,205 @@
     ]
   },
   {
+    "id": "sk_bj_2022",
+    "exam_name": "2022年北京市公务员考试申论真题及参考答案",
+    "year": 2022,
+    "category": "北京",
+    "tier": "通用",
+    "char_count": 7220,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_bj_2022_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_bj_2022_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 15,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_bj_2022_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 25,
+        "char_limit": "400 字"
+      },
+      {
+        "id": "sk_bj_2022_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "800-1000 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_sh_2022_b",
+    "exam_name": "2022年上海市公考《申论》（B卷）真题及答案",
+    "year": 2022,
+    "category": "上海",
+    "tier": "B类/行政执法",
+    "char_count": 10949,
+    "question_count": 2,
+    "questions_summary": [
+      {
+        "id": "sk_sh_2022_b_q1",
+        "q_index": 1,
+        "type": "essay",
+        "question_title": "第1题（essay）",
+        "target_score": 0,
+        "char_limit": ""
+      },
+      {
+        "id": "sk_sh_2022_b_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 0,
+        "char_limit": ""
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2021_c",
+    "exam_name": "2021年江苏省公考《申论》题（C卷）及参考答案",
+    "year": 2021,
+    "category": "江苏",
+    "tier": "C类/乡镇",
+    "char_count": 6094,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2021_c_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2021_c_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 15,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2021_c_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 25,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2021_c_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "第4题（single）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2021_b",
+    "exam_name": "2021年江苏省公考《申论》题（B卷）及参考答案",
+    "year": 2021,
+    "category": "江苏",
+    "tier": "B类/行政执法",
+    "char_count": 6045,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2021_b_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 15,
+        "char_limit": "200 字"
+      },
+      {
+        "id": "sk_js_2021_b_q2",
+        "q_index": 2,
+        "type": "doc",
+        "question_title": "第2题（doc）",
+        "target_score": 25,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2021_b_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "篇幅300 字左右"
+      },
+      {
+        "id": "sk_js_2021_b_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2021_a",
+    "exam_name": "2021年江苏省公考《申论》题（A卷）及参考答案",
+    "year": 2021,
+    "category": "江苏",
+    "tier": "A类/省级",
+    "char_count": 7740,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2021_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2021_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 15,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2021_a_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 25,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2021_a_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
     "id": "gk2021_city",
     "exam_name": "2021年国家公务员考试《申论》真题（地市级）",
     "year": 2021,
@@ -710,6 +1688,385 @@
         "question_title": "“夜色难免黑凉（议论文）",
         "target_score": 35,
         "char_limit": "字数1000～1200 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_bj_2021_dist",
+    "exam_name": "2021年北京公务员考试申论真题及答案（区级试卷）",
+    "year": 2021,
+    "category": "北京",
+    "tier": "区级及以上",
+    "char_count": 7079,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_bj_2021_dist_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_bj_2021_dist_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_bj_2021_dist_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "400 字"
+      },
+      {
+        "id": "sk_bj_2021_dist_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "在800-1000 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_bj_2021_town",
+    "exam_name": "2021年北京公务员考试申论真题及答案（乡镇试卷）",
+    "year": 2021,
+    "category": "北京",
+    "tier": "乡镇级",
+    "char_count": 7286,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_bj_2021_town_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_bj_2021_town_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 15,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_bj_2021_town_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 25,
+        "char_limit": "400 字"
+      },
+      {
+        "id": "sk_bj_2021_town_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "在800-1000 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_sh_2021_b",
+    "exam_name": "2021年上海市公考《申论》题（B卷）及参考答案",
+    "year": 2021,
+    "category": "上海",
+    "tier": "B类/行政执法",
+    "char_count": 9682,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_sh_2021_b_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2021_b_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2021_b_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2021_b_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "字数800-1000 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_sh_2021_a",
+    "exam_name": "2021年上海市公考《申论》题（A卷）及参考答案",
+    "year": 2021,
+    "category": "上海",
+    "tier": "A类/省级",
+    "char_count": 11273,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_sh_2021_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2021_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2021_a_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_sh_2021_a_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "字数800~1000 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_fj_2020_dist",
+    "exam_name": "2020年0725公务员多省联考《申论》题（福建县级卷）两套答案",
+    "year": 2020,
+    "category": "福建",
+    "tier": "区级及以上",
+    "char_count": 7106,
+    "question_count": 3,
+    "questions_summary": [
+      {
+        "id": "sk_fj_2020_dist_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "300 字"
+      },
+      {
+        "id": "sk_fj_2020_dist_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 30,
+        "char_limit": "500 字"
+      },
+      {
+        "id": "sk_fj_2020_dist_q3",
+        "q_index": 3,
+        "type": "essay",
+        "question_title": "第3题（essay）",
+        "target_score": 50,
+        "char_limit": "字数1000-1200 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_fj_2020_town",
+    "exam_name": "2020年0725公务员多省联考《申论》题（福建乡镇卷）两套答案",
+    "year": 2020,
+    "category": "福建",
+    "tier": "乡镇级",
+    "char_count": 4632,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_fj_2020_town_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 15,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_fj_2020_town_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 25,
+        "char_limit": "350 字"
+      },
+      {
+        "id": "sk_fj_2020_town_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 25,
+        "char_limit": "400 字"
+      },
+      {
+        "id": "sk_fj_2020_town_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 35,
+        "char_limit": "600 字"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2020_c",
+    "exam_name": "2020年江苏公务员考试《申论》真题（C类）及参考答案",
+    "year": 2020,
+    "category": "江苏",
+    "tier": "C类/乡镇",
+    "char_count": 6392,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2020_c_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2020_c_q2",
+        "q_index": 2,
+        "type": "doc",
+        "question_title": "第2题（doc）",
+        "target_score": 25,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2020_c_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 15,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2020_c_q4",
+        "q_index": 4,
+        "type": "doc",
+        "question_title": "第4题（doc）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2020_b",
+    "exam_name": "2020年江苏公务员考试《申论》真题（B类）及参考答案",
+    "year": 2020,
+    "category": "江苏",
+    "tier": "B类/行政执法",
+    "char_count": 6703,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2020_b_q1",
+        "q_index": 1,
+        "type": "doc",
+        "question_title": "第1题（doc）",
+        "target_score": 25,
+        "char_limit": "篇幅300 字左右"
+      },
+      {
+        "id": "sk_js_2020_b_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2020_b_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "第3题（single）",
+        "target_score": 15,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2020_b_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
+      }
+    ]
+  },
+  {
+    "id": "sk_js_2020_a",
+    "exam_name": "2020年江苏公务员考试《申论》真题（A类）及参考答案",
+    "year": 2020,
+    "category": "江苏",
+    "tier": "A类/省级",
+    "char_count": 7992,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "sk_js_2020_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "第1题（single）",
+        "target_score": 20,
+        "char_limit": "250 字"
+      },
+      {
+        "id": "sk_js_2020_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "第2题（single）",
+        "target_score": 15,
+        "char_limit": "篇幅250 字左右"
+      },
+      {
+        "id": "sk_js_2020_a_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "第3题（doc）",
+        "target_score": 25,
+        "char_limit": "篇幅350 字左右"
+      },
+      {
+        "id": "sk_js_2020_a_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "第4题（essay）",
+        "target_score": 40,
+        "char_limit": "篇幅1000 字左右"
       }
     ]
   },
@@ -816,3334 +2173,16 @@
     ]
   },
   {
-    "id": "gk2019_city",
-    "exam_name": "2019年国家公务员考试《申论》真题（地市级）",
-    "year": 2019,
-    "category": "国考",
-    "tier": "地市级",
-    "char_count": 6410,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "gk2019_city_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "概括小张家乡出现的新变化（单一题）",
-        "target_score": 15,
-        "char_limit": "不超过200 字"
-      },
-      {
-        "id": "gk2019_city_q2",
-        "q_index": 2,
-        "type": "doc",
-        "question_title": "省里召开扶贫工作座谈会（公文题）",
-        "target_score": 20,
-        "char_limit": "不超过400 字"
-      },
-      {
-        "id": "gk2019_city_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "分析小吴发生了哪些变化（单一题）",
-        "target_score": 10,
-        "char_limit": "不超过200 字"
-      },
-      {
-        "id": "gk2019_city_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "的座谈会上（单一题）",
-        "target_score": 15,
-        "char_limit": "不超过200 字"
-      },
-      {
-        "id": "gk2019_city_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "“跟着时代的大潮往前走（议论文）",
-        "target_score": 40,
-        "char_limit": "字数1000～1200 字"
-      }
-    ]
-  },
-  {
-    "id": "gk2019_prov",
-    "exam_name": "2019年国家公务员考试《申论》真题（副省级）",
-    "year": 2019,
-    "category": "国考",
-    "tier": "副省级",
-    "char_count": 6699,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "gk2019_prov_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "根据“指定资料1”（单一题）",
-        "target_score": 10,
-        "char_limit": "不超过150 字"
-      },
-      {
-        "id": "gk2019_prov_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "请根据“给定资料2”中的调研记录（单一题）",
-        "target_score": 20,
-        "char_limit": "不超过400字"
-      },
-      {
-        "id": "gk2019_prov_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "不超过500 字（单一题）",
-        "target_score": 20,
-        "char_limit": "不超过600 字"
-      },
-      {
-        "id": "gk2019_prov_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "谈谈你对“作为精神资源的乡村文化”的理解（单一题）",
-        "target_score": 10,
-        "char_limit": "不超过250 字"
-      },
-      {
-        "id": "gk2019_prov_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "结尾写道：“城市文明和乡村文明（议论文）",
-        "target_score": 40,
-        "char_limit": "字数1000～1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2005",
-    "exam_name": "2005年江苏公务员考试《申论》真题及解析",
-    "year": 2005,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 3300,
-    "question_count": 2,
-    "questions_summary": [
-      {
-        "id": "sk_js_2005_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_js_2005_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2006",
-    "exam_name": "2006年江苏公务员考试《申论》真题及解析",
-    "year": 2006,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 8015,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_js_2006_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 30,
-        "char_limit": "字数４００字以内"
-      },
-      {
-        "id": "sk_js_2006_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "４００字以内"
-      },
-      {
-        "id": "sk_js_2006_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 50,
-        "char_limit": "１２００字"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2007",
-    "exam_name": "2007年江苏公务员考试《申论》真题及解析",
-    "year": 2007,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 8350,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2007_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 25,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_js_2007_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 10,
-        "char_limit": "100 字"
-      },
-      {
-        "id": "sk_js_2007_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2007_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 50,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2008",
-    "exam_name": "2008年江苏公务员考试《申论》真题及解析",
-    "year": 2008,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 8392,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_js_2008_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 24,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_js_2008_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2008_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2009",
-    "exam_name": "2009年江苏公务员考试《申论》真题及解析",
-    "year": 2009,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 10374,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2009_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 24,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_js_2009_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2009_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 16,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2009_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2010_425",
-    "exam_name": "2010年425公务员联考《申论》卷及参考答案（广西、江苏、辽宁、天津、海南、湖南、蒙古、重庆、陕西、云南、宁夏）",
-    "year": 2010,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 7059,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2010_425_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "150 字"
-      },
-      {
-        "id": "sk_js_2010_425_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_js_2010_425_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_js_2010_425_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "800 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2011_424",
-    "exam_name": "2011年424公务员联考《申论》卷及参考答案（福建、广西、四川、江苏、辽宁、天津、海南、江西、湖南、湖北、山西、黑龙江、贵州、重庆、陕西、云南、山东）",
-    "year": 2011,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 6956,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2011_424_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_js_2011_424_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_js_2011_424_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_js_2011_424_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "800 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2012",
-    "exam_name": "2012年江苏公务员考试《申论》真题及解析",
-    "year": 2012,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 6771,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2012_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2012_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2012_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "第3题（doc）",
-        "target_score": 25,
-        "char_limit": "500 字"
-      },
-      {
-        "id": "sk_js_2012_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2013",
-    "exam_name": "2013年江苏公务员考试《申论》真题及解析",
-    "year": 2013,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 6924,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_js_2013_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2013_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2013_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_js_2013_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 0,
-        "char_limit": "篇幅为800-1000 字"
-      },
-      {
-        "id": "sk_js_2013_q5",
-        "q_index": 5,
-        "type": "single",
-        "question_title": "第5题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2014",
-    "exam_name": "2014年江苏公务员考试《申论》真题及解析",
-    "year": 2014,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 7125,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2014_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_js_2014_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2014_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 25,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_js_2014_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅为800~1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2015",
-    "exam_name": "2015年江苏公务员考试《申论》真题及解析",
-    "year": 2015,
-    "category": "江苏",
-    "tier": "通用",
-    "char_count": 7060,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2015_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2015_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2015_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_js_2015_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2016_a",
-    "exam_name": "2016年江苏公务员考试《申论》真题（A类卷）及解析",
-    "year": 2016,
-    "category": "江苏",
-    "tier": "A类/省级",
-    "char_count": 7716,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2016_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2016_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2016_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2016_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2016_b",
-    "exam_name": "2016年江苏公务员考试《申论》真题（B类卷）及解析",
-    "year": 2016,
-    "category": "江苏",
-    "tier": "B类/行政执法",
-    "char_count": 7564,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2016_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2016_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2016_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2016_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅800 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2016_c",
-    "exam_name": "2016年江苏公务员考试《申论》真题（C类卷）及解析",
-    "year": 2016,
-    "category": "江苏",
-    "tier": "C类/乡镇",
-    "char_count": 7566,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2016_c_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2016_c_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2016_c_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2016_c_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅800 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2017_a",
-    "exam_name": "2017年江苏公务员考试《申论》真题（A类卷）及解析",
-    "year": 2017,
-    "category": "江苏",
-    "tier": "A类/省级",
-    "char_count": 8053,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2017_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2017_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2017_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2017_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2017_b",
-    "exam_name": "2017年江苏公务员考试《申论》真题（B类卷）及解析",
-    "year": 2017,
-    "category": "江苏",
-    "tier": "B类/行政执法",
-    "char_count": 8053,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2017_b_q1",
-        "q_index": 1,
-        "type": "doc",
-        "question_title": "第1题（doc）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2017_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2017_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2017_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2017_c",
-    "exam_name": "2017年江苏公务员考试《申论》真题（C类卷）及解析",
-    "year": 2017,
-    "category": "江苏",
-    "tier": "C类/乡镇",
-    "char_count": 8053,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2017_c_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2017_c_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2017_c_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2017_c_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2018_a",
-    "exam_name": "2018年江苏省录用公务员考试《申论》真题卷A类",
-    "year": 2018,
-    "category": "江苏",
-    "tier": "A类/省级",
-    "char_count": 6592,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2018_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2018_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2018_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅400 字左右"
-      },
-      {
-        "id": "sk_js_2018_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2018_b",
-    "exam_name": "2018年江苏省录用公务员考试《申论》真题卷B类",
-    "year": 2018,
-    "category": "江苏",
-    "tier": "B类/行政执法",
-    "char_count": 6576,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2018_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2018_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2018_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅400 字左右"
-      },
-      {
-        "id": "sk_js_2018_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2018_c",
-    "exam_name": "2018年江苏省录用公务员考试《申论》真题卷C类",
-    "year": 2018,
-    "category": "江苏",
-    "tier": "C类/乡镇",
-    "char_count": 6550,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2018_c_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2018_c_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2018_c_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2018_c_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2019_a",
-    "exam_name": "2019年江苏省公考《申论》真题（A类）试卷及答案",
-    "year": 2019,
-    "category": "江苏",
-    "tier": "A类/省级",
-    "char_count": 6621,
-    "question_count": 6,
-    "questions_summary": [
-      {
-        "id": "sk_js_2019_a_q1",
-        "q_index": 1,
-        "type": "essay",
-        "question_title": "第1题（essay）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2019_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_js_2019_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_js_2019_a_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_js_2019_a_q5",
-        "q_index": 5,
-        "type": "single",
-        "question_title": "第5题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_js_2019_a_q6",
-        "q_index": 6,
-        "type": "single",
-        "question_title": "第6题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2019_b",
-    "exam_name": "2019年江苏省公考《申论》真题（B类）试卷及答案",
-    "year": 2019,
-    "category": "江苏",
-    "tier": "B类/行政执法",
-    "char_count": 5908,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2019_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2019_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2019_b_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "第3题（doc）",
-        "target_score": 25,
-        "char_limit": "篇幅300 字左右"
-      },
-      {
-        "id": "sk_js_2019_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2019_c",
-    "exam_name": "2019年江苏省公考《申论》真题（C类）试卷及答案",
-    "year": 2019,
-    "category": "江苏",
-    "tier": "C类/乡镇",
-    "char_count": 5240,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2019_c_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2019_c_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2019_c_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2019_c_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2020_a",
-    "exam_name": "2020年江苏公务员考试《申论》真题（A类）及参考答案",
+    "id": "sk_bj_2020_dist",
+    "exam_name": "2020年北京公务员考试申论真题及答案（区级及以上）",
     "year": 2020,
-    "category": "江苏",
-    "tier": "A类/省级",
-    "char_count": 7992,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2020_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2020_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2020_a_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "第3题（doc）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2020_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2020_b",
-    "exam_name": "2020年江苏公务员考试《申论》真题（B类）及参考答案",
-    "year": 2020,
-    "category": "江苏",
-    "tier": "B类/行政执法",
-    "char_count": 6703,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2020_b_q1",
-        "q_index": 1,
-        "type": "doc",
-        "question_title": "第1题（doc）",
-        "target_score": 25,
-        "char_limit": "篇幅300 字左右"
-      },
-      {
-        "id": "sk_js_2020_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2020_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2020_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2020_c",
-    "exam_name": "2020年江苏公务员考试《申论》真题（C类）及参考答案",
-    "year": 2020,
-    "category": "江苏",
-    "tier": "C类/乡镇",
-    "char_count": 6392,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2020_c_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2020_c_q2",
-        "q_index": 2,
-        "type": "doc",
-        "question_title": "第2题（doc）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2020_c_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2020_c_q4",
-        "q_index": 4,
-        "type": "doc",
-        "question_title": "第4题（doc）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2021_a",
-    "exam_name": "2021年江苏省公考《申论》题（A卷）及参考答案",
-    "year": 2021,
-    "category": "江苏",
-    "tier": "A类/省级",
-    "char_count": 7740,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2021_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2021_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2021_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2021_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2021_b",
-    "exam_name": "2021年江苏省公考《申论》题（B卷）及参考答案",
-    "year": 2021,
-    "category": "江苏",
-    "tier": "B类/行政执法",
-    "char_count": 6045,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2021_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2021_b_q2",
-        "q_index": 2,
-        "type": "doc",
-        "question_title": "第2题（doc）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2021_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅300 字左右"
-      },
-      {
-        "id": "sk_js_2021_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2021_c",
-    "exam_name": "2021年江苏省公考《申论》题（C卷）及参考答案",
-    "year": 2021,
-    "category": "江苏",
-    "tier": "C类/乡镇",
-    "char_count": 6094,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2021_c_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2021_c_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2021_c_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2021_c_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2022_a",
-    "exam_name": "2022年江苏公务员考试申论真题试卷（A卷）及答案",
-    "year": 2022,
-    "category": "江苏",
-    "tier": "A类/省级",
-    "char_count": 7878,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2022_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2022_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2022_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2022_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2022_b",
-    "exam_name": "2022年江苏公务员考试申论真题试卷（B卷）及答案",
-    "year": 2022,
-    "category": "江苏",
-    "tier": "B类/行政执法",
-    "char_count": 7367,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_js_2022_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_js_2022_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2022_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅300 字左右"
-      },
-      {
-        "id": "sk_js_2022_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 15,
-        "char_limit": "篇幅200 字左右"
-      },
-      {
-        "id": "sk_js_2022_b_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2022_c",
-    "exam_name": "2022年江苏公务员考试申论真题试卷（C卷）及答案",
-    "year": 2022,
-    "category": "江苏",
-    "tier": "C类/乡镇",
-    "char_count": 6783,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2022_c_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2022_c_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2022_c_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2022_c_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2023_a",
-    "exam_name": "2023年江苏省公考《申论》真题（A类）及参考答案",
-    "year": 2023,
-    "category": "江苏",
-    "tier": "A类/省级",
-    "char_count": 8031,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_js_2023_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_js_2023_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2023_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2023_a_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2023_a_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2023_b",
-    "exam_name": "2023年江苏省公考《申论》真题（B类）及参考答案",
-    "year": 2023,
-    "category": "江苏",
-    "tier": "B类/行政执法",
-    "char_count": 7081,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_js_2023_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_js_2023_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2023_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2023_b_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 25,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2023_b_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2023_c",
-    "exam_name": "2023年江苏省公考《申论》真题（C类）及参考答案",
-    "year": 2023,
-    "category": "江苏",
-    "tier": "C类/乡镇",
-    "char_count": 7458,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2023_c_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2023_c_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2023_c_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2023_c_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2024_a",
-    "exam_name": "2024 年公务员江苏省考《申论》题（A卷）及参考答案",
-    "year": 2024,
-    "category": "江苏",
-    "tier": "A类/省级",
-    "char_count": 7821,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2024_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2024_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字左右"
-      },
-      {
-        "id": "sk_js_2024_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "篇幅350 字左右"
-      },
-      {
-        "id": "sk_js_2024_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2024_b",
-    "exam_name": "2024 年公务员江苏省考《申论》题（B卷）及参考答案",
-    "year": 2024,
-    "category": "江苏",
-    "tier": "B类/行政执法",
-    "char_count": 6953,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_js_2024_b_q1",
-        "q_index": 1,
-        "type": "essay",
-        "question_title": "第1题（essay）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_js_2024_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_js_2024_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_js_2024_b_q4",
-        "q_index": 4,
-        "type": "doc",
-        "question_title": "第4题（doc）",
-        "target_score": 0,
-        "char_limit": "篇幅1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_js_2024_c",
-    "exam_name": "2024 年公务员江苏省考《申论》题（C卷）及参考答案",
-    "year": 2024,
-    "category": "江苏",
-    "tier": "C类/乡镇",
-    "char_count": 6381,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_js_2024_c_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_js_2024_c_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "篇幅250 字左右"
-      },
-      {
-        "id": "sk_js_2024_c_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "第3题（doc）",
-        "target_score": 25,
-        "char_limit": "篇幅400 字左右"
-      },
-      {
-        "id": "sk_js_2024_c_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "篇幅1000 字左右"
-      },
-      {
-        "id": "sk_js_2024_c_q5",
-        "q_index": 5,
-        "type": "single",
-        "question_title": "第5题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2003",
-    "exam_name": "2003年上海公务员考试《申论》真题及参考答案",
-    "year": 2003,
-    "category": "上海",
-    "tier": "通用",
-    "char_count": 2253,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2003_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2003_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2003_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2004",
-    "exam_name": "2004年上海公务员考试《申论》真题及参考答案",
-    "year": 2004,
-    "category": "上海",
-    "tier": "通用",
-    "char_count": 5135,
-    "question_count": 6,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2004_q1",
-        "q_index": 1,
-        "type": "essay",
-        "question_title": "第1题（essay）",
-        "target_score": 0,
-        "char_limit": "1000 字"
-      },
-      {
-        "id": "sk_sh_2004_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2004_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2004_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2004_q5",
-        "q_index": 5,
-        "type": "doc",
-        "question_title": "第5题（doc）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2004_q6",
-        "q_index": 6,
-        "type": "essay",
-        "question_title": "第6题（essay）",
-        "target_score": 0,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2005",
-    "exam_name": "2005年上海公务员考试《申论》真题及参考答案",
-    "year": 2005,
-    "category": "上海",
-    "tier": "通用",
-    "char_count": 4198,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2005_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2005_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2005_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 15,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_sh_2005_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 50,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2006",
-    "exam_name": "2006年上海公务员考试《申论》真题及参考答案",
-    "year": 2006,
-    "category": "上海",
-    "tier": "通用",
-    "char_count": 4719,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2006_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "200字"
-      },
-      {
-        "id": "sk_sh_2006_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "150字"
-      },
-      {
-        "id": "sk_sh_2006_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 15,
-        "char_limit": "200字"
-      },
-      {
-        "id": "sk_sh_2006_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 50,
-        "char_limit": "000字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2007",
-    "exam_name": "2007年上海公务员考试《申论》真题及参考答案",
-    "year": 2007,
-    "category": "上海",
-    "tier": "通用",
-    "char_count": 2858,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2007_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2007_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2007_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2007_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 45,
-        "char_limit": "1000 字左右"
-      },
-      {
-        "id": "sk_sh_2007_q5",
-        "q_index": 5,
-        "type": "single",
-        "question_title": "第5题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2008",
-    "exam_name": "2008年上海公务员考试《申论》真题及参考答案",
-    "year": 2008,
-    "category": "上海",
-    "tier": "通用",
-    "char_count": 7082,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2008_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2008_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2008_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2008_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2009",
-    "exam_name": "2009年上海公务员考试《申论》真题及参考答案",
-    "year": 2009,
-    "category": "上海",
-    "tier": "通用",
-    "char_count": 7532,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2009_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2009_q2",
-        "q_index": 2,
-        "type": "doc",
-        "question_title": "第2题（doc）",
-        "target_score": 15,
-        "char_limit": "150 字"
-      },
-      {
-        "id": "sk_sh_2009_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "第3题（doc）",
-        "target_score": 10,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2010",
-    "exam_name": "2010年上海公务员考试《申论》真题及参考答案",
-    "year": 2010,
-    "category": "上海",
-    "tier": "通用",
-    "char_count": 8034,
-    "question_count": 2,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2010_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2010_q2",
-        "q_index": 2,
-        "type": "essay",
-        "question_title": "第2题（essay）",
-        "target_score": 10,
-        "char_limit": "1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2011_a",
-    "exam_name": "2011年上海公务员考试《申论》真题（A卷）及参考答案",
-    "year": 2011,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 7255,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2011_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2011_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2011_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2011_a_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 15,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_sh_2011_a_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2011_b",
-    "exam_name": "2011年上海公务员考试《申论》真题（B卷）及参考答案",
-    "year": 2011,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 7834,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2011_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2011_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2011_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2011_b_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 15,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_sh_2011_b_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 40,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2012_a",
-    "exam_name": "2012年上海公务员考试《申论》真题（A卷）及参考答案",
-    "year": 2012,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 8563,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2012_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2012_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2012_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2012_a_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2012_a_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2012_b",
-    "exam_name": "2012年上海公务员考试《申论》真题（B卷）及参考答案",
-    "year": 2012,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 7614,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2012_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 8,
-        "char_limit": "150 字"
-      },
-      {
-        "id": "sk_sh_2012_b_q2",
-        "q_index": 2,
-        "type": "essay",
-        "question_title": "第2题（essay）",
-        "target_score": 12,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_sh_2012_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2012_b_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2013_a",
-    "exam_name": "2013年上海公务员考试《申论》真题（A卷）及参考答案",
-    "year": 2013,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 7566,
-    "question_count": 6,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2013_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2013_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2013_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2013_a_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 25,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2013_a_q5",
-        "q_index": 5,
-        "type": "single",
-        "question_title": "第5题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2013_a_q6",
-        "q_index": 6,
-        "type": "essay",
-        "question_title": "第6题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2013_b",
-    "exam_name": "2013年上海公务员考试《申论》真题（B卷）及参考答案",
-    "year": 2013,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 7166,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2013_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2013_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2013_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 0,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2013_b_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 0,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2013_b_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 0,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2014_a",
-    "exam_name": "2014年上海公务员考试《申论》真题（A卷）及参考答案",
-    "year": 2014,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 8221,
-    "question_count": 7,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2014_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2014_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2014_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2014_a_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 20,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_sh_2014_a_q5",
-        "q_index": 5,
-        "type": "single",
-        "question_title": "第5题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2014_a_q6",
-        "q_index": 6,
-        "type": "essay",
-        "question_title": "第6题（essay）",
-        "target_score": 40,
-        "char_limit": "字数800~1000 字"
-      },
-      {
-        "id": "sk_sh_2014_a_q7",
-        "q_index": 7,
-        "type": "single",
-        "question_title": "第7题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2014_b",
-    "exam_name": "2014年上海公务员考试《申论》真题（B卷）及参考答案",
-    "year": 2014,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 7980,
-    "question_count": 6,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2014_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2014_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 25,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2014_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2014_b_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2014_b_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 40,
-        "char_limit": "字数800~1000 字"
-      },
-      {
-        "id": "sk_sh_2014_b_q6",
-        "q_index": 6,
-        "type": "single",
-        "question_title": "第6题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2015_a",
-    "exam_name": "2015年上海公务员考试《申论》真题（A卷）及参考答案",
-    "year": 2015,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 7534,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2015_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2015_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2015_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 10,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2015_a_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 20,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_sh_2015_a_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 40,
-        "char_limit": "字数800~1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2015_b",
-    "exam_name": "2015年上海公务员考试《申论》真题（B卷）及参考答案",
-    "year": 2015,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 7755,
-    "question_count": 6,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2015_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": "200字"
-      },
-      {
-        "id": "sk_sh_2015_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": "300字"
-      },
-      {
-        "id": "sk_sh_2015_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 0,
-        "char_limit": "300字"
-      },
-      {
-        "id": "sk_sh_2015_b_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 20,
-        "char_limit": "350字"
-      },
-      {
-        "id": "sk_sh_2015_b_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 0,
-        "char_limit": "字数800-1000字"
-      },
-      {
-        "id": "sk_sh_2015_b_q6",
-        "q_index": 6,
-        "type": "single",
-        "question_title": "第6题（single）",
-        "target_score": 0,
-        "char_limit": "200字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2016_a",
-    "exam_name": "2016年上海公务员考试《申论》真题（A卷）及参考答案",
-    "year": 2016,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 5856,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2016_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2016_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2016_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 0,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2016_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 0,
-        "char_limit": "字数800~1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2016_b",
-    "exam_name": "2016年上海公务员考试《申论》真题（B卷）及参考答案",
-    "year": 2016,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 8574,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2016_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2016_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2016_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2016_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "字数800~1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2017_a",
-    "exam_name": "2017年上海公务员考试《申论》真题（A卷）及参考答案",
-    "year": 2017,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 8106,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2017_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2017_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2017_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2017_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2017_b",
-    "exam_name": "2017年上海公务员考试《申论》真题（B卷）及参考答案",
-    "year": 2017,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 7660,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2017_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2017_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2017_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2017_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2018_a",
-    "exam_name": "2018年上海市公务员考试《申论》真题（A卷）及参考答案",
-    "year": 2018,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 8701,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2018_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2018_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2018_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2018_a_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2018_b",
-    "exam_name": "2018年上海市公务员考试《申论》真题（B类）及参考答案",
-    "year": 2018,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 9238,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2018_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2018_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2018_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2018_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "字数800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2019_a",
-    "exam_name": "2019年上海公务员考试《申论》真题（A卷）及参考答案",
-    "year": 2019,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 8465,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2019_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2019_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2019_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2019_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2019_b",
-    "exam_name": "2019年上海公务员考试《申论》真题（B卷）及参考答案",
-    "year": 2019,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 8240,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2019_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2019_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2019_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2019_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2020_a",
-    "exam_name": "2020年上海公务员考试《申论》真题（A类）及参考答案",
-    "year": 2020,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 8821,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2020_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2020_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2020_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2020_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "字数800~1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2020_b",
-    "exam_name": "2020年上海公务员考试《申论》真题（B类）及参考答案",
-    "year": 2020,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 11216,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2020_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2020_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2020_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2020_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "字数800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2021_a",
-    "exam_name": "2021年上海市公考《申论》题（A卷）及参考答案",
-    "year": 2021,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 11273,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2021_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2021_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2021_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2021_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "字数800~1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2021_b",
-    "exam_name": "2021年上海市公考《申论》题（B卷）及参考答案",
-    "year": 2021,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 9682,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2021_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2021_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2021_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2021_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "字数800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2022_b",
-    "exam_name": "2022年上海市公考《申论》（B卷）真题及答案",
-    "year": 2022,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 10949,
-    "question_count": 2,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2022_b_q1",
-        "q_index": 1,
-        "type": "essay",
-        "question_title": "第1题（essay）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2022_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2023_a",
-    "exam_name": "2023年上海市公考《申论》（A卷）真题及答案",
-    "year": 2023,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 10171,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2023_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_sh_2023_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2023_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2023_a_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2023_a_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 50,
-        "char_limit": "字数800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2024_a",
-    "exam_name": "2024年上海市公考《申论》（A卷）题及参考答案",
-    "year": 2024,
-    "category": "上海",
-    "tier": "A类/省级",
-    "char_count": 9275,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2024_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2024_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2024_a_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2024_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 50,
-        "char_limit": "字数800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_sh_2024_b",
-    "exam_name": "2024年上海市公考《申论》（B卷）题及参考答案",
-    "year": 2024,
-    "category": "上海",
-    "tier": "B类/行政执法",
-    "char_count": 10251,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_sh_2024_b_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_sh_2024_b_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2024_b_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_sh_2024_b_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 50,
-        "char_limit": "字数800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2009",
-    "exam_name": "2009年北京市（应届）申论真题及参考答案",
-    "year": 2009,
     "category": "北京",
-    "tier": "通用",
-    "char_count": 5040,
+    "tier": "区级及以上",
+    "char_count": 7120,
     "question_count": 4,
     "questions_summary": [
       {
-        "id": "sk_bj_2009_q1",
+        "id": "sk_bj_2020_dist_q1",
         "q_index": 1,
         "type": "single",
         "question_title": "第1题（single）",
@@ -4151,179 +2190,15 @@
         "char_limit": "300 字"
       },
       {
-        "id": "sk_bj_2009_q2",
+        "id": "sk_bj_2020_dist_q2",
         "q_index": 2,
         "type": "single",
         "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2009_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_bj_2009_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "800\n字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2010_h1",
-    "exam_name": "2010年上半年北京市申论真题及参考答案",
-    "year": 2010,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 5412,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2010_h1_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_bj_2010_h1_q2",
-        "q_index": 2,
-        "type": "doc",
-        "question_title": "第2题（doc）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2010_h1_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2010_h1_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "在800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2010_h2",
-    "exam_name": "2010年下半年北京市申论真题及参考答案",
-    "year": 2010,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 5967,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2010_h2_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2010_h2_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2010_h2_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2010_h2_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2011",
-    "exam_name": "2011年北京市公务员录用考试《申论》真题",
-    "year": 2011,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 6736,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2011_q1",
-        "q_index": 1,
-        "type": "essay",
-        "question_title": "第1题（essay）",
-        "target_score": 15,
-        "char_limit": "３００字"
-      },
-      {
-        "id": "sk_bj_2011_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_bj_2011_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2012",
-    "exam_name": "2012年北京市公务员录用考试申论真题及解析",
-    "year": 2012,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 6839,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2012_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
         "target_score": 15,
         "char_limit": "250 字"
       },
       {
-        "id": "sk_bj_2012_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2012_q3",
+        "id": "sk_bj_2020_dist_q3",
         "q_index": 3,
         "type": "single",
         "question_title": "第3题（single）",
@@ -4331,305 +2206,12 @@
         "char_limit": "400 字"
       },
       {
-        "id": "sk_bj_2012_q4",
+        "id": "sk_bj_2020_dist_q4",
         "q_index": 4,
         "type": "essay",
         "question_title": "第4题（essay）",
         "target_score": 40,
-        "char_limit": "1200\n字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2013",
-    "exam_name": "2013年北京市公务员考试申论真题及参考答案",
-    "year": 2013,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 6978,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2013_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_bj_2013_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_bj_2013_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_bj_2013_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "在1000~1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2014",
-    "exam_name": "2014年北京市公务员考试申论真题及参考解析",
-    "year": 2014,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 7469,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2014_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2014_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2014_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "第3题（doc）",
-        "target_score": 0,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_bj_2014_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 20,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2015",
-    "exam_name": "2015年北京公务员考试《申论》真题及解析",
-    "year": 2015,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 6819,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2015_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": "300字"
-      },
-      {
-        "id": "sk_bj_2015_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": "300字"
-      },
-      {
-        "id": "sk_bj_2015_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 0,
-        "char_limit": "400字"
-      },
-      {
-        "id": "sk_bj_2015_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 0,
-        "char_limit": "在800-1000字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2016",
-    "exam_name": "2016年北京公务员考试《申论》真题及答案",
-    "year": 2016,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 6279,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2016_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2016_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_bj_2016_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "第3题（doc）",
-        "target_score": 25,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_bj_2016_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2017",
-    "exam_name": "2017年北京公务员考试《申论》真题卷及答案",
-    "year": 2017,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 7567,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2017_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_bj_2017_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_bj_2017_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_bj_2017_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "字数在800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2018",
-    "exam_name": "2018年北京公务员考试《申论》真题卷及答案",
-    "year": 2018,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 6823,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2018_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2018_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_bj_2018_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_bj_2018_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "在800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2019",
-    "exam_name": "2019年北京市公考《申论》真题",
-    "year": 2019,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 7652,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2019_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2019_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_bj_2019_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 25,
-        "char_limit": "350 字"
+        "char_limit": "在800-1000\n字"
       }
     ]
   },
@@ -4677,16 +2259,16 @@
     ]
   },
   {
-    "id": "sk_bj_2020_dist",
-    "exam_name": "2020年北京公务员考试申论真题及答案（区级及以上）",
+    "id": "sk_sh_2020_b",
+    "exam_name": "2020年上海公务员考试《申论》真题（B类）及参考答案",
     "year": 2020,
-    "category": "北京",
-    "tier": "区级及以上",
-    "char_count": 7120,
+    "category": "上海",
+    "tier": "B类/行政执法",
+    "char_count": 11216,
     "question_count": 4,
     "questions_summary": [
       {
-        "id": "sk_bj_2020_dist_q1",
+        "id": "sk_sh_2020_b_q1",
         "q_index": 1,
         "type": "single",
         "question_title": "第1题（single）",
@@ -4694,93 +2276,7 @@
         "char_limit": "300 字"
       },
       {
-        "id": "sk_bj_2020_dist_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_bj_2020_dist_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_bj_2020_dist_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "在800-1000\n字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2021_town",
-    "exam_name": "2021年北京公务员考试申论真题及答案（乡镇试卷）",
-    "year": 2021,
-    "category": "北京",
-    "tier": "乡镇级",
-    "char_count": 7286,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2021_town_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2021_town_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_bj_2021_town_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_bj_2021_town_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "在800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2021_dist",
-    "exam_name": "2021年北京公务员考试申论真题及答案（区级试卷）",
-    "year": 2021,
-    "category": "北京",
-    "tier": "区级及以上",
-    "char_count": 7079,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2021_dist_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2021_dist_q2",
+        "id": "sk_sh_2020_b_q2",
         "q_index": 2,
         "type": "single",
         "question_title": "第2题（single）",
@@ -4788,507 +2284,15 @@
         "char_limit": "300 字"
       },
       {
-        "id": "sk_bj_2021_dist_q3",
+        "id": "sk_sh_2020_b_q3",
         "q_index": 3,
         "type": "single",
         "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_bj_2021_dist_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "在800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2022",
-    "exam_name": "2022年北京市公务员考试申论真题及参考答案",
-    "year": 2022,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 7220,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2022_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
         "target_score": 20,
         "char_limit": "300 字"
       },
       {
-        "id": "sk_bj_2022_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_bj_2022_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_bj_2022_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_bj_2023",
-    "exam_name": "2023年北京市公考《申论》真题与答案",
-    "year": 2023,
-    "category": "北京",
-    "tier": "通用",
-    "char_count": 7318,
-    "question_count": 5,
-    "questions_summary": [
-      {
-        "id": "sk_bj_2023_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_bj_2023_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_bj_2023_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_bj_2023_q4",
-        "q_index": 4,
-        "type": "single",
-        "question_title": "第4题（single）",
-        "target_score": 25,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_bj_2023_q5",
-        "q_index": 5,
-        "type": "essay",
-        "question_title": "第5题（essay）",
-        "target_score": 40,
-        "char_limit": "在800-1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2006_spring",
-    "exam_name": "2006年福建省公务员考试《申论》真题（春季）及参考答案",
-    "year": 2006,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 2968,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2006_spring_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "200 字以内"
-      },
-      {
-        "id": "sk_fj_2006_spring_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 30,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_fj_2006_spring_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 40,
-        "char_limit": "1200 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2007_autumn",
-    "exam_name": "2007年福建省公务员考试真题《申论》真题（秋季）及参考答案",
-    "year": 2007,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 4898,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2007_autumn_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2007_autumn_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": "450 字"
-      },
-      {
-        "id": "sk_fj_2007_autumn_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 0,
-        "char_limit": "字数在1200 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2008_autumn",
-    "exam_name": "2008年福建省公务员考试《申论》真题（秋季）及参考答案",
-    "year": 2008,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 6991,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2008_autumn_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "字数在200 字左右"
-      },
-      {
-        "id": "sk_fj_2008_autumn_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 30,
-        "char_limit": "字数在500 字左右"
-      },
-      {
-        "id": "sk_fj_2008_autumn_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 50,
-        "char_limit": "1200\n字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2009_913",
-    "exam_name": "2009年913公务员联考《申论》及参考答案（福建、重庆、海南、辽宁、内蒙古、新疆 ）",
-    "year": 2009,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 5567,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2009_913_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2009_913_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_fj_2009_913_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_fj_2009_913_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "字数800~1000\n字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2009_spring",
-    "exam_name": "2009年福建省公务员考试《申论》真题（春季）及参考答案",
-    "year": 2009,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 5536,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2009_spring_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "200\n字"
-      },
-      {
-        "id": "sk_fj_2009_spring_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 30,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2009_spring_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 50,
-        "char_limit": "字数在1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2010_918",
-    "exam_name": "2010年918公务员联考《申论》卷及参考答案（福建、辽宁、河南、海南、山西、内蒙、重庆、陕西、宁夏、青海、西藏）",
-    "year": 2010,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 6096,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2010_918_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字以内"
-      },
-      {
-        "id": "sk_fj_2010_918_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字以内"
-      },
-      {
-        "id": "sk_fj_2010_918_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "300 字以内"
-      },
-      {
-        "id": "sk_fj_2010_918_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2010_spring",
-    "exam_name": "2010年福建省公务员考试《申论》真题（春季）及参考答案",
-    "year": 2010,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 6262,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2010_spring_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_fj_2010_spring_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2010_spring_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 30,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2010_spring_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 50,
-        "char_limit": "字数1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2011_424",
-    "exam_name": "2011年424公务员联考《申论》卷及参考答案（福建、广西、四川、江苏、辽宁、天津、海南、江西、湖南、湖北、山西、黑龙江、贵州、重庆、陕西、云南、山东）",
-    "year": 2011,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 6956,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2011_424_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_fj_2011_424_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 15,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2011_424_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_fj_2011_424_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "800 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2011_917",
-    "exam_name": "2011年917公务员联考《申论》卷及参考答案（福建、河南、重庆、甘肃、新疆）",
-    "year": 2011,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 6633,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2011_917_q1",
-        "q_index": 1,
-        "type": "doc",
-        "question_title": "第1题（doc）",
-        "target_score": 20,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_fj_2011_917_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_fj_2011_917_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_fj_2011_917_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2012_421",
-    "exam_name": "2012年421公务员联考《申论》卷及参考答案（福建、广西、四川、辽宁、海南、湖南、湖北、山西、黑龙江、重庆、陕西、云南、新疆、宁夏、青海）",
-    "year": 2012,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 7479,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2012_421_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2012_421_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_fj_2012_421_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "第3题（doc）",
-        "target_score": 25,
-        "char_limit": "500 字"
-      },
-      {
-        "id": "sk_fj_2012_421_q4",
+        "id": "sk_sh_2020_b_q4",
         "q_index": 4,
         "type": "essay",
         "question_title": "第4题（essay）",
@@ -5298,457 +2302,16 @@
     ]
   },
   {
-    "id": "sk_fj_2012_915",
-    "exam_name": "2012年915公务员联考《申论》卷及参考答案（福建、河南、重庆、吉林、陕西）",
-    "year": 2012,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 5189,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2012_915_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 35,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_fj_2012_915_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 25,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_fj_2012_915_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 40,
-        "char_limit": "1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2013_413",
-    "exam_name": "2013年413公务员联考《申论》卷及参考答案（福建、广西、安徽、四川、辽宁、海南、山西、内蒙古、黑龙江、贵州）",
-    "year": 2013,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 6250,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2013_413_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2013_413_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2013_413_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2013_413_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2014_412",
-    "exam_name": "2014年412公务员联考《申论》卷及参考答案（福建、广西、安徽、海南、湖南、内蒙古、贵州、重庆、陕西、云南、宁夏）",
-    "year": 2014,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 6763,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2014_412_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2014_412_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2014_412_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 25,
-        "char_limit": "500 字"
-      },
-      {
-        "id": "sk_fj_2014_412_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "1000-1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2015_425",
-    "exam_name": "2015年425公务员联考《申论》（福建卷）及参考答案",
-    "year": 2015,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 5189,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2015_425_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2015_425_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 30,
-        "char_limit": "500 字"
-      },
-      {
-        "id": "sk_fj_2015_425_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 50,
-        "char_limit": "字数1000-1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2016_423",
-    "exam_name": "2016年423公务员联考《申论》（福建卷）及参考答案",
-    "year": 2016,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 6412,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2016_423_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_fj_2016_423_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2016_423_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 30,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2016_423_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 50,
-        "char_limit": "字数1000~1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2017_422",
-    "exam_name": "2017年422公务员联考《申论》（福建卷）真题答案及解析",
-    "year": 2017,
-    "category": "福建",
-    "tier": "通用",
-    "char_count": 7413,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2017_422_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": ""
-      },
-      {
-        "id": "sk_fj_2017_422_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2017_422_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 30,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2017_422_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 50,
-        "char_limit": "字数1000 字左右"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2018_town",
-    "exam_name": "2018年联考《申论》真题（福建乡镇卷）及答案",
-    "year": 2018,
-    "category": "福建",
-    "tier": "乡镇级",
-    "char_count": 5414,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2018_town_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_fj_2018_town_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2018_town_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 30,
-        "char_limit": "字数400 字左右"
-      },
-      {
-        "id": "sk_fj_2018_town_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 35,
-        "char_limit": "字数在400-500 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2018_dist",
-    "exam_name": "2018年联考《申论》真题（福建县级卷）及答案",
-    "year": 2018,
-    "category": "福建",
-    "tier": "区级及以上",
-    "char_count": 6053,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2018_dist_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 0,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2018_dist_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 0,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2018_dist_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 0,
-        "char_limit": "字数1000~1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2019_dist",
-    "exam_name": "2019年420联考《申论》真题（福县级卷）参考答案",
-    "year": 2019,
-    "category": "福建",
-    "tier": "区级及以上",
-    "char_count": 6478,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2019_dist_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 20,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2019_dist_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 30,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_fj_2019_dist_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 50,
-        "char_limit": ""
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2019_town",
-    "exam_name": "2019年420联考《申论》真题（福建乡镇卷）参考答案",
-    "year": 2019,
-    "category": "福建",
-    "tier": "乡镇级",
-    "char_count": 4462,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2019_town_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "200 字"
-      },
-      {
-        "id": "sk_fj_2019_town_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 20,
-        "char_limit": "300 字"
-      },
-      {
-        "id": "sk_fj_2019_town_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "500 字"
-      },
-      {
-        "id": "sk_fj_2019_town_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 40,
-        "char_limit": "600 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2020_town",
-    "exam_name": "2020年0725公务员多省联考《申论》题（福建乡镇卷）两套答案",
+    "id": "sk_sh_2020_a",
+    "exam_name": "2020年上海公务员考试《申论》真题（A类）及参考答案",
     "year": 2020,
-    "category": "福建",
-    "tier": "乡镇级",
-    "char_count": 4632,
+    "category": "上海",
+    "tier": "A类/省级",
+    "char_count": 8821,
     "question_count": 4,
     "questions_summary": [
       {
-        "id": "sk_fj_2020_town_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "250 字"
-      },
-      {
-        "id": "sk_fj_2020_town_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 25,
-        "char_limit": "350 字"
-      },
-      {
-        "id": "sk_fj_2020_town_q3",
-        "q_index": 3,
-        "type": "single",
-        "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "400 字"
-      },
-      {
-        "id": "sk_fj_2020_town_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "第4题（essay）",
-        "target_score": 35,
-        "char_limit": "600 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2020_dist",
-    "exam_name": "2020年0725公务员多省联考《申论》题（福建县级卷）两套答案",
-    "year": 2020,
-    "category": "福建",
-    "tier": "区级及以上",
-    "char_count": 7106,
-    "question_count": 3,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2020_dist_q1",
+        "id": "sk_sh_2020_a_q1",
         "q_index": 1,
         "type": "single",
         "question_title": "第1题（single）",
@@ -5756,192 +2319,28 @@
         "char_limit": "300 字"
       },
       {
-        "id": "sk_fj_2020_dist_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "第2题（single）",
-        "target_score": 30,
-        "char_limit": "500 字"
-      },
-      {
-        "id": "sk_fj_2020_dist_q3",
-        "q_index": 3,
-        "type": "essay",
-        "question_title": "第3题（essay）",
-        "target_score": 50,
-        "char_limit": "字数1000-1200 字"
-      }
-    ]
-  },
-  {
-    "id": "sk_fj_2024_town",
-    "exam_name": "2024年福建申论（县乡级）真题及参考答案",
-    "year": 2024,
-    "category": "福建",
-    "tier": "乡镇级",
-    "char_count": 6766,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "sk_fj_2024_town_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "第1题（single）",
-        "target_score": 15,
-        "char_limit": "300字"
-      },
-      {
-        "id": "sk_fj_2024_town_q2",
+        "id": "sk_sh_2020_a_q2",
         "q_index": 2,
         "type": "single",
         "question_title": "第2题（single）",
         "target_score": 20,
-        "char_limit": "400字"
+        "char_limit": "300 字"
       },
       {
-        "id": "sk_fj_2024_town_q3",
+        "id": "sk_sh_2020_a_q3",
         "q_index": 3,
         "type": "single",
         "question_title": "第3题（single）",
-        "target_score": 25,
-        "char_limit": "500字"
+        "target_score": 20,
+        "char_limit": "300 字"
       },
       {
-        "id": "sk_fj_2024_town_q4",
+        "id": "sk_sh_2020_a_q4",
         "q_index": 4,
         "type": "essay",
         "question_title": "第4题（essay）",
         "target_score": 40,
-        "char_limit": "字数800字左右"
-      }
-    ]
-  },
-  {
-    "id": "js2024_a",
-    "exam_name": "2024年江苏省公务员考试申论真题（A类）",
-    "year": 2024,
-    "category": "江苏",
-    "tier": "省考A类",
-    "char_count": 430,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "js2024_a_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "无锡物联网创新联合体培育经验（单一题）",
-        "target_score": 20,
-        "char_limit": "不超过300字"
-      },
-      {
-        "id": "js2024_a_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "宿迁农村电商赋能乡村振兴路径（单一题）",
-        "target_score": 20,
-        "char_limit": "不超过300字"
-      },
-      {
-        "id": "js2024_a_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "推行“综合查一次”柔性执法倡议书（公文题）",
-        "target_score": 20,
-        "char_limit": "不超过400字"
-      },
-      {
-        "id": "js2024_a_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "大作文：在推进中国式现代化中走在前做示范（议论文）",
-        "target_score": 40,
-        "char_limit": "1000～1200字"
-      }
-    ]
-  },
-  {
-    "id": "gd2024_county",
-    "exam_name": "2024年广东省公务员考试申论真题（县级）",
-    "year": 2024,
-    "category": "广东",
-    "tier": "省考县级",
-    "char_count": 395,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "gd2024_county_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "粤北山区县飞地经济发展经验（单一题）",
-        "target_score": 20,
-        "char_limit": "不超过300字"
-      },
-      {
-        "id": "gd2024_county_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "现代海洋牧场全产业链发展路径（单一题）",
-        "target_score": 20,
-        "char_limit": "不超过300字"
-      },
-      {
-        "id": "gd2024_county_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "“粤治美”数字基层治理经验推广通知（公文题）",
-        "target_score": 20,
-        "char_limit": "不超过400字"
-      },
-      {
-        "id": "gd2024_county_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "大作文：日日行不怕千万里 常常做不怕千万事（议论文）",
-        "target_score": 40,
-        "char_limit": "1000～1200字"
-      }
-    ]
-  },
-  {
-    "id": "bj2024_district",
-    "exam_name": "2024年北京市公务员考试申论真题（区级及以上）",
-    "year": 2024,
-    "category": "北京",
-    "tier": "北京市考",
-    "char_count": 441,
-    "question_count": 4,
-    "questions_summary": [
-      {
-        "id": "bj2024_dist_q1",
-        "q_index": 1,
-        "type": "single",
-        "question_title": "中关村颠覆性硬科技孵化机制分析（单一题）",
-        "target_score": 20,
-        "char_limit": "不超过300字"
-      },
-      {
-        "id": "bj2024_dist_q2",
-        "q_index": 2,
-        "type": "single",
-        "question_title": "“接诉即办”向“未诉先办”延伸治理经验（单一题）",
-        "target_score": 20,
-        "char_limit": "不超过300字"
-      },
-      {
-        "id": "bj2024_dist_q3",
-        "q_index": 3,
-        "type": "doc",
-        "question_title": "“拆栏透绿”花园城市无界公园宣传稿（公文题）",
-        "target_score": 20,
-        "char_limit": "不超过400字"
-      },
-      {
-        "id": "bj2024_dist_q4",
-        "q_index": 4,
-        "type": "essay",
-        "question_title": "大作文：首善标准铸就卓越之城（议论文）",
-        "target_score": 40,
-        "char_limit": "1000～1200字"
+        "char_limit": "字数800~1000 字"
       }
     ]
   }

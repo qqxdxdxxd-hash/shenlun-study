@@ -10,11 +10,11 @@ def test_parse_all_18_guokao_pdfs():
     parser = GuokaoPdfParser(SOURCE_DIR)
     papers = parser.parse_all()
 
-    assert len(papers) == 18, f"Expected 18 papers, got {len(papers)}"
+    assert len(papers) == 16, f"Expected 16 papers (2020-2025), got {len(papers)}"
 
     for p in papers:
         # Check metadata
-        assert p["year"] in range(2019, 2026), f"Invalid year: {p['year']}"
+        assert p["year"] in range(2020, 2026), f"Invalid year: {p['year']}"
         assert p["category"] == "国考"
         assert p["tier"] in ["副省级", "地市级", "行政执法卷", "副省级/省级"]
         assert p["id"].startswith("gk")

@@ -296,7 +296,9 @@ def load_real_papers_kb() -> List[Dict[str, Any]]:
 
     fallback_prov = [p for p in PROVINCIAL_PAPERS_KB if p["id"] not in existing_ids]
 
-    all_papers = list(guokao_papers) + list(prov_papers) + fallback_prov
+    all_papers = [p for p in (list(guokao_papers) + list(prov_papers) + fallback_prov) if p.get("year", 2020) >= 2020]
+    # 统一按年份降序排布
+    all_papers.sort(key=lambda p: (p.get("year", 2020), p.get("category", ""), p.get("tier", "")), reverse=True)
     return all_papers
 
 

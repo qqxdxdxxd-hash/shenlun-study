@@ -16,13 +16,13 @@ def test_parse_provincial_pdfs():
     parser = ProvincialPdfParser(PROVINCE_DIRS)
     papers = parser.parse_all()
     
-    # 至少成功解析出 100 套以上的真实省考题本
-    assert len(papers) >= 100, f"解析得到的省考题本数量应>=100套，实测: {len(papers)}"
-    
+    # 成功解析出 30 套以上的 2020-2025 真实省考题本
+    assert len(papers) >= 30, f"解析得到的省考题本数量应>=30套，实测: {len(papers)}"
+
     for paper in papers:
         assert paper["id"], "必须具备试卷唯一 ID"
         assert paper["exam_name"], "必须具备试卷名称"
-        assert paper["year"] >= 2003 and paper["year"] <= 2025, f"年份范围异常: {paper['year']}"
+        assert paper["year"] >= 2020 and paper["year"] <= 2025, f"年份范围异常: {paper['year']}"
         assert paper["category"] in ["江苏", "上海", "北京", "福建"], f"分类异常: {paper['category']}"
         assert len(paper["materials_text"]) >= 2000, f"{paper['id']} 材料长度过短: {len(paper['materials_text'])}"
         assert len(paper["questions"]) >= 2, f"{paper['id']} 题目数量过少: {len(paper['questions'])}"

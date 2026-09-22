@@ -288,8 +288,9 @@ class GuokaoPdfParser:
         papers = []
         for pdf_path in pdf_files:
             paper = self.parse_paper_file(pdf_path)
-            papers.append(paper)
-        # 按年份降序排布 (2025 -> 2019)
+            if paper["year"] >= 2020:
+                papers.append(paper)
+        # 按年份降序排布 (2025 -> 2020)
         papers.sort(key=lambda p: (p["year"], p["tier"]), reverse=True)
         return papers
 
