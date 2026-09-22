@@ -188,7 +188,12 @@ class ApiClient {
     // 4. 组装题型量规与评卷 User Prompt
     let marPromptStr = "";
     if (typeof LocalMARAudit !== 'undefined') {
-      marPromptStr = LocalMARAudit.buildMARPrompt(payload.user_answer, payload.question_title, payload.recalled_memories || []);
+      marPromptStr = LocalMARAudit.buildMARPrompt(
+        payload.user_answer,
+        payload.question_title,
+        qType === 'single' ? [] : (payload.recalled_memories || []),
+        qType
+      );
     }
 
     let criteriaSection = "";
@@ -280,6 +285,8 @@ ${marPromptStr}
 请以极其严格的官方阅卷考官标准进行评审，并严格按照以下 JSON 格式返回，严禁任何额外格式废话：
 \`\`\`json
 {
+  "target_score": ${targetScore},
+  "word_limit": ${payload.word_limit || (qType === 'single' ? 250 : (qType === 'doc' ? 400 : 1000))},
   "score": ${Math.round(targetScore * 0.85 * 10) / 10},
   "grade": "二类文",
   "radar_scores": ${radarExample},
@@ -288,7 +295,7 @@ ${marPromptStr}
     {"quote": "口语化句子原文", "type": "colloquial_flaw", "color": "purple", "style": "strikethrough", "label": "大白话", "comment": "口语化表达缺少政务大词"}
   ],
 ${perspectivesExample},
-  "rewritten_exemplar": "基于考生原文结合其记忆库重构的一类标杆示范..."
+  "rewritten_exemplar": "基于考生原文结合其规范重构的考场标杆示范..."
 }
 \`\`\`
 `;
@@ -374,12 +381,17 @@ ${perspectivesExample},
       drills = LocalDrillEngine.generateDrills(llmQuotes);
     }
 
+    const finalTargetScore = parsed.target_score !== undefined ? Number(parsed.target_score) : (payload.target_score || targetScore);
+    const finalWordLimit = parsed.word_limit !== undefined ? Number(parsed.word_limit) : (payload.word_limit || null);
+
     return {
       word_count: preInfo.word_count,
       copy_ratio: preInfo.copy_ratio,
       copy_redline_exceeded: preInfo.copy_redline_exceeded,
       title_issues: preInfo.title_issues,
-      score: parsed.score || 30.0,
+      score: parsed.score !== undefined ? parsed.score : 30.0,
+      target_score: finalTargetScore,
+      word_limit: finalWordLimit,
       grade: parsed.grade || "二类文",
       radar_scores: parsed.radar_scores || { "立意与总分论点": 10.0, "结构与段落布局": 7.0, "论据与论证深度": 8.0, "语言与公文规范": 4.5 },
       chroma_spans: allSpans,

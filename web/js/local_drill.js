@@ -65,33 +65,38 @@ class LocalMARAudit {
   }
 
   /**
-   * 构建限制性一类文重构 Prompt，强制融入考生记忆库并标注 [来自记忆库: 卡片标题]
+   * 题型解耦的标杆示范重写指引生成器
    */
-  static buildMARPrompt(userAnswer, questionTitle, recalledMemories = []) {
-    const memBlock = [];
-    if (recalledMemories && recalledMemories.length > 0) {
-      memBlock.push("## 【考生个人已背诵记忆库（在重构范文时，必须优先无缝融合以下素材）】：");
-      recalledMemories.forEach((m, idx) => {
-        memBlock.push(`${idx + 1}. [${m.category || '申论'}·${m.tag || '素材'}] 《${m.title}》：${m.content}`);
-      });
+  static buildMARPrompt(userAnswer, questionTitle, recalledMemories = [], questionType = 'essay') {
+    if (questionType === 'single') {
+      return `
+## 【标杆示范重写指引】：
+请严格遵循已加载的单一题阅卷 Skill 规范，基于给定资料提炼的客观采分点，对考生作答进行考场标杆示范重写。
+【严禁事项】：单一题严格以材料为唯一依凭，严禁注入未在材料中出现的外部时政理论或记忆库内容，字数严格控制在题目所限定的范围内。
+`;
     }
 
-    const memStr = memBlock.length > 0 ? memBlock.join("\n") : "（考生未注入特定记忆，请按照考场一类文标准重塑）";
+    if (questionType === 'doc') {
+      return `
+## 【标杆示范重写指引】：
+请严格遵循公文贯彻执行题阅卷规范，基于给定资料重构格式规范、内容完备、语体得当的考场公文范本。
+`;
+    }
+
+    // essay 场景：仅作为参考素材提示，不采用霸道强制命令
+    const memBlock = [];
+    if (recalledMemories && recalledMemories.length > 0) {
+      memBlock.push("## 【考生个人已背诵素材库（撰写大作文时可供参考化用）】：");
+      recalledMemories.forEach((m, idx) => {
+        memBlock.push(`${idx + 1}. 《${m.title}》：${m.content}`);
+      });
+    }
+    const memStr = memBlock.length > 0 ? memBlock.join("\n") : "";
 
     return `
-你是一名资深公职阅卷名师。请基于考生的原始立意与素材脉络，重构一篇考场标杆一类文（1000~1100字）：
-
 ${memStr}
-
-【题目】：${questionTitle || '申论综合研习'}
-【考生原始作答】：
-${userAnswer}
-
-【重构硬性铁律】：
-1. 100% 保持考生的立意主线与材料方向，绝不天马行空另起新论点；
-2. 论点必须置于段首，采用“1+3”严整大五段结构；
-3. 凡在行文中成功融入上述考生已背素材的句子，必须在句末清晰标注：[来自记忆库: 卡片标题]；
-4. 语言规范化、公文化、短句化，打造 32+ 分标杆示范。
+## 【大作文标杆示范重写指引】：
+请基于考生原始立意与上述参考素材，撰写考场标杆示范议论文。
 `;
   }
 }
