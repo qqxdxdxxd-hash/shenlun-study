@@ -26,3 +26,17 @@ def test_build_exams_split(tmp_path):
     q1_detail = json.loads((out_dir / "q1.json").read_text(encoding="utf-8"))
     assert q1_detail["id"] == "q1"
     assert q1_detail["materials"] == "材料内容..."
+
+def test_real_papers_kb_contains_all_21_papers():
+    from scripts.real_exams_data import REAL_PAPERS_KB
+    assert len(REAL_PAPERS_KB) >= 21
+    gk_papers = [p for p in REAL_PAPERS_KB if p["category"] == "国考"]
+    assert len(gk_papers) == 18
+    # Verify year span 2019 to 2025
+    years = {p["year"] for p in gk_papers}
+    assert years == {2019, 2020, 2021, 2022, 2023, 2024, 2025}
+    # Verify material integrity
+    for p in gk_papers:
+        assert len(p["materials_text"]) >= 5000
+        assert len(p["questions"]) == 5
+
