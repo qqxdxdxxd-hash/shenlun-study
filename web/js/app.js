@@ -98,8 +98,8 @@ const SKILL_DATABASE = {
     {
       group: "🏛️ 系统默认官方 Skill (已根据单一题适配)",
       id: "default_single_expert",
-      name: "【默认】单一题八大要素采点专家 (shenlun-single-question-expert)",
-      desc: "💡 <strong>当前选用规范</strong>：单一题八大要素采点专家 · 采点给分制(75%~85%)，对照材料地毯式核查问题/原因/影响/对策采分点。"
+      name: "【默认】单一题八大要素客观采点与五维提分专家 (shenlun-single-expert)",
+      desc: "💡 <strong>当前选用规范</strong>：单一题八大要素客观采点专家 · 采点给分制(75%~85%)，四分法材料过滤、字数排版自适应（≤200字禁小标题，250~350字强制前置动宾短语）与五维深度诊断。"
     },
     {
       group: "🏛️ 系统默认官方 Skill (已根据单一题适配)",

@@ -27,12 +27,19 @@ def export_skills(skills_dir: Path, output_file: Path):
                 meta = yaml.safe_load(chunks[1]) or {}
                 body = chunks[2].strip()
 
+        refs = {}
+        ref_dir = sdir / "references"
+        if ref_dir.exists():
+            for rf in sorted(ref_dir.glob("*.md")):
+                refs[rf.name] = rf.read_text(encoding="utf-8")
+
         skill_id = meta.get("name", sdir.name)
         skills_data[skill_id] = {
             "id": skill_id,
             "name": meta.get("description", skill_id),
             "question_type": meta.get("metadata", {}).get("question_type", "essay"),
-            "prompt": body
+            "prompt": body,
+            "references": refs
         }
 
     output_file.write_text(json.dumps(skills_data, ensure_ascii=False, indent=2), encoding="utf-8")

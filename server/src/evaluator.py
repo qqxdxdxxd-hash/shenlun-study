@@ -69,7 +69,19 @@ class ShenlunEvaluator:
         """
         调用客户端透传的 LLM 执行深度评审
         """
-        skill = self.registry.get(req.skill_id) or self.registry.get("shenlun-essay-expert")
+        # 自动依据题型智能对齐默认 Skill 专家（避免单一题误走大五段作文）
+        skill = None
+        if req.skill_id:
+            skill = self.registry.get(req.skill_id)
+        if not skill:
+            type_to_skill = {
+                "single": "shenlun-single-expert",
+                "doc": "shenlun-official-doc",
+                "essay": "shenlun-essay-expert",
+            }
+            target_id = type_to_skill.get(req.question_type, "shenlun-essay-expert")
+            skill = self.registry.get(target_id) or self.registry.get("shenlun-single-expert") or self.registry.get("shenlun-essay-expert")
+
         system_prompt = skill.assemble_system_prompt()
 
         mar_instruction = MemoryAugmentedRewriter.build_mar_prompt(
@@ -79,15 +91,21 @@ class ShenlunEvaluator:
         target_score = req.target_score or (35 if req.question_type == "essay" else (25 if req.question_type == "doc" else 20))
         if req.question_type == "single":
             type_rule = """
-## 【单一题（归纳概括/对策/理解）客观采点给分铁律】：
-1. 采点给分，宁多勿少。以材料原词原意和采分点为唯一基准，严禁使用议论文“大五段”、“立意论证”等模式评判！
-2. 重点审查：①内容采点覆盖度（约占55%）；②分类逻辑与条理（MECE原则、总分与序号，约占20%）；③提炼概括度（前置动宾短语小标题、去案例流水账，约占15%）；④表达与字数规范（字数控制、无主观臆造，约占10%）。
+## 【单一题（归纳概括/对策/理解）客观采点与五维诊断铁律】：
+1. 采点给分，宁多勿少。以材料原词原意和采分点为唯一基准，严禁使用议论文“大五段”、“立意论证”等模式评判！答错散点不倒扣分。
+2. 字数驱动的排版自适应准则：
+   - ≤200字极限短题：严禁写独立小标题，直接以 1. 2. 3. 紧凑罗列“动宾短语+材料实词”，不分段换行；盲设小标题浪费篇幅导致漏点的按漏点重扣；
+   - 250~350字常规题：必须配备 4~8 字前置动宾短语（小标题加粗），微观呈现总分结构；
+   - ≥400字长题/要求“归类合理”：强制执行二级 MECE 结构化分类，严禁散沙平铺。
+3. 材料逐段过滤与去粗取精：文学风光与宏观背景跳读过滤；案例段剥离人名（张某某）与微观数字（200万），抽象为上位政务动宾短语；尾段展望套话视时态分流。
+4. 反推对策给分准则：针对材料问题提出的合理对策，只要主体明确、靶向痛点、具备政务可行性，合理即可同等赋分。
+5. 重点审查：①内容采点覆盖度（约占55%）；②分类逻辑与条理（MECE原则、总分与序号，约占20%）；③提炼概括度（前置动宾短语小标题、去案例流水账，约占15%）；④表达与字数规范（字数控制、无主观臆造，约占10%）。
 """
             radar_example = f'{{"内容采点覆盖度": {target_score*0.55:.1f}, "分类逻辑与条理": {target_score*0.20:.1f}, "提炼概括度": {target_score*0.15:.1f}, "表达与字数规范": {target_score*0.10:.1f}}}'
             perspectives_example = """  "perspectives": {
-    "examiner": "考场考官前10秒第一眼定档：审题要素是否切中、字数与排版条理初判...",
-    "structure_expert": "要素归纳与分类逻辑诊断：诊断八大要素提取全面性、总分结构、MECE分类是否交叉重复、前置动宾大词是否工整醒目...",
-    "style_expert": "作答规范与去流水账质检：诊断是否存在大段抄录事例/人名/数据流水账、有无主观捏造事实、字数卡位规范度..."
+    "examiner": "考场考官前10秒第一眼定档：核查题干要素、字数红线排版合规度（≤200字小标题陷阱/≥300字前置词）、初扫档位与卷面条理...",
+    "structure_expert": "要素归纳与分类逻辑诊断：诊断八大要素提取全面性、总分结构、MECE同类项合并是否交叉重复、行首前置动宾大词是否工整醒目...",
+    "style_expert": "作答规范与去流水账质检：诊断是否存在大段抄录事例/人名/数据流水账、背景废段误采、字数卡位规范度与反推对策可行性..."
   }"""
         elif req.question_type == "doc":
             type_rule = """
