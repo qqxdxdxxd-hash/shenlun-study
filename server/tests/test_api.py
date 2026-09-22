@@ -74,3 +74,37 @@ def test_api_submit_review_with_byok_key(monkeypatch):
     assert len(data["chroma_spans"]) >= 1
     assert data["memory_audit"]["activation_rate"] > 0
     assert len(data["remediation_drills"]) >= 1
+
+def test_review_response_supports_dynamic_target_score_and_word_limit():
+    from src.models import ReviewResponse, ReviewRequest
+    req = ReviewRequest(
+        question_type="single",
+        question_title="攻克精密光学仪器经验",
+        materials="材料内容...",
+        user_answer="考生作答...",
+        target_score=15,
+        word_limit=250
+    )
+    assert req.target_score == 15
+    assert req.word_limit == 250
+
+    resp = ReviewResponse(
+        word_count=180,
+        copy_ratio=0.08,
+        copy_redline_exceeded=False,
+        score=12.5,
+        target_score=15.0,
+        word_limit=250,
+        grade="二类文",
+        radar_scores={"内容采点": 8.0},
+        chroma_spans=[],
+        perspectives={},
+        memory_audit={},
+        rewritten_exemplar="主要经验如下：1. 科技赋能...",
+        remediation_drills=[]
+    )
+    assert resp.target_score == 15.0
+    assert resp.word_limit == 250
+    assert resp.model_dump()["target_score"] == 15.0
+    assert resp.model_dump()["word_limit"] == 250
+

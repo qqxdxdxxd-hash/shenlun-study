@@ -28,3 +28,15 @@ def test_drill_generator_and_verify():
     # 测试未包含政务大词失败
     v_fail = DrillGenerator.verify_drill_input("colloquial_to_formal", flaws[0]["quote"], "就是没有钱干不了")
     assert v_fail["passed"] is False
+
+def test_mar_rewriter_does_not_inject_hardcoded_instructions_for_single():
+    mems = [MemoryItemPayload(id="1", title="新质生产力", content="创新主导", category="时政", tag="热词")]
+    # 单一题调用
+    single_prompt = MemoryAugmentedRewriter.build_mar_prompt(
+        "考生作答...", "概括经验", mems, question_type="single"
+    )
+    assert "1000~1100字" not in single_prompt
+    assert "大五段" not in single_prompt
+    assert "[来自记忆库" not in single_prompt
+    assert "新质生产力" not in single_prompt
+

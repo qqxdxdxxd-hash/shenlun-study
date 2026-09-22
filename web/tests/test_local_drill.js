@@ -43,4 +43,11 @@ assert(audit.activated[0].includes("生态保护补偿机制"));
 assert.strictEqual(audit.missed_opportunities.length, 1);
 assert(audit.missed_opportunities[0].includes("新质生产力内涵"));
 
+// 6. 测试单一题提示词完全解耦系统硬编码
+const singlePrompt = LocalMARAudit.buildMARPrompt("作答", "单一题", memories, "single");
+assert(!singlePrompt.includes("1000~1100字"), "严禁包含硬编码大作文字数");
+assert(!singlePrompt.includes("大五段"), "严禁包含硬编码大五段结构");
+assert(!singlePrompt.includes("[来自记忆库"), "严禁强制标注记忆库标签");
+assert(!singlePrompt.includes("32+ 分标杆"), "严禁硬编码大作文32分标杆");
+
 console.log("✓ LocalDrillEngine & LocalMARAudit 算法测试通过！");

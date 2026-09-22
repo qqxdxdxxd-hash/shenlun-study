@@ -18,19 +18,30 @@ const DEFAULT_OFFICIAL_SKILLS = {
   },
   doc: {
     id: "shenlun-official-doc",
-    name: "申论贯彻执行与公文题三轨专业阅卷专家",
-    prompt: `你是一位公考贯彻执行与公文题官方资深主阅卷人。
-评分模型（三轨）：
-1. 格式分（1~2分）：标题、主送称谓、落款；
-2. 内容分（14~16分）：严格以材料原词原意为采分点；
-3. 语言与逻辑分（2~3分）：行文号召力、排比对仗、分类清晰度（MECE原则）。`
+    name: "申论贯彻执行与公文题三轨专业阅卷专家与五维提分引擎",
+    prompt: `你是一位国家公务员考试官方资深贯彻执行与公文题主阅卷人。请对考生的公文写作（汇报提纲/工作指南/宣传展板/谈话提纲/公开信等）执行“格式分+内容分+语言逻辑分”三轨严格评审。
+评分铁律：
+1. 格式分（2~4分）：
+   - 标题：公式完整、居中独占一行、严禁加《》书名号（加书名号扣1~2分）；
+   - 格式三件套决策树：公开信/倡议书等完整公文写称谓与落款；提纲类（汇报提纲/发言提纲/谈话提纲/工作指南/宣传展板）仅保留标题，严禁写称谓与落款（乱写倒扣1分）；
+2. 内容分（14~16分）：
+   - 以材料原词原意为采分点，采点给分，宁多勿少；
+   - 必须采用“前置动宾短语小标题 + 展开实词”结构；
+3. 语言与结构分（2~3分）：
+   - 层次逻辑符合法定行政脉络（发文缘由 ➔ 现状/痛点 ➔ 举措/建议）；
+   - 机关场景口吻精准（上行汇报谦抑客观、监管谈话严肃中肯、工作指南具体可操作、对外宣传生动真挚）；
+   - 语病扣分红线：严禁“广大市民朋友们”重复语病，严禁极端绝对化用词与通篇口语化。`
   },
   single: {
     id: "shenlun-single-expert",
-    name: "申论单一题八大要素客观采点阅卷专家",
-    prompt: `你是一位公职考试单一题（归纳概括、提出对策、理解题）官方阅卷专家。
-评分铁律：采点给分，宁多勿少。
-采分标准：前置动宾总括词 + 展开支撑实词。全面、准确、简明、有条理。`
+    name: "申论单一题八大要素客观采点阅卷专家与五维提分引擎",
+    prompt: `你是一位国家公务员考试官方资深单一题主阅卷人。请对考生的单一题（归纳概括/综合分析/提出对策/理解题）作答执行纯客观采点给分制与五维深度诊断。
+评分铁律：
+1. 采点给分，宁多勿少。以给定资料原词原意和采分细则为唯一基准，答错散点不倒扣分；
+2. 字数自适应排版：≤200字极限短题严禁独立小标题，紧凑分条罗列；250~350字常规题必须配备4~8字前置动宾短语（小标题加粗）；≥400字强制MECE层次分类；
+3. 材料四分法过滤：跳读背景文学描写与宏观铺垫，案例段剥离人名与微观数字提炼政务动宾大词，尾段展望套话视时态分流；
+4. 反推对策合理给分：针对材料痛点，措施主体明确、靶向明确、具备政务可行性，合理即可赋分；
+5. 采分点标准结构：前置规范动宾总括词（约占1分）+ 展开支撑材料核心实词（约占1~2分）。`
   }
 };
 
@@ -90,9 +101,13 @@ class ApiClient {
     const materials = payload.materials || '';
 
     let titleIssues = [];
-    const lines = userText.split('\n').map(l => l.trim()).filter(Boolean);
-    if (lines.length > 0 && typeof LocalChromaScanner !== 'undefined') {
-      titleIssues = LocalChromaScanner.scanTitleIssues(lines[0]);
+    const qType = payload.question_type || 'essay';
+    // 单一题客观采点无独立文章标题，不将第一行当作标题做格式检查
+    if (qType !== 'single') {
+      const lines = userText.split('\n').map(l => l.trim()).filter(Boolean);
+      if (lines.length > 0 && typeof LocalChromaScanner !== 'undefined') {
+        titleIssues = LocalChromaScanner.scanTitleIssues(lines[0]);
+      }
     }
 
     let copySpans = [];
@@ -105,8 +120,11 @@ class ApiClient {
       copyExceeded = copyRes.exceeded;
     }
 
+    // 实测字数：剔除换行与多余空格，精准反映考生实际格子填涂字符数
+    const actualCharCount = userText.replace(/\s+/g, '').length;
+
     return {
-      word_count: userText.trim().length,
+      word_count: actualCharCount,
       copy_ratio: copyRatio,
       copy_redline_exceeded: copyExceeded,
       title_issues: titleIssues,
@@ -188,7 +206,12 @@ class ApiClient {
     // 4. 组装题型量规与评卷 User Prompt
     let marPromptStr = "";
     if (typeof LocalMARAudit !== 'undefined') {
-      marPromptStr = LocalMARAudit.buildMARPrompt(payload.user_answer, payload.question_title, payload.recalled_memories || []);
+      marPromptStr = LocalMARAudit.buildMARPrompt(
+        payload.user_answer,
+        payload.question_title,
+        qType === 'single' ? [] : (payload.recalled_memories || []),
+        qType
+      );
     }
 
     let criteriaSection = "";
@@ -280,6 +303,8 @@ ${marPromptStr}
 请以极其严格的官方阅卷考官标准进行评审，并严格按照以下 JSON 格式返回，严禁任何额外格式废话：
 \`\`\`json
 {
+  "target_score": ${targetScore},
+  "word_limit": ${payload.word_limit || (qType === 'single' ? 250 : (qType === 'doc' ? 400 : 1000))},
   "score": ${Math.round(targetScore * 0.85 * 10) / 10},
   "grade": "二类文",
   "radar_scores": ${radarExample},
@@ -288,7 +313,7 @@ ${marPromptStr}
     {"quote": "口语化句子原文", "type": "colloquial_flaw", "color": "purple", "style": "strikethrough", "label": "大白话", "comment": "口语化表达缺少政务大词"}
   ],
 ${perspectivesExample},
-  "rewritten_exemplar": "基于考生原文结合其记忆库重构的一类标杆示范..."
+  "rewritten_exemplar": "基于考生原文结合其规范重构的考场标杆示范..."
 }
 \`\`\`
 `;
@@ -374,12 +399,17 @@ ${perspectivesExample},
       drills = LocalDrillEngine.generateDrills(llmQuotes);
     }
 
+    const finalTargetScore = parsed.target_score !== undefined ? Number(parsed.target_score) : (payload.target_score || targetScore);
+    const finalWordLimit = parsed.word_limit !== undefined ? Number(parsed.word_limit) : (payload.word_limit || null);
+
     return {
       word_count: preInfo.word_count,
       copy_ratio: preInfo.copy_ratio,
       copy_redline_exceeded: preInfo.copy_redline_exceeded,
       title_issues: preInfo.title_issues,
-      score: parsed.score || 30.0,
+      score: parsed.score !== undefined ? parsed.score : 30.0,
+      target_score: finalTargetScore,
+      word_limit: finalWordLimit,
       grade: parsed.grade || "二类文",
       radar_scores: parsed.radar_scores || { "立意与总分论点": 10.0, "结构与段落布局": 7.0, "论据与论证深度": 8.0, "语言与公文规范": 4.5 },
       chroma_spans: allSpans,

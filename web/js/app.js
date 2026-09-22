@@ -72,8 +72,8 @@ const SKILL_DATABASE = {
     {
       group: "🏛️ 系统默认官方 Skill (已根据公文题适配)",
       id: "default_doc_expert",
-      name: "【默认】公文题三轨阅卷专家 (shenlun-official-doc-expert)",
-      desc: "💡 <strong>当前选用规范</strong>：公文题三轨阅卷专家 · 严格按格式分(1~2分)+内容分(材料原词采分14~16分)+语言分三轨阅卷，核算逻辑分与格式五要素。"
+      name: "【默认】公文题三轨专业阅卷专家 (shenlun-official-doc)",
+      desc: "💡 <strong>当前选用规范</strong>：公文题三轨专业阅卷专家 · 格式分(2~4分)+内容分(材料原词采分14~16分)+语言分三轨阅卷，格式决策树自适应与五大公文骨架诊断。"
     },
     {
       group: "🏛️ 系统默认官方 Skill (已根据公文题适配)",
@@ -98,8 +98,8 @@ const SKILL_DATABASE = {
     {
       group: "🏛️ 系统默认官方 Skill (已根据单一题适配)",
       id: "default_single_expert",
-      name: "【默认】单一题八大要素采点专家 (shenlun-single-question-expert)",
-      desc: "💡 <strong>当前选用规范</strong>：单一题八大要素采点专家 · 采点给分制(75%~85%)，对照材料地毯式核查问题/原因/影响/对策采分点。"
+      name: "【默认】单一题八大要素客观采点与五维提分专家 (shenlun-single-expert)",
+      desc: "💡 <strong>当前选用规范</strong>：单一题八大要素客观采点专家 · 采点给分制(75%~85%)，四分法材料过滤、字数排版自适应（≤200字禁小标题，250~350字强制前置动宾短语）与五维深度诊断。"
     },
     {
       group: "🏛️ 系统默认官方 Skill (已根据单一题适配)",
@@ -610,6 +610,7 @@ async function runFullReview() {
   
   let topic = currentQuestion ? currentQuestion.question_title : document.getElementById('prompt-text').innerText;
   let targetScore = currentQuestion ? (currentQuestion.target_score || currentQuestion.score) : (qType === 'essay' ? 35 : (qType === 'doc' ? 25 : 20));
+  let wordLimit = (currentQuestion && currentQuestion.max_words) || null;
   let materials = currentActiveMaterialText;
 
   if (!materials) {
@@ -624,6 +625,26 @@ async function runFullReview() {
   if (isCustomPrompt) {
     topic = document.getElementById('custom-prompt-input').value || topic;
     materials = document.getElementById('custom-mat-input').value || currentActiveMaterialText;
+
+    const customScoreVal = parseFloat(document.getElementById('custom-score-input')?.value);
+    if (!isNaN(customScoreVal) && customScoreVal > 0) {
+      targetScore = customScoreVal;
+    }
+    const customLimitVal = parseInt(document.getElementById('custom-limit-input')?.value, 10);
+    if (!isNaN(customLimitVal) && customLimitVal > 0) {
+      wordLimit = customLimitVal;
+    }
+  }
+
+  // 尝试从题干和要求文本中提取分值与字数限制
+  const combinedReqText = `${topic} ${currentQuestion ? (currentQuestion.prompt_reqs || '') : ''}`;
+  const scoreMatch = combinedReqText.match(/(?:满分|分值|共计?|总分)\s*[:：]?\s*(\d+(?:\.\d+)?)\s*分|[（(]\s*(\d+(?:\.\d+)?)\s*分\s*[)）]/);
+  if (scoreMatch && (!isCustomPrompt || !document.getElementById('custom-score-input')?.value)) {
+    targetScore = parseFloat(scoreMatch[1] || scoreMatch[2]);
+  }
+  const limitMatch = combinedReqText.match(/(?:不超过|限|以内|至多)\s*(\d+)\s*字|(\d+)\s*字以内/);
+  if (limitMatch && (!isCustomPrompt || !document.getElementById('custom-limit-input')?.value)) {
+    wordLimit = parseInt(limitMatch[1] || limitMatch[2], 10);
   }
 
   const apiKey = (localStorage.getItem('shenlun_api_key') || '').trim();
@@ -647,15 +668,17 @@ async function runFullReview() {
     return;
   }
 
-  // 1. 本地 Mini-RAG 智能召回匹配记忆
+  // 1. 本地 Mini-RAG 智能召回匹配记忆 (单一题客观采分题绝对严禁调用 RAG 污染材料)
   let recalled = [];
-  try {
-    const allMemories = await window.clientDB.getAll('memories');
-    if (window.MiniRAG && typeof window.MiniRAG.recallTopK === 'function') {
-      recalled = window.MiniRAG.recallTopK(allMemories, topic, userText, 3);
+  if (qType === 'essay') {
+    try {
+      const allMemories = await window.clientDB.getAll('memories');
+      if (window.MiniRAG && typeof window.MiniRAG.recallTopK === 'function') {
+        recalled = window.MiniRAG.recallTopK(allMemories, topic, userText, 3);
+      }
+    } catch (e) {
+      console.warn("MiniRAG recall error:", e);
     }
-  } catch (e) {
-    console.warn("MiniRAG recall error:", e);
   }
 
   const payload = {
@@ -664,8 +687,9 @@ async function runFullReview() {
     materials: materials,
     user_answer: userText,
     target_score: targetScore,
+    word_limit: wordLimit,
     skill_id: skillId,
-    recalled_memories: recalled,
+    recalled_memories: qType === 'single' ? [] : recalled,
     scoring_criteria: currentQuestion ? (currentQuestion.scoring_criteria || '') : '',
     reference_answer: currentQuestion ? (currentQuestion.reference_answer || '') : '',
     api_key: apiKey,
@@ -760,8 +784,18 @@ function renderReviewResult(userText, res, passedQType, passedTargetScore) {
   if (emptyBox) emptyBox.style.display = 'none';
 
   // 分数与定档
-  document.getElementById('score-val').innerText = res.score;
+  const effectiveTargetScore = res.target_score !== undefined ? Number(res.target_score) : targetScore;
+  const scoreValEl = document.getElementById('score-val');
+  if (scoreValEl) {
+    scoreValEl.innerHTML = `${res.score} <span style="font-size: 13px; font-weight: normal; color: var(--text-muted);">/ ${effectiveTargetScore}分</span>`;
+  }
   document.getElementById('score-grade').innerText = res.grade;
+
+  const scoreLblEl = document.getElementById('score-max-lbl');
+  if (scoreLblEl) {
+    const rate = Math.round((res.score / effectiveTargetScore) * 100);
+    scoreLblEl.innerText = `综合评定分 (得分率: ${rate}%)`;
+  }
 
   // 动态更新顶部指标卡第3项（结构/条理/格式）
   const structLblEl = document.getElementById('structure-lbl');
@@ -797,7 +831,7 @@ function renderReviewResult(userText, res, passedQType, passedTargetScore) {
   const radar = res.radar_scores || {};
   let dimensions = [];
   if (window.QuestionTypeRubrics) {
-    dimensions = window.QuestionTypeRubrics.getDimensions(qType, targetScore);
+    dimensions = window.QuestionTypeRubrics.getDimensions(qType, effectiveTargetScore);
   } else {
     dimensions = [
       { key: "立意与总分论点", max: 12, getDesc: () => "立意100%源于材料，首段末句亮明总论点，三分论点醒目" },
@@ -821,7 +855,7 @@ function renderReviewResult(userText, res, passedQType, passedTargetScore) {
       }
     }
     if (scoreVal === undefined) {
-      scoreVal = Math.round(d.max * (res.score / targetScore) * 10) / 10;
+      scoreVal = Math.round(d.max * (res.score / effectiveTargetScore) * 10) / 10;
     }
     const color = scoreVal >= d.max * 0.8 ? '#4ade80' : (scoreVal >= d.max * 0.6 ? '#facc15' : '#f87171');
     const desc = typeof d.getDesc === 'function' ? d.getDesc(res) : (d.desc || '按考规量化评定');
