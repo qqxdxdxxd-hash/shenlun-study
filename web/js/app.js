@@ -72,8 +72,8 @@ const SKILL_DATABASE = {
     {
       group: "🏛️ 系统默认官方 Skill (已根据公文题适配)",
       id: "default_doc_expert",
-      name: "【默认】公文题三轨阅卷专家 (shenlun-official-doc-expert)",
-      desc: "💡 <strong>当前选用规范</strong>：公文题三轨阅卷专家 · 严格按格式分(1~2分)+内容分(材料原词采分14~16分)+语言分三轨阅卷，核算逻辑分与格式五要素。"
+      name: "【默认】公文题三轨专业阅卷专家 (shenlun-official-doc)",
+      desc: "💡 <strong>当前选用规范</strong>：公文题三轨专业阅卷专家 · 格式分(2~4分)+内容分(材料原词采分14~16分)+语言分三轨阅卷，格式决策树自适应与五大公文骨架诊断。"
     },
     {
       group: "🏛️ 系统默认官方 Skill (已根据公文题适配)",
