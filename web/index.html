@@ -84,10 +84,37 @@
                 </button>
               </div>
               <select class="form-select" id="exam-selector" onchange="onExamSelectChange()">
-                <option value="gk2026_essay">2026年国考副省级 · 第五题材料大作文《以绿色发展理念赋能现代化》</option>
-                <option value="js2025_single">2025年江苏省考A类 · 第二题单一对策题《整治形式主义与基层减负》</option>
-                <option value="sydw2025_doc">2025年事业单位联考A类 · 第三题公文写作《关于推进垃圾分类的公开信》</option>
+                <option value="gk2024_provincial">🏛️ 2024年国家公务员考试申论真题（副省级）</option>
+                <option value="gk2023_provincial">🏛️ 2023年国家公务员考试申论真题（副省级）</option>
+                <option value="gk2022_provincial">🏛️ 2022年国家公务员考试申论真题（省级）</option>
+                <option value="gk2021_provincial">🏛️ 2021年国家公务员考试申论真题（省级）</option>
+                <option value="gk2020_provincial">🏛️ 2020年国家公务员考试申论真题（省级）</option>
+                <option value="js2024_a">🏛️ 2024年江苏省公务员考试申论真题（A类）</option>
+                <option value="gd2024_county">🏛️ 2024年广东省公务员考试申论真题（县级）</option>
+                <option value="bj2024_district">🏛️ 2024年北京市公务员考试申论真题（区级及以上）</option>
               </select>
+            </div>
+
+            <!-- 题本小题直达与官方采分底稿展开 -->
+            <div id="paper-questions-container" style="margin-bottom: 10px;">
+              <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 5px; display:flex; justify-content:space-between; align-items:center;">
+                <span>🎯 试卷各题快速直达（自动联动资料、题型与采分点）：</span>
+                <button type="button" class="btn btn-outline" style="padding: 1px 8px; font-size: 10.5px; border-color: rgba(56,189,248,0.4); color: #38bdf8;" onclick="toggleScoringCriteria()">
+                  <span id="scoring-toggle-text">🔍 查看官方采分底稿</span>
+                </button>
+              </div>
+              <div id="paper-questions-pills" style="display:flex; flex-wrap:wrap; gap:6px;">
+                <!-- 动态由 app.js 渲染 -->
+              </div>
+            </div>
+
+            <!-- 官方标准采分底稿抽屉 (Ground Truth) -->
+            <div id="scoring-criteria-box" style="display:none; background: rgba(34,197,94,0.06); border: 1px dashed rgba(34,197,94,0.3); border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #86efac; margin-bottom: 12px; line-height: 1.6;">
+              <div style="font-weight:700; margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:#4ade80;">🏛️ 【官方客观采分底稿与阅卷细则】(Ground Truth)：</span>
+                <span style="font-size:11px; color:var(--text-muted); cursor:pointer;" onclick="toggleScoringCriteria()">✕ 收起</span>
+              </div>
+              <div id="scoring-criteria-content" style="white-space:pre-wrap; color:#cbd5e1; font-size:12px; line-height:1.7;"></div>
             </div>
 
             <!-- 动态展示题干要求与给定资料 -->
@@ -194,7 +221,7 @@
               </div>
               <div class="score-item">
                 <div style="font-size: 15px; font-weight: 700; color: #38bdf8;" id="structure-val">--</div>
-                <div class="score-lbl">立意与骨架形态</div>
+                <div class="score-lbl" id="structure-lbl">立意与骨架形态</div>
               </div>
               <div class="score-item">
                 <div style="font-size: 15px; font-weight: 700; color: #4ade80;" id="copy-ratio-val">--</div>
@@ -252,7 +279,7 @@
                   <span style="font-size: 11px; color: var(--text-muted);">三重视角联合把关</span>
                 </div>
                 <div id="perspectives-container" style="font-size: 13px; line-height: 1.8; color: #cbd5e1;">
-                  提交作答后将在此处呈现考官第一眼定档、大五段骨架深度诊断与行政文风质检判语。
+                  提交作答后将在此处呈现考官第一眼定档、题型专属结构逻辑深度诊断与行政文风质检判语。
                 </div>
               </div>
 
@@ -333,20 +360,12 @@
         </div>
         <div class="grid-2col">
           <div>
-            <div class="form-label">【公共库】近10年国考/省考官方真题与标准采分底稿 (只读秒开)</div>
-            <div style="background:#090d16; border:1px solid var(--card-border); border-radius:6px; padding:12px;">
-              <div style="padding:8px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between;">
-                <span>2026年国考副省 (材料作文+公文+单一题)</span>
-                <span class="tag-blue card-tag">官方原卷+底稿</span>
-              </div>
-              <div style="padding:8px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between;">
-                <span>2025年江苏省考A类 (综合分析+公文题)</span>
-                <span class="tag-blue card-tag">官方原卷+底稿</span>
-              </div>
-              <div style="padding:8px; display:flex; justify-content:space-between;">
-                <span>2025年事业单位联考综合应用能力(A类)</span>
-                <span class="tag-blue card-tag">官方原卷+底稿</span>
-              </div>
+            <div class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>【公共库】历年国考/省考/事业单位官方真题 (纯前端分片秒开)</span>
+              <span class="tag-blue card-tag" id="public-kb-count">共 200 套真题</span>
+            </div>
+            <div style="background:#090d16; border:1px solid var(--card-border); border-radius:6px; padding:8px; max-height: 420px; overflow-y: auto;" id="public-kb-list">
+              <div style="padding:12px; text-align:center; color:var(--text-muted);">正在加载真题分片索引...</div>
             </div>
           </div>
 
@@ -517,10 +536,18 @@
   <!-- 浮动提示 Popover -->
   <div id="span-popover"></div>
 
-  <!-- 脚本引入 -->
+  <!-- 外部解析库 (Mozilla PDF.js CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <!-- 客户端核心算法与无状态数据层 -->
   <script src="js/db.js"></script>
   <script src="js/sm2.js"></script>
   <script src="js/retrieval.js"></script>
+  <script src="js/local_scanner.js"></script>
+  <script src="js/local_drill.js"></script>
+  <script src="js/local_pdf.js"></script>
+  <script src="js/exams_loader.js"></script>
+  <script src="js/rubrics.js"></script>
   <script src="js/chroma_renderer.js"></script>
   <script src="js/backup.js"></script>
   <script src="js/api_client.js"></script>

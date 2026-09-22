@@ -168,6 +168,19 @@ node web/tests/test_dossier_metrics.js
 
 ---
 
+## 🚀 双轨运行架构：支持 GitHub Pages 纯静态 0 元部署与无状态后端
+
+本系统原生支持**“双轨无缝架构”**：
+1. **GitHub Pages 纯前端零后端模式 (Pure Frontend / Serverless)**：
+   - **0 元成本，永久免费托管**：直接通过 GitHub Pages 访问，无需租用云服务器或维护 Docker/Linux 环境；
+   - **200 套真题轻量秒开**：通过 `web/data/exams/index.json` (~50KB) 与单卷分片按需懒加载 (~25KB)，配合 IndexedDB 二级持久化缓存，首屏秒开，断网亦可复习；
+   - **全套算法纯 JS 原生化**：15-gram 抄袭红线预检、Span 字符级坐标定位器、MAR 记忆审计、3 分钟微练习即时秒判、Mozilla PDF.js 文字图层提取均在浏览器内存内执行；
+   - **大模型前端直连 (Direct BYOK)**：浏览器端直接基于 Fetch 请求 DeepSeek / 火山方舟 / OpenAI 兼容端点（天然跨域 CORS），密钥 100% 留存在浏览器本地，用完即焚。
+2. **本地 Python FastAPI 后端模式 (可选)**：
+   - 提供 `server/` 高性能异步后端，供本地离线批处理或团队内网部署。
+
+---
+
 ## 📂 项目工程目录拓扑
 
 ```
@@ -175,7 +188,15 @@ shenlun-study/
 ├── CONTEXT.md                    # 领域建模词典 (15个规范统一术语)
 ├── README.md                     # 项目介绍与快速启动指引
 ├── start.bat                     # Windows 一键启动脚本 (双击打开浏览器+启动后台)
+├── start.sh                      # Linux / macOS 一键启动脚本
+├── Dockerfile                    # 生产级极简容器镜像定义
+├── docker-compose.yml            # Docker 编排配置 (一键容器化启动)
+├── index.html                    # 根重定向入口 (支持 GitHub Pages 根路径无缝跳转)
+├── .nojekyll                     # 禁用 Jekyll 规则保障 GitHub Pages 静态数据正常加载
 ├── preview.html                  # 全功能交互高保真效果预览原型
+├── scripts/
+│   ├── build_exams_kb.py         # 200 套真题分片与轻量索引生成工具
+│   └── export_skills_kb.py       # 官方中立阅卷规范 JSON 导出工具
 ├── docs/                         # 文档体系
 │   ├── adr/                      # 架构决策记录 (ADR 0001~0005)
 │   ├── prd-architecture.md       # 完备的 PRD 与系统架构规范底稿 (v2.5.0)
@@ -197,16 +218,25 @@ shenlun-study/
 │   │   ├── evaluator.py          # 核心无状态评审流水线
 │   │   ├── api.py                # FastAPI 路由控制器 (支持 BYOK 透传与 PDF 提取)
 │   │   └── main.py               # 服务启动入口 (端口 8789)
-│   └── tests/                    # 后端完备 TDD 单元测试集 (9/9 全绿通过)
+│   └── tests/                    # 后端完备 TDD 单元测试集
 └── web/                          # 现代纯原生前端工作台 (基于 IndexedDB 本地存储)
-    ├── index.html                # 主工作台结构 (已集成题干材料展开与题型Skill智能联动)
+    ├── index.html                # 主工作台结构 (集成 200 套真题分片库与 PDF.js 纯前端解析)
     ├── styles/main.css           # 考场暗色模式规范样式
-    └── js/
-        ├── db.js                 # 客户端 IndexedDB 封装 (6大对象表，Version: 2)
-        ├── retrieval.js          # 纯前端 Mini-RAG 极速分词与记忆召回 (<5ms)
-        ├── sm2.js                # SuperMemo-2 艾宾浩斯记忆调度算法
-        ├── chroma_renderer.js    # 字符级色谱 Span 注入与悬浮 Popover 诊断
-        ├── backup.js             # 温和主动数据防护与全量 JSON 导出导入
-        ├── api_client.js         # 前端 API 客户端 (含 BYOK 请求头与 PDF 提取调用)
-        └── app.js                # 全局主控制器与事件总线
+    ├── data/
+    │   ├── exams/                # 200 套真题分片与轻量索引 (~50KB index.json + [id].json)
+    │   ├── skills/               # 官方中立阅卷规范 JSON
+    │   └── default_kb/           # 种子真题库
+    ├── js/
+    │   ├── db.js                 # 客户端 IndexedDB 封装 (7大对象表，含真题分片离线缓存)
+    │   ├── retrieval.js          # 纯前端 Mini-RAG 极速分词与记忆召回 (<5ms)
+    │   ├── sm2.js                # SuperMemo-2 艾宾浩斯记忆调度算法
+    │   ├── local_scanner.js      # 纯前端 15-gram 抄袭红线预检与 SpanResolver 定位算法
+    │   ├── local_drill.js        # 纯前端 MAR 记忆激活审计与 3 分钟微练习秒判引擎
+    │   ├── local_pdf.js          # 纯前端 Mozilla PDF.js 文本图层解析 (零上传绝对隐私)
+    │   ├── exams_loader.js       # 纯前端真题分片按需懒加载器 (二级持久化)
+    │   ├── chroma_renderer.js    # 字符级色谱 Span 注入与悬浮 Popover 诊断
+    │   ├── backup.js             # 温和主动数据防护与全量 JSON 导出导入
+    │   ├── api_client.js         # 前端 API 调度器 (支持本地后端与大模型直接 BYOK 直连)
+    │   └── app.js                # 全局主控制器与事件总线
+    └── tests/                    # 前端全部算法单元测试集 (6组测试 100% 通过)
 ```

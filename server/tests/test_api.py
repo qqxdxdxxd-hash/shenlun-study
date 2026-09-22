@@ -9,7 +9,7 @@ def test_api_get_exams():
     assert res.status_code == 200
     exams = res.json()
     assert len(exams) >= 3
-    assert any("2026年国考" in e["exam_name"] for e in exams)
+    assert any("国家公务员考试" in e["exam_name"] or "国考" in e["exam_name"] for e in exams)
 
 def test_api_get_skills():
     res = client.get("/api/skills")

@@ -31,11 +31,10 @@ jobs:
 
       - name: Run Backend Unit Tests
         run: |
-          cd server
           pytest -v
 
   frontend-tests:
-    name: Frontend Logic & Metrics Tests (Node ${{ matrix.node-version }})
+    name: Frontend Logic & Pure Client-Side Tests (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -50,6 +49,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Run Frontend Dossier Metrics Tests
+      - name: Run All Pure Frontend Test Suites
         run: |
           node web/tests/test_dossier_metrics.js
+          node web/tests/test_local_scanner.js
+          node web/tests/test_local_drill.js
+          node web/tests/test_exams_loader.js
+          node web/tests/test_local_pdf.js
+          node web/tests/test_api_client.js
+          node web/tests/test_real_exam_subquestions.js

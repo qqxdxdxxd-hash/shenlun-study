@@ -122,41 +122,79 @@ const SKILL_DATABASE = {
   ]
 };
 
-// 静态/纯前端兜底真题库 (保证在 GitHub Pages 等纯静态环境下依然能即刻呈现真题)
+// 静态/纯前端保底真实真题库 (采用最近5年真实国考与省考真题)
 const FALLBACK_DEFAULT_EXAMS = [
   {
-    id: "gk2026_essay",
-    exam_name: "2026年国考副省级",
-    question_type: "essay",
-    question_title: "以绿色发展理念引领现代化大作文",
-    prompt_text: "“给定资料4”中提到“大鹏之动，非一羽之轻；骐骥之速，非一足之力”。请深入思考这句话的内涵，联系实际，自选角度，自拟题目，写一篇议论文。",
-    prompt_reqs: "① 立意明确，见解深刻；② 联系实际，不拘泥于给定资料；③ 思路清晰，语言流畅；④ 参考时限 60 分钟，字数 1000~1200 字，满分 35 分。",
-    target_score: 35,
-    materials: "【给定资料 1】某沿海工业强市曾走过一段高能耗、高污染的粗放增长历程。上世纪末，为了追求产值增速，该市盲目招引大量高耗能化工与印染企业，虽然短期内财政收入大幅上涨，但随之而来的是河道发黑发臭、灰霾天气频繁，引发群众强烈不满。进入新时代，该市坚决摒弃“先污染后治理”的传统老路，坚决贯彻绿色发展理念。市委统筹算大账、长远账，三年内依法关停搬迁落后污染企业 128 家，引入清洁能源装备制造与工业互联网产业，昔日黑烟滚滚的厂区全面升级为绿色低碳示范园，实现了经济增速与生态环境的“双向提升”。\n\n【给定资料 2】在中国式现代化进程中，生态文明建设是全局性、根本性工程。环境法学专家李教授指出：“保护生态环境必须依靠最严格的制度、最严密的法治。很多地方基层治理出现‘上面发文件、基层难落实’，根源在于财政保障不足与权责脱节。”必须健全生态保护补偿制度和转移支付机制，打破部门壁垒，推行跨流域横向生态补偿，严格落实河湖长制、林长制，把生态环境指标作为领导干部考核的硬性刚性约束，以制度倒逼产业升级。\n\n【给定资料 3】良好生态环境是最普惠的民生福祉。某街道探索“绿色积分银行”，将垃圾分类、河道巡查、低碳出行转化为积分，居民可凭积分兑换生活用品。党员带头成立“绿色管家”志愿者队伍，开展常态化环保宣传，带动超 90% 的居民自觉参与社区环境整治，昔日脏乱老旧小区变成了绿树成荫的生态宜居家园。\n\n【给定资料 4】古人云：“大鹏之动，非一羽之轻；骐骥之速，非一足之力。”中国式现代化是人与自然和谐共生的现代化。面对艰巨繁重的绿色转型任务，既需要国家层面的顶层设计与战略定力，也需要经营主体的自觉践行，更需要亿万人民的团结奋斗。只有全社会凝心聚力、久久为功，才能共同绘就美丽中国的壮阔图景。"
+    id: "gk2024_provincial",
+    exam_name: "2024年国家公务员考试申论真题（副省级）",
+    year: 2024,
+    category: "国考",
+    tier: "副省级/省级",
+    char_count: 7600,
+    question_count: 5,
+    questions_summary: [
+      { id: "gk2024_prov_q1", q_index: 1, type: "single", question_title: "H光电集团自主创新突破经验", target_score: 15 },
+      { id: "gk2024_prov_q2", q_index: 2, type: "single", question_title: "某市“高效办成一件事”改革举措", target_score: 15 },
+      { id: "gk2024_prov_q3", q_index: 3, type: "doc", question_title: "云栖县“土特产”产业振兴工作简报", target_score: 20 },
+      { id: "gk2024_prov_q4", q_index: 4, type: "single", question_title: "海洋经济“向海图强”高质量发展分析", target_score: 15 },
+      { id: "gk2024_prov_q5", q_index: 5, type: "essay", question_title: "大作文：事必有法 然后可成", target_score: 35 }
+    ]
   },
   {
-    id: "js2025_single",
-    exam_name: "2025年江苏省考A类",
-    question_type: "single",
-    question_title: "基层形式主义与减负对策",
-    prompt_text: "根据“给定资料2”，请概括当前部分地区在基层形式主义整治过程中面临的主要瓶颈与成因，并提出切实可行的对策建议。",
-    prompt_reqs: "① 概括全面，条理清晰；② 对策具备针对性与可行性；③ 字数不超过 300 字，满分 20 分。",
-    target_score: 20,
-    materials: "【给定资料 2】半月谈记者走访某乡镇，一名大学生村官坦言：“现在上级各类检查评比名目繁多，手机里装了十几个政务App，每天打卡拍照、填报台账耗费了近半天时间。工作干得好不如材料写得好、台账造得齐，基层干部苦不堪言。”县委党校副教授分析指出，形式主义在基层屡禁不止，根源在于政绩观扭曲以及“考核机制唯痕迹论”。一些上级部门图省事，把督导简化为查台账、看留痕；加上权责不对等，基层‘看得见的管不着、管得着的看不见’，导致减负政策在基层出现温差。"
+    id: "gk2022_provincial",
+    exam_name: "2022年国家公务员考试申论真题（省级）",
+    year: 2022,
+    category: "国考",
+    tier: "省级/副省级",
+    char_count: 7800,
+    question_count: 5,
+    questions_summary: [
+      { id: "gk2022_prov_q1", q_index: 1, type: "single", question_title: "B公司科技创新启示", target_score: 10 },
+      { id: "gk2022_prov_q2", q_index: 2, type: "single", question_title: "G省粮食产业发展问题与对策", target_score: 15 },
+      { id: "gk2022_prov_q3", q_index: 3, type: "doc", question_title: "临诗特色乡村旅游推介材料", target_score: 20 },
+      { id: "gk2022_prov_q4", q_index: 4, type: "single", question_title: "“未来学校”更高教育境界阐释", target_score: 20 },
+      { id: "gk2022_prov_q5", q_index: 5, type: "essay", question_title: "大作文：今天的思维与未来的收获", target_score: 35 }
+    ]
   },
   {
-    id: "sydw2025_doc",
-    exam_name: "2025年事业单位联考A类",
-    question_type: "doc",
-    question_title: "垃圾分类倡议公开信",
-    prompt_text: "为了在全区推广生活垃圾分类，某区城管局拟向全体市民发布一封倡议公开信。请根据“给定资料3”，拟写这份公开信的内容提纲。",
-    prompt_reqs: "① 格式要素齐全（标题、称谓、正文、落款）；② 动员语言有感染力，措施具体；③ 字数 400~500 字，满分 25 分。",
-    target_score: 25,
-    materials: "【给定资料 3】生活垃圾分类不仅是民生关键小事，更关乎城市文明底色。某区日均产生生活垃圾达 800 余吨，垃圾焚烧厂超负荷运转。为扭转这一现状，区政府决定在全区全面启动垃圾分类定时定点投放工作。公开信需向广大市民讲清分类必要性，倡导源头减量，明确厨余垃圾、可回收物分类标准，并公布社区志愿监督热线与奖励积分细则。"
+    id: "js2024_a",
+    exam_name: "2024年江苏省公务员考试申论真题（A类）",
+    year: 2024,
+    category: "江苏",
+    tier: "省考A类",
+    char_count: 7200,
+    question_count: 4,
+    questions_summary: [
+      { id: "js2024_a_q1", q_index: 1, type: "single", question_title: "无锡物联网创新联合体培育经验", target_score: 20 },
+      { id: "js2024_a_q2", q_index: 2, type: "single", question_title: "宿迁农村电商赋能乡村振兴路径", target_score: 20 },
+      { id: "js2024_a_q3", q_index: 3, type: "doc", question_title: "推行“综合查一次”柔性执法倡议书", target_score: 20 },
+      { id: "js2024_a_q4", q_index: 4, type: "essay", question_title: "大作文：在推进中国式现代化中走在前做示范", target_score: 40 }
+    ]
+  },
+  {
+    id: "gd2024_county",
+    exam_name: "2024年广东省公务员考试申论真题（县级）",
+    year: 2024,
+    category: "广东",
+    tier: "省考县级",
+    char_count: 6900,
+    question_count: 4,
+    questions_summary: [
+      { id: "gd2024_county_q1", q_index: 1, type: "single", question_title: "粤北山区县飞地经济发展经验", target_score: 20 },
+      { id: "gd2024_county_q2", q_index: 2, type: "single", question_title: "现代海洋牧场全产业链发展路径", target_score: 20 },
+      { id: "gd2024_county_q3", q_index: 3, type: "doc", question_title: "“粤治美”数字基层治理经验推广通知", target_score: 20 },
+      { id: "gd2024_county_q4", q_index: 4, type: "essay", question_title: "大作文：日日行不怕千万里 常常做不怕千万事", target_score: 40 }
+    ]
   }
 ];
 
+if (typeof window !== 'undefined') {
+  window.FALLBACK_DEFAULT_EXAMS = FALLBACK_DEFAULT_EXAMS;
+}
+
 let currentExams = [...FALLBACK_DEFAULT_EXAMS];
+let currentPaper = null;
+let currentQuestion = null;
 let currentActiveMaterialText = "";
 
 // 初始化
@@ -179,10 +217,14 @@ async function initApp() {
     }
   }
 
-  // 2. 加载真题
-  const fetchedExams = await window.ApiClient.getExams();
-  if (fetchedExams && fetchedExams.length > 0) {
-    currentExams = fetchedExams;
+  // 2. 加载真题轻量索引 (分片秒开架构)
+  try {
+    const fetchedExams = await (window.ExamsLoader ? window.ExamsLoader.loadIndex() : window.ApiClient.getExams());
+    if (fetchedExams && fetchedExams.length > 0) {
+      currentExams = fetchedExams;
+    }
+  } catch (err) {
+    console.warn("加载真题分片索引异常，使用保底真题库", err);
   }
 
   // 3. 渲染首屏
@@ -190,6 +232,7 @@ async function initApp() {
   await renderExamSelector();
   renderMemoryDeck();
   renderPrivateKBDocs();
+  renderPublicKBList();
   await renderDossierList();
   await renderDossierWarningOnReviewPage();
 
@@ -221,11 +264,21 @@ function changeQuestionType() {
   const qType = document.getElementById('q-type').value;
   renderSkillOptions(qType);
 
-  const examSelector = document.getElementById('exam-selector');
-  if (qType === 'essay') examSelector.value = 'gk2026_essay';
-  else if (qType === 'single') examSelector.value = 'js2025_single';
-  else if (qType === 'doc') examSelector.value = 'sydw2025_doc';
-  onExamSelectChange();
+  // 联动刷新顶部指标卡与占位
+  const structLblEl = document.getElementById('structure-lbl');
+  if (structLblEl && window.QuestionTypeRubrics) {
+    structLblEl.innerText = window.QuestionTypeRubrics.getStructureCardLabel(qType);
+  }
+
+  // 如果当前整卷中存在匹配该题型的试题，自动联动切至该小题
+  if (currentPaper && Array.isArray(currentPaper.questions)) {
+    const matched = currentPaper.questions.find(q => q.type === qType);
+    if (matched) {
+      selectSubQuestion(matched.id);
+      renderDossierWarningOnReviewPage(qType);
+      return;
+    }
+  }
 
   // 动态联动刷新作答页短板警报
   renderDossierWarningOnReviewPage(qType);
@@ -289,11 +342,26 @@ async function renderExamSelector() {
   const currentSelected = selector.value;
   const userDocs = await window.clientDB.getAll('private_kb') || [];
 
-  let html = '<optgroup label="🏛️ 预置官方真题与标准采分底稿">';
-  currentExams.forEach(exam => {
-    html += `<option value="${exam.id}">🏛️ ${exam.exam_name} · ${exam.question_title}</option>`;
-  });
-  html += '</optgroup>';
+  // 按国考与各省省考分类
+  const guokaoList = currentExams.filter(e => e.category === '国考' || (e.exam_name && (e.exam_name.includes('国家') || e.exam_name.includes('国考'))));
+  const provList = currentExams.filter(e => !(e.category === '国考' || (e.exam_name && (e.exam_name.includes('国家') || e.exam_name.includes('国考')))));
+
+  let html = '';
+  if (guokaoList.length > 0) {
+    html += '<optgroup label="🏛️ 历年国考官方真题 (最近5年整卷)">';
+    guokaoList.forEach(exam => {
+      html += `<option value="${exam.id}">🏛️ ${exam.exam_name}</option>`;
+    });
+    html += '</optgroup>';
+  }
+
+  if (provList.length > 0) {
+    html += '<optgroup label="🏛️ 各省省考官方真题 (最近5年代表卷)">';
+    provList.forEach(exam => {
+      html += `<option value="${exam.id}">🏛️ ${exam.exam_name}</option>`;
+    });
+    html += '</optgroup>';
+  }
 
   if (userDocs.length > 0) {
     html += '<optgroup label="📂 我的私有知识库 / 上传材料 (点击直接作为试卷材料)">';
@@ -331,8 +399,14 @@ async function onExamSelectChange() {
   const key = selector.value;
   if (!key) return;
 
+  const qContainer = document.getElementById('paper-questions-container');
+  const pillsContainer = document.getElementById('paper-questions-pills');
+
   if (key === 'custom_manual') {
     if (!isCustomPrompt) toggleCustomPromptMode();
+    if (qContainer) qContainer.style.display = 'none';
+    currentPaper = null;
+    currentQuestion = null;
     return;
   }
 
@@ -341,13 +415,16 @@ async function onExamSelectChange() {
     const userDocs = await window.clientDB.getAll('private_kb');
     const doc = userDocs.find(d => d.id === key);
     if (doc) {
-      currentActiveMaterialText = doc.content; // 确保大模型与色谱比对拿到的是完整纯净原文
+      currentPaper = null;
+      currentQuestion = null;
+      if (qContainer) qContainer.style.display = 'none';
+
+      currentActiveMaterialText = doc.content;
       document.getElementById('exam-title-badge').innerText = `📂 私有资料 · ${doc.title}`;
       document.getElementById('exam-score-badge').innerText = `共 ${doc.content.length} 字`;
       document.getElementById('prompt-text').innerText = `《${doc.title}》· 深入研读与申论综合分析`;
       document.getElementById('prompt-reqs').innerHTML = `<strong>使用材料：</strong>${doc.title}（已关联为大模型批改与抄袭比对全文基准，共 ${doc.content.length} 字）。`;
 
-      // 优雅呈现自然原文流，过滤页码噪声，保留连贯舒适阅读与段间距
       const cleanContent = doc.content.replace(/---\s*\[第\s*\d+\s*页\]\s*---\s*/g, '').trim();
       document.getElementById('materials-panel').innerHTML = `
         <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
@@ -359,23 +436,110 @@ ${window.ChromaRenderer.escapeHtml(cleanContent)}
     }
   }
 
-  // 2. 否则判定为官方预置真题
-  const exam = currentExams.find(e => e.id === key);
-  if (!exam) return;
+  // 2. 判定为官方预置真题题本 (获取整卷与题目)
+  let paper = null;
+  if (window.ExamsLoader) {
+    paper = await window.ExamsLoader.getPaperDetail(key);
+  }
+  if (!paper) {
+    paper = currentExams.find(e => e.id === key);
+  }
+  if (!paper) return;
 
-  currentActiveMaterialText = exam.materials;
-  document.getElementById('exam-title-badge').innerText = `🏛️ ${exam.exam_name}`;
-  document.getElementById('exam-score-badge').innerText = `满分 ${exam.target_score} 分`;
-  document.getElementById('prompt-text').innerText = exam.prompt_text;
-  document.getElementById('prompt-reqs').innerHTML = `<strong>作答要求：</strong>${exam.prompt_reqs}`;
-  
-  // 优雅呈现完整原文
+  currentPaper = paper;
+
+  // 渲染试卷内题目切换 Pill 标签组
+  const questions = paper.questions || [];
+  if (questions.length > 0) {
+    if (qContainer) qContainer.style.display = 'block';
+    if (pillsContainer) {
+      pillsContainer.innerHTML = questions.map((q, idx) => {
+        let typeBadge = '大作文';
+        if (q.type === 'doc') typeBadge = '公文';
+        else if (q.type === 'single') typeBadge = '单一';
+        return `<button type="button" class="q-pill ${idx === 0 ? 'active' : ''}" id="pill-${q.id}" onclick="selectSubQuestion('${q.id}')">题(${q.q_index})·${typeBadge} (${q.target_score || q.score}分)</button>`;
+      }).join('');
+    }
+    await selectSubQuestion(questions[0].id);
+  } else {
+    // 兼容单题旧数据
+    if (qContainer) qContainer.style.display = 'none';
+    currentQuestion = null;
+    currentActiveMaterialText = paper.materials || paper.materials_text || '';
+    document.getElementById('exam-title-badge').innerText = `🏛️ ${paper.exam_name}`;
+    document.getElementById('exam-score-badge').innerText = `满分 ${paper.target_score || 35} 分`;
+    document.getElementById('prompt-text').innerText = paper.prompt_text || paper.question_title;
+    document.getElementById('prompt-reqs').innerHTML = `<strong>作答要求：</strong>${paper.prompt_reqs || '按公考规范要求作答'}`;
+    document.getElementById('materials-panel').innerHTML = `
+      <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
+${window.ChromaRenderer.escapeHtml(currentActiveMaterialText)}
+      </div>
+    `;
+  }
+
+  if (isCustomPrompt) toggleCustomPromptMode();
+}
+
+// 选择试卷中的具体小题
+async function selectSubQuestion(qid) {
+  if (!currentPaper || !Array.isArray(currentPaper.questions)) return;
+  const q = currentPaper.questions.find(item => item.id === qid) || currentPaper.questions[0];
+  if (!q) return;
+
+  currentQuestion = q;
+
+  // 更新 pill 按钮激活状态
+  document.querySelectorAll('.q-pill').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.getElementById(`pill-${q.id}`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  // 同步题型与 Skill 规范
+  const qTypeEl = document.getElementById('q-type');
+  if (qTypeEl && q.type) {
+    qTypeEl.value = q.type;
+    renderSkillOptions(q.type);
+  }
+
+  // 联动更新顶部指标卡标签
+  const structLblEl = document.getElementById('structure-lbl');
+  if (structLblEl && window.QuestionTypeRubrics && q.type) {
+    structLblEl.innerText = window.QuestionTypeRubrics.getStructureCardLabel(q.type);
+  }
+
+  // 呈现真实题干与作答要求
+  document.getElementById('exam-title-badge').innerText = `🏛️ ${currentPaper.exam_name} · 第(${q.q_index})题`;
+  document.getElementById('exam-score-badge').innerText = `满分 ${q.target_score || q.score || 20} 分`;
+  document.getElementById('prompt-text').innerText = q.prompt_text;
+  document.getElementById('prompt-reqs').innerHTML = `<strong>作答要求：</strong>${q.prompt_reqs || '按要求作答'}（${q.char_limit || ''}）。`;
+
+  // 呈现采分底稿内容
+  const criteriaContent = document.getElementById('scoring-criteria-content');
+  if (criteriaContent) {
+    criteriaContent.innerText = q.scoring_criteria || '本题根据材料客观原词与要点采分。';
+  }
+
+  // 呈现完整给定资料
+  currentActiveMaterialText = currentPaper.materials_text || currentPaper.materials || '';
   document.getElementById('materials-panel').innerHTML = `
     <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
-${window.ChromaRenderer.escapeHtml(exam.materials)}
+${window.ChromaRenderer.escapeHtml(currentActiveMaterialText)}
     </div>
   `;
-  if (isCustomPrompt) toggleCustomPromptMode();
+
+  // 联动刷新作答页短板警报
+  renderDossierWarningOnReviewPage(q.type);
+}
+
+// 展开/收起官方标准采分底稿
+function toggleScoringCriteria() {
+  const box = document.getElementById('scoring-criteria-box');
+  const btnText = document.getElementById('scoring-toggle-text');
+  if (!box) return;
+  const isHidden = box.style.display === 'none';
+  box.style.display = isHidden ? 'block' : 'none';
+  if (btnText) {
+    btnText.innerText = isHidden ? '✕ 收起采分底稿' : '🔍 查看官方采分底稿';
+  }
 }
 
 // 从私有知识库一键载入至自定义编辑框
@@ -435,26 +599,63 @@ function updateWordCount() {
 // 核心批改提交
 async function runFullReview() {
   const userText = document.getElementById('user-essay-input').value.trim();
+  if (!userText) {
+    alert("请在左侧作答输入框内录入或粘贴您的答卷内容后再点击开始批改！");
+    return;
+  }
+
   const qType = document.getElementById('q-type').value;
-  const skillId = document.getElementById('skill-selector').value;
+  const skillSelector = document.getElementById('skill-selector');
+  const skillId = skillSelector ? skillSelector.value : 'shenlun-essay-expert';
   
-  let topic = document.getElementById('prompt-text').innerText;
+  let topic = currentQuestion ? currentQuestion.question_title : document.getElementById('prompt-text').innerText;
+  let targetScore = currentQuestion ? (currentQuestion.target_score || currentQuestion.score) : (qType === 'essay' ? 35 : (qType === 'doc' ? 25 : 20));
   let materials = currentActiveMaterialText;
+
+  if (!materials) {
+    if (currentPaper) materials = currentPaper.materials_text || currentPaper.materials || '';
+    if (!materials && currentQuestion) materials = currentQuestion.materials || '';
+    if (!materials) {
+      const matPanel = document.getElementById('materials-panel');
+      if (matPanel) materials = matPanel.innerText.trim();
+    }
+  }
 
   if (isCustomPrompt) {
     topic = document.getElementById('custom-prompt-input').value || topic;
     materials = document.getElementById('custom-mat-input').value || currentActiveMaterialText;
   }
 
-  // 1. 本地 Mini-RAG 智能召回匹配记忆
-  const allMemories = await window.clientDB.getAll('memories');
-  const recalled = window.MiniRAG.recallTopK(allMemories, topic, userText, 3);
-
   const apiKey = (localStorage.getItem('shenlun_api_key') || '').trim();
   if (!apiKey) {
-    openModelConfigModal();
-    alert("【请先配置大模型密钥】\n本项目遵循 Strict BYOK (自持密钥) 规范，不设集中式商业服务器。\n请在弹出的【⚙️ 模型配置】窗口中填入您的 DeepSeek / 火山方舟 / OpenAI 兼容 API Key 后开始批改。");
+    openSettingModal();
+    const chromaEl = document.getElementById('chroma-text-container');
+    if (chromaEl) {
+      chromaEl.innerHTML = `
+        <div style="padding: 30px 20px; text-align: center; background: rgba(56, 189, 248, 0.06); border: 1px dashed rgba(56, 189, 248, 0.4); border-radius: 8px;">
+          <div style="font-size: 32px; margin-bottom: 10px;">⚙️</div>
+          <div style="font-size: 15px; font-weight: 700; color: #38bdf8; margin-bottom: 6px;">请先填入大模型 API Key</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6; max-width: 440px; margin: 0 auto 14px auto;">
+            本项目遵循 <strong>Strict BYOK (自持密钥)</strong> 军工级隐私规范，不设集中式商业服务器。<br>
+            密钥仅保存在当前浏览器本地，支持 <strong>DeepSeek / 火山方舟 / 硅基流动 / OpenAI 兼容端点</strong>。
+          </div>
+          <button class="btn btn-primary" onclick="openSettingModal()" style="padding: 6px 18px; font-size: 12px;">⚙️ 立即打开配置窗口填入 Key</button>
+        </div>
+      `;
+    }
+    alert("【请先配置大模型密钥 (Strict BYOK)】\n本项目为纯前端无状态架构，数据不留存任何集中式服务器。\n请在右上角【⚙️ 模型配置】窗口填入您的 API Key（如 DeepSeek sk-...）后即可开始智能批改！");
     return;
+  }
+
+  // 1. 本地 Mini-RAG 智能召回匹配记忆
+  let recalled = [];
+  try {
+    const allMemories = await window.clientDB.getAll('memories');
+    if (window.MiniRAG && typeof window.MiniRAG.recallTopK === 'function') {
+      recalled = window.MiniRAG.recallTopK(allMemories, topic, userText, 3);
+    }
+  } catch (e) {
+    console.warn("MiniRAG recall error:", e);
   }
 
   const payload = {
@@ -465,28 +666,39 @@ async function runFullReview() {
     target_score: targetScore,
     skill_id: skillId,
     recalled_memories: recalled,
+    scoring_criteria: currentQuestion ? (currentQuestion.scoring_criteria || '') : '',
+    reference_answer: currentQuestion ? (currentQuestion.reference_answer || '') : '',
     api_key: apiKey,
     base_url: localStorage.getItem('shenlun_base_url') || 'https://api.deepseek.com/v1',
     model_id: localStorage.getItem('shenlun_model_id') || 'deepseek-chat'
   };
 
   const btn = document.getElementById('btn-start-review');
-  btn.innerText = '🤖 正在向 DeepSeek-V3 请求实时考场审判（耗时约 3~6 秒）...';
+  btn.innerText = '🤖 正在向大模型请求考场审判（耗时约 3~6 秒）...';
   btn.disabled = true;
 
   // 在右侧展示清晰的加载态，告知大模型正在实时推理
   document.getElementById('chroma-text-container').innerHTML = `
     <div style="padding: 40px 20px; text-align: center; color: #38bdf8;">
-      <div style="font-size: 32px; margin-bottom: 12px;">🤖</div>
-      <div style="font-size: 16px; font-weight: 700;">DeepSeek-V3 正在逐句阅卷审判中...</div>
-      <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">模型正在执行：官方考规审查 ➔ 原词踩点 ➔ 抄袭红线核算 ➔ 4维量化赋分 ➔ 记忆库重塑一类文</div>
-      <div style="font-size: 11px; color: #4ade80; margin-top: 6px;">预计耗时 3~6 秒，请稍候</div>
+      <div style="font-size: 36px; margin-bottom: 12px;">🤖</div>
+      <div style="font-size: 16px; font-weight: 700; color: #f1f5f9;">大模型考场审判进行中...</div>
+      <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        正在对标官方采分底稿 ➔ 原词采点 ➔ 15-gram 抄袭检测 ➔ 4维量化赋分 ➔ 记忆库一类文重塑
+      </div>
+      <div style="font-size: 11px; color: #4ade80; margin-top: 8px;">
+        ⏳ 直连 ${payload.base_url.includes('deepseek') ? 'DeepSeek' : 'OpenAI兼容端点'} 推理中，请稍候...
+      </div>
     </div>
   `;
 
+  const emptyBox = document.getElementById('score-empty-box');
+  if (emptyBox) {
+    emptyBox.innerHTML = `<span>⏳ <strong>正在批改</strong>：已向大模型发起考场四维量化评判与采分点比对...</span>`;
+  }
+
   try {
     const result = await window.ApiClient.submitReview(payload);
-    renderReviewResult(userText, result);
+    renderReviewResult(userText, result, qType, targetScore);
 
     // 持久化到客户端 IndexedDB
     const subId = `sub_${Date.now()}`;
@@ -511,6 +723,24 @@ async function runFullReview() {
     await renderDossierList();
     await renderDossierWarningOnReviewPage(qType);
   } catch (err) {
+    console.error("批改异常:", err);
+    const chromaEl = document.getElementById('chroma-text-container');
+    if (chromaEl) {
+      chromaEl.innerHTML = `
+        <div style="padding: 30px 20px; text-align: center; background: rgba(239, 68, 68, 0.08); border: 1px solid var(--danger); border-radius: 8px;">
+          <div style="font-size: 32px; margin-bottom: 8px;">⚠️</div>
+          <div style="font-size: 15px; font-weight: 700; color: #f87171; margin-bottom: 6px;">批改未能成功完成</div>
+          <div style="font-size: 12.5px; color: #cbd5e1; margin-bottom: 14px; line-height: 1.6; max-width: 480px; margin-left:auto; margin-right:auto; white-space: pre-wrap;">${window.ChromaRenderer ? window.ChromaRenderer.escapeHtml(err.message) : err.message}</div>
+          <div style="display:flex; justify-content:center; gap:10px;">
+            <button class="btn btn-outline" onclick="openSettingModal()" style="padding: 5px 14px; font-size: 12px;">⚙️ 检查模型配置</button>
+            <button class="btn btn-primary" onclick="runFullReview()" style="padding: 5px 14px; font-size: 12px;">🔄 重新发起批改</button>
+          </div>
+        </div>
+      `;
+    }
+    if (emptyBox) {
+      emptyBox.innerHTML = `<span>⚠️ <strong>批改失败</strong>：${window.ChromaRenderer ? window.ChromaRenderer.escapeHtml(err.message) : err.message}</span>`;
+    }
     alert(`批改遇到错误: ${err.message}`);
   } finally {
     btn.innerText = '🚀 开始批改';
@@ -519,7 +749,10 @@ async function runFullReview() {
 }
 
 // 渲染批改结果
-function renderReviewResult(userText, res) {
+function renderReviewResult(userText, res, passedQType, passedTargetScore) {
+  const qType = passedQType || (document.getElementById('q-type') && document.getElementById('q-type').value) || res.question_type || 'essay';
+  const targetScore = passedTargetScore || (currentQuestion ? (currentQuestion.target_score || currentQuestion.score) : (qType === 'essay' ? 35 : (qType === 'doc' ? 25 : 20)));
+
   // 显示评分条，隐藏未批改占位提示
   const bannerBox = document.getElementById('score-banner-box');
   if (bannerBox) bannerBox.style.display = 'flex';
@@ -529,10 +762,28 @@ function renderReviewResult(userText, res) {
   // 分数与定档
   document.getElementById('score-val').innerText = res.score;
   document.getElementById('score-grade').innerText = res.grade;
+
+  // 动态更新顶部指标卡第3项（结构/条理/格式）
+  const structLblEl = document.getElementById('structure-lbl');
+  if (structLblEl && window.QuestionTypeRubrics) {
+    structLblEl.innerText = window.QuestionTypeRubrics.getStructureCardLabel(qType);
+  }
   const structVal = document.getElementById('structure-val');
   if (structVal) {
-    const structScore = res.radar_scores ? res.radar_scores['结构与段落布局'] : null;
-    structVal.innerText = res.grade?.includes('四类') ? '结构残缺' : (structScore >= 7 ? '结构严整' : (structScore !== null ? '结构尚可' : '结构规范'));
+    let structScore = null;
+    const radar = res.radar_scores || {};
+    if (qType === 'single') {
+      structScore = radar['分类逻辑与条理'] ?? radar['分类逻辑'] ?? radar['条理'] ?? null;
+    } else if (qType === 'doc') {
+      structScore = radar['格式规范三件套'] ?? radar['格式规范'] ?? radar['格式分'] ?? null;
+    } else {
+      structScore = radar['结构与段落布局'] ?? radar['结构布局'] ?? null;
+    }
+    if (window.QuestionTypeRubrics) {
+      structVal.innerText = window.QuestionTypeRubrics.getStructureStatus(qType, structScore, null, res.grade);
+    } else {
+      structVal.innerText = res.grade?.includes('四类') ? '结构残缺' : (structScore >= 7 ? '结构严整' : '结构规范');
+    }
   }
   document.getElementById('copy-ratio-val').innerText = `${(res.copy_ratio * 100).toFixed(1)}% (${res.copy_redline_exceeded ? '⚠️超标' : '安全'})`;
 
@@ -544,23 +795,42 @@ function renderReviewResult(userText, res) {
 
   // 1. 渲染四维量化得分明细表与扣分依据 (#score-breakdown-tbody)
   const radar = res.radar_scores || {};
-  const dimensions = [
-    { key: "立意与总分论点", max: 12, desc: (res.grade?.includes("四类") || res.score < 20) ? "总论点或分论点不完整（未满足1+3骨架），或字数严重不足扣分" : "立意100%源于材料，首段末句亮明总论点，三分论点醒目" },
-    { key: "结构与段落布局", max: 8, desc: (res.grade?.includes("四类")) ? "分论点仅设两个，正文论证段未达三段标杆，结构残缺" : "五段大五段匀称，段落字数控制在250字左右" },
-    { key: "论据与论证深度", max: 10, desc: (res.copy_redline_exceeded || res.copy_ratio > 0.15) ? "存在大段照抄材料原句现象，论证沦为事实搬运缺乏深度制度剖析" : "道理论证与事例论证结合紧密，具备事后深度分析" },
-    { key: "语言与公文规范", max: 5, desc: res.chroma_spans?.some(s => s.type === 'colloquial_flaw') ? "存在口语化聊天大白话，需强化政务动宾大词提炼与短句对仗" : "公文语体规范严谨，短句对仗工整" }
-  ];
+  let dimensions = [];
+  if (window.QuestionTypeRubrics) {
+    dimensions = window.QuestionTypeRubrics.getDimensions(qType, targetScore);
+  } else {
+    dimensions = [
+      { key: "立意与总分论点", max: 12, getDesc: () => "立意100%源于材料，首段末句亮明总论点，三分论点醒目" },
+      { key: "结构与段落布局", max: 8, getDesc: () => "五段大五段匀称，段落字数控制在250字左右" },
+      { key: "论据与论证深度", max: 10, getDesc: () => "道理论证与事例论证结合紧密，具备事后深度分析" },
+      { key: "语言与公文规范", max: 5, getDesc: () => "公文语体规范严谨，短句对仗工整" }
+    ];
+  }
 
   let tbodyHtml = '';
   dimensions.forEach(d => {
-    const scoreVal = (radar[d.key] !== undefined) ? radar[d.key] : Math.round(d.max * (res.score / 35) * 10) / 10;
+    let scoreVal = undefined;
+    if (radar[d.key] !== undefined) {
+      scoreVal = radar[d.key];
+    } else {
+      for (const [rKey, rVal] of Object.entries(radar)) {
+        if (rKey.includes(d.key.slice(0, 2)) || d.key.includes(rKey.slice(0, 2))) {
+          scoreVal = rVal;
+          break;
+        }
+      }
+    }
+    if (scoreVal === undefined) {
+      scoreVal = Math.round(d.max * (res.score / targetScore) * 10) / 10;
+    }
     const color = scoreVal >= d.max * 0.8 ? '#4ade80' : (scoreVal >= d.max * 0.6 ? '#facc15' : '#f87171');
+    const desc = typeof d.getDesc === 'function' ? d.getDesc(res) : (d.desc || '按考规量化评定');
     tbodyHtml += `
       <tr style="border-bottom: 1px solid var(--card-border);">
         <td style="padding: 8px 10px; font-weight: 600; color: #f8fafc;">${d.key}</td>
         <td style="padding: 8px 10px; text-align: center; color: var(--text-muted);">${d.max}分</td>
         <td style="padding: 8px 10px; text-align: center; font-weight: 700; color: ${color};">${scoreVal}分</td>
-        <td style="padding: 8px 10px; color: #cbd5e1; font-size: 12px; line-height: 1.5;">${d.desc}</td>
+        <td style="padding: 8px 10px; color: #cbd5e1; font-size: 12px; line-height: 1.5;">${desc}</td>
       </tr>
     `;
   });
@@ -569,15 +839,24 @@ function renderReviewResult(userText, res) {
 
   // 2. 渲染多视角名师与考官判语 (#perspectives-container)
   const p = res.perspectives || {};
+  let pTitles = {
+    examiner: "【考场考官前10秒第一眼定档】",
+    structure_expert: "【大五段骨架与对策论证诊断】",
+    style_expert: "【政务文风与语汇质检诊断】"
+  };
+  if (window.QuestionTypeRubrics) {
+    pTitles = window.QuestionTypeRubrics.getPerspectiveTitles(qType);
+  }
+
   let phtml = '';
   if (p.examiner) {
-    phtml += `<div style="margin-bottom: 8px;"><strong style="color:#38bdf8;">【考场考官前10秒第一眼定档】</strong>：${window.ChromaRenderer.escapeHtml(p.examiner)}</div>`;
+    phtml += `<div style="margin-bottom: 8px;"><strong style="color:#38bdf8;">${pTitles.examiner}</strong>：${window.ChromaRenderer.escapeHtml(p.examiner)}</div>`;
   }
   if (p.structure_expert) {
-    phtml += `<div style="margin-bottom: 8px;"><strong style="color:#a855f7;">【大五段骨架与对策论证诊断】</strong>：${window.ChromaRenderer.escapeHtml(p.structure_expert)}</div>`;
+    phtml += `<div style="margin-bottom: 8px;"><strong style="color:#a855f7;">${pTitles.structure_expert}</strong>：${window.ChromaRenderer.escapeHtml(p.structure_expert)}</div>`;
   }
   if (p.style_expert) {
-    phtml += `<div><strong style="color:#f59e0b;">【政务文风与语汇质检诊断】</strong>：${window.ChromaRenderer.escapeHtml(p.style_expert)}</div>`;
+    phtml += `<div><strong style="color:#f59e0b;">${pTitles.style_expert}</strong>：${window.ChromaRenderer.escapeHtml(p.style_expert)}</div>`;
   }
   if (!phtml) {
     phtml = '<div style="color:var(--text-muted);">暂无名师判语，系统已依据官方阅卷规范执行评分。</div>';
@@ -1323,6 +1602,68 @@ async function renderPrivateKBDocs() {
   `).join('');
 }
 
+// 动态渲染历年真实官方题本列表 (最近5年国考与省考)
+function renderPublicKBList() {
+  const container = document.getElementById('public-kb-list');
+  const countBadge = document.getElementById('public-kb-count');
+  if (!container) return;
+
+  if (countBadge) {
+    countBadge.innerText = `共 ${currentExams.length} 套真实题本 (最近5年)`;
+  }
+
+  if (!currentExams || currentExams.length === 0) {
+    container.innerHTML = `<div style="padding:12px; text-align:center; color:var(--text-muted);">暂无真题数据</div>`;
+    return;
+  }
+
+  let html = '';
+  currentExams.forEach(paper => {
+    const qCount = paper.question_count || (paper.questions ? paper.questions.length : (paper.questions_summary ? paper.questions_summary.length : 1));
+    const questionsSummary = paper.questions_summary || paper.questions || [];
+
+    html += `
+      <div style="padding: 10px 12px; border-bottom: 1px solid var(--card-border); transition: background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background='transparent'">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <div style="font-size: 13.5px; font-weight: 600; color: #f1f5f9; display: flex; align-items: center; gap: 8px;">
+            <span>🏛️ ${paper.exam_name}</span>
+            <span class="card-tag tag-blue" style="padding: 1px 6px; font-size: 11px;">${paper.category || '国考'} · ${paper.tier || '全卷'}</span>
+            <span style="font-size: 11px; color: var(--text-muted);">共 ${qCount} 题 · 100分</span>
+          </div>
+          <button class="btn btn-outline" style="padding: 2px 10px; font-size: 11px;" onclick="selectExamForStudy('${paper.id}')">
+            ✍️ 选用整卷
+          </button>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">
+          ${questionsSummary.map(q => {
+            const typeLabel = q.type === 'essay' ? '大作文' : (q.type === 'doc' ? '公文' : '单一');
+            return `
+              <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); color: #cbd5e1; cursor:pointer;" onclick="selectExamForStudy('${paper.id}', '${q.id}')">
+                题(${q.q_index})·${typeLabel} (${q.target_score || q.score || 20}分) ${q.title || q.question_title || ''}
+              </span>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+// 从公共题库一键选用并跳转到做题界面
+async function selectExamForStudy(paperId, questionId) {
+  switchTab('review');
+  const selector = document.getElementById('exam-selector');
+  if (selector) {
+    selector.value = paperId;
+    await onExamSelectChange();
+    if (questionId) {
+      await selectSubQuestion(questionId);
+    }
+  }
+}
+
 function openUploadDocModal() {
   document.getElementById('upload-doc-title').value = '';
   document.getElementById('upload-doc-content').value = '';
@@ -1520,5 +1861,14 @@ async function extractAndSaveCustomSkill() {
   }
 }
 
-// 启动
+// 启动与全局暴露
+window.openSettingModal = openSettingModal;
+window.openModelConfigModal = openSettingModal;
+window.closeSettingModal = closeSettingModal;
+window.saveSettings = saveSettings;
+window.runFullReview = runFullReview;
+window.selectSubQuestion = selectSubQuestion;
+window.toggleScoringCriteria = toggleScoringCriteria;
+window.selectExamForStudy = selectExamForStudy;
+
 document.addEventListener('DOMContentLoaded', initApp);

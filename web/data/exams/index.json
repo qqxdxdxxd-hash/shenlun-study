@@ -1,0 +1,386 @@
+[
+  {
+    "id": "gk2024_provincial",
+    "exam_name": "2024年国家公务员考试申论真题（副省级）",
+    "year": 2024,
+    "category": "国考",
+    "tier": "副省级/省级",
+    "char_count": 810,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2024_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "H光电集团自主创新突破经验（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过250字"
+      },
+      {
+        "id": "gk2024_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "某市“高效办成一件事”改革举措（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2024_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "云栖县“土特产”产业振兴工作简报（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gk2024_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "海洋经济“向海图强”高质量发展分析（综合分析）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2024_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "大作文：事必有法 然后可成（议论文）",
+        "target_score": 35,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "gk2023_provincial",
+    "exam_name": "2023年国家公务员考试申论真题（副省级）",
+    "year": 2023,
+    "category": "国考",
+    "tier": "副省级/省级",
+    "char_count": 525,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2023_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "智慧物流枢纽建设经验概括（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过250字"
+      },
+      {
+        "id": "gk2023_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "青年农创客返乡下乡动能分析（综合分析）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2023_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "文旅街区历史文化保护与利用经验交流材料（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过450字"
+      },
+      {
+        "id": "gk2023_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "破除地方壁垒构建统一大市场（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2023_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "大作文：以流动汇聚蓬勃生机（议论文）",
+        "target_score": 35,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "gk2022_provincial",
+    "exam_name": "2022年国家公务员考试申论真题（省级）",
+    "year": 2022,
+    "category": "国考",
+    "tier": "省级/副省级",
+    "char_count": 2132,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2022_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "B公司科技创新启示（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过200字"
+      },
+      {
+        "id": "gk2022_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "G省粮食产业发展问题与对策（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2022_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "临诗特色乡村旅游推介材料（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过500字"
+      },
+      {
+        "id": "gk2022_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "“未来学校”更高教育境界阐释（综合分析）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gk2022_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "大作文：今天的思维与未来的收获（议论文）",
+        "target_score": 35,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "gk2021_provincial",
+    "exam_name": "2021年国家公务员考试申论真题（省级）",
+    "year": 2021,
+    "category": "国考",
+    "tier": "省级/副省级",
+    "char_count": 959,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2021_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "小谷村“有形与无形”内涵理解（综合分析）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2021_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "S市“局区合一”改革概括（归纳概括）",
+        "target_score": 10,
+        "char_limit": "不超过250字"
+      },
+      {
+        "id": "gk2021_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "基层协商民主经验汇报提纲（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gk2021_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "F县“借石成玉”发展智慧分析（综合分析）",
+        "target_score": 20,
+        "char_limit": "不超过350字"
+      },
+      {
+        "id": "gk2021_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "大作文：论新时代发展中的“变与不变”（议论文）",
+        "target_score": 35,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "gk2020_provincial",
+    "exam_name": "2020年国家公务员考试申论真题（省级）",
+    "year": 2020,
+    "category": "国考",
+    "tier": "省级/副省级",
+    "char_count": 843,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2020_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "海德集团大国重器攻关经验概括（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过250字"
+      },
+      {
+        "id": "gk2020_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "东水村生态转型蝶变路径（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2020_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "城市精细化治理工作经验简报（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过450字"
+      },
+      {
+        "id": "gk2020_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "传统产业数字化转型分析（综合分析）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2020_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "大作文：安民之道在于察疾苦惠民生（议论文）",
+        "target_score": 35,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "js2024_a",
+    "exam_name": "2024年江苏省公务员考试申论真题（A类）",
+    "year": 2024,
+    "category": "江苏",
+    "tier": "省考A类",
+    "char_count": 430,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "js2024_a_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "无锡物联网创新联合体培育经验（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "js2024_a_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "宿迁农村电商赋能乡村振兴路径（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "js2024_a_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "推行“综合查一次”柔性执法倡议书（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "js2024_a_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "大作文：在推进中国式现代化中走在前做示范（议论文）",
+        "target_score": 40,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "gd2024_county",
+    "exam_name": "2024年广东省公务员考试申论真题（县级）",
+    "year": 2024,
+    "category": "广东",
+    "tier": "省考县级",
+    "char_count": 395,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "gd2024_county_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "粤北山区县飞地经济发展经验（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gd2024_county_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "现代海洋牧场全产业链发展路径（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gd2024_county_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "“粤治美”数字基层治理经验推广通知（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gd2024_county_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "大作文：日日行不怕千万里 常常做不怕千万事（议论文）",
+        "target_score": 40,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  },
+  {
+    "id": "bj2024_district",
+    "exam_name": "2024年北京市公务员考试申论真题（区级及以上）",
+    "year": 2024,
+    "category": "北京",
+    "tier": "北京市考",
+    "char_count": 441,
+    "question_count": 4,
+    "questions_summary": [
+      {
+        "id": "bj2024_dist_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "中关村颠覆性硬科技孵化机制分析（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "bj2024_dist_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "“接诉即办”向“未诉先办”延伸治理经验（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "bj2024_dist_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "“拆栏透绿”花园城市无界公园宣传稿（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "bj2024_dist_q4",
+        "q_index": 4,
+        "type": "essay",
+        "question_title": "大作文：首善标准铸就卓越之城（议论文）",
+        "target_score": 40,
+        "char_limit": "1000～1200字"
+      }
+    ]
+  }
+]
