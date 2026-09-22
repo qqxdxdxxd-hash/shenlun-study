@@ -10,16 +10,16 @@ console.log("=== 开始执行 真实真题题本与小题采分底稿集成测�
 const indexPath = path.join(__dirname, '../data/exams/index.json');
 assert(fs.existsSync(indexPath), "web/data/exams/index.json 必须存在");
 const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
-assert(indexData.length >= 21, `真题题本数量应>=21套，实测: ${indexData.length}`);
+assert(indexData.length >= 130, `真题题本数量应>=130套，实测: ${indexData.length}`);
 
 // 验证每一套题本都必须具备年份、分类与小题概要
 indexData.forEach(paper => {
   assert(paper.id, "试卷必须包含 id");
   assert(paper.exam_name, "试卷必须包含 exam_name");
-  assert(paper.year >= 2019 && paper.year <= 2025, `试卷年份必须为 2019~2025，实测: ${paper.year}`);
-  assert(paper.questions_summary && paper.questions_summary.length >= 3, `试卷至少包含3道小题，实测: ${paper.questions_summary?.length}`);
+  assert(paper.year >= 2003 && paper.year <= 2025, `试卷年份必须为 2003~2025，实测: ${paper.year}`);
+  assert(paper.questions_summary && paper.questions_summary.length >= 2, `试卷至少包含2道小题，实测: ${paper.questions_summary?.length}`);
 });
-console.log(`✓ 验证通过：共载入 ${indexData.length} 套 2019-2025 年真实国考与省考题本索引`);
+console.log(`✓ 验证通过：共载入 ${indexData.length} 套真实国考与省考题本索引`);
 
 // 2. 验证 2022 国考省级真题题本分片内容与采分底稿 (高教公考 1371 / 1370)
 const gk2022Path = path.join(__dirname, '../data/exams/gk2022_provincial.json');

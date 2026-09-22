@@ -244,18 +244,19 @@ PROVINCIAL_PAPERS_KB: List[Dict[str, Any]] = [
 def load_real_papers_kb() -> List[Dict[str, Any]]:
     """
     加载全部真实试卷：
-    优先从 data/guokao_real_papers.json 读取国考 18 套全真试卷；
-    若缓存不存在且存在本地 PDF 目录，则实时解析并生成缓存；
-    最后与 3 套代表性省考真题合并为 21 套完整全真试卷库。
+    1. 优先从 data/guokao_real_papers.json 读取国考 18 套全真试卷；
+    2. 优先从 data/provincial_real_papers.json 读取江苏、上海、北京、福建等全真省考试卷；
+    3. 若缓存不存在且存在本地 PDF 目录，则实时解析并生成缓存；
+    4. 保留广东省考等非重复代表性试卷，共同构成系统真实试卷知识库。
     """
-    cache_path = Path("data/guokao_real_papers.json")
+    gk_cache_path = Path("data/guokao_real_papers.json")
     guokao_papers: List[Dict[str, Any]] = []
 
-    if cache_path.exists():
+    if gk_cache_path.exists():
         try:
-            guokao_papers = json.loads(cache_path.read_text(encoding="utf-8"))
+            guokao_papers = json.loads(gk_cache_path.read_text(encoding="utf-8"))
         except Exception as e:
-            print(f"Warning: Failed to load {cache_path}: {e}")
+            print(f"Warning: Failed to load {gk_cache_path}: {e}")
 
     if not guokao_papers:
         pdf_dir = Path("D:/BaiduNetdiskDownload/国考申论PDF")
@@ -264,13 +265,38 @@ def load_real_papers_kb() -> List[Dict[str, Any]]:
                 from scripts.import_guokao_pdfs import GuokaoPdfParser
                 parser = GuokaoPdfParser(pdf_dir)
                 guokao_papers = parser.parse_all()
-                cache_path.parent.mkdir(parents=True, exist_ok=True)
-                cache_path.write_text(json.dumps(guokao_papers, ensure_ascii=False, indent=2), encoding="utf-8")
+                gk_cache_path.parent.mkdir(parents=True, exist_ok=True)
+                gk_cache_path.write_text(json.dumps(guokao_papers, ensure_ascii=False, indent=2), encoding="utf-8")
             except Exception as e:
                 print(f"Warning: Failed to parse PDFs from {pdf_dir}: {e}")
 
-    # 合并 18 套国考与 3 套省考
-    all_papers = list(guokao_papers) + list(PROVINCIAL_PAPERS_KB)
+    prov_cache_path = Path("data/provincial_real_papers.json")
+    prov_papers: List[Dict[str, Any]] = []
+
+    if prov_cache_path.exists():
+        try:
+            prov_papers = json.loads(prov_cache_path.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"Warning: Failed to load {prov_cache_path}: {e}")
+
+    if not prov_papers:
+        try:
+            from scripts.import_provincial_pdfs import ProvincialPdfParser
+            p_parser = ProvincialPdfParser()
+            prov_papers = p_parser.parse_all()
+            if prov_papers:
+                prov_cache_path.parent.mkdir(parents=True, exist_ok=True)
+                prov_cache_path.write_text(json.dumps(prov_papers, ensure_ascii=False, indent=2), encoding="utf-8")
+        except Exception as e:
+            print(f"Warning: Failed to parse provincial PDFs: {e}")
+
+    # 合并试卷并去重（保留广东县级等其他代表性省考）
+    existing_ids = {p["id"] for p in guokao_papers}
+    existing_ids.update(p["id"] for p in prov_papers)
+
+    fallback_prov = [p for p in PROVINCIAL_PAPERS_KB if p["id"] not in existing_ids]
+
+    all_papers = list(guokao_papers) + list(prov_papers) + fallback_prov
     return all_papers
 
 
