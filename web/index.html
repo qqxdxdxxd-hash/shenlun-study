@@ -160,6 +160,16 @@
                 <label class="form-label">自定义题干与作答要求</label>
                 <textarea class="form-textarea" id="custom-prompt-input" style="min-height:70px;" placeholder="在此粘贴你的题目要求，如：请概括材料1中的主要问题..."></textarea>
               </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" style="font-size: 11px;">自定义满分 (留空由大模型自动提取)</label>
+                  <input type="number" class="form-input" id="custom-score-input" placeholder="如 15 或 20" style="padding: 6px 10px; font-size: 12px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" style="font-size: 11px;">自定义字数上限 (留空由大模型自动提取)</label>
+                  <input type="number" class="form-input" id="custom-limit-input" placeholder="如 250 或 300" style="padding: 6px 10px; font-size: 12px;">
+                </div>
+              </div>
               <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">自定义给定资料全文</label>
                 <textarea class="form-textarea" id="custom-mat-input" style="min-height:140px;" placeholder="在此粘贴你的给定材料原文..."></textarea>
