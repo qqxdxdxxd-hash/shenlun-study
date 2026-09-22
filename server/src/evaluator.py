@@ -73,7 +73,7 @@ class ShenlunEvaluator:
         system_prompt = skill.assemble_system_prompt()
 
         mar_instruction = MemoryAugmentedRewriter.build_mar_prompt(
-            req.user_answer, req.question_title, req.recalled_memories
+            req.user_answer, req.question_title, req.recalled_memories, question_type=req.question_type
         )
 
         target_score = req.target_score or (35 if req.question_type == "essay" else (25 if req.question_type == "doc" else 20))
@@ -132,6 +132,8 @@ class ShenlunEvaluator:
 请以极其严格的官方阅卷考官标准进行评审，并严格按照以下 JSON 格式返回，严禁任何额外格式废话：
 ```json
 {{
+  "target_score": {target_score},
+  "word_limit": {req.word_limit or (250 if req.question_type == 'single' else (400 if req.question_type == 'doc' else 1000))},
   "score": {target_score * 0.85:.1f},
   "grade": "二类文",
   "radar_scores": {radar_example},
@@ -140,7 +142,7 @@ class ShenlunEvaluator:
     {{"quote": "口语化句子原文", "type": "colloquial_flaw", "color": "purple", "style": "strikethrough", "label": "大白话", "comment": "口语化表达缺少政务大词"}}
   ],
 {perspectives_example},
-  "rewritten_exemplar": "基于考生原文结合其记忆库重构的一类标杆示范..."
+  "rewritten_exemplar": "基于考生原文结合其规范重构的考场标杆示范..."
 }}
 ```
 """
@@ -184,11 +186,15 @@ class ShenlunEvaluator:
             colloquial_quotes = [q for q in llm_quotes if q.get("type") == "colloquial_flaw"]
             drills = DrillGenerator.extract_remediation_drills(colloquial_quotes)
 
+            extracted_target_score = float(parsed.get("target_score") or target_score)
+            extracted_word_limit = parsed.get("word_limit") or req.word_limit
             return {
                 "word_count": pre_info["word_count"],
                 "copy_ratio": pre_info["copy_ratio"],
                 "copy_redline_exceeded": pre_info["copy_redline_exceeded"],
                 "score": parsed.get("score", 30.0),
+                "target_score": extracted_target_score,
+                "word_limit": extracted_word_limit,
                 "grade": parsed.get("grade", "二类文"),
                 "radar_scores": parsed.get("radar_scores", {}),
                 "chroma_spans": [s.model_dump() for s in all_spans],
@@ -248,10 +254,9 @@ class ShenlunEvaluator:
 
         drills = DrillGenerator.extract_remediation_drills(colloquial_flaws)
 
-        exemplar = f"《以绿色发展绘就中国式现代化生态底色》\n\n大鹏之动，非一羽之轻；骐骥之速，非一足之力。面对新时代的高质量发展要求，我们必须协同推进降碳、减污、扩绿、增长 [来自记忆库: 生态文明]，以高品质生态环境支撑高质量发展。\n\n筑牢生态屏障，必须坚持理念先行，推动生产方式绿色转型。以新旧动能转换为契机，坚决关停落后产能、大力发展清洁能源，推动传统制造业智能化改造。\n\n涵养绿色动能，必须强化制度保障，健全生态治理长效机制。针对基层治理痛点，健全多元化财政保障体系，破除“唯台账论”的浮夸之风 [来自记忆库: 基层减负]，让生态考核真正化为长效机制。"
-
         target_score = req.target_score or (35 if req.question_type == "essay" else (25 if req.question_type == "doc" else 20))
         if req.question_type == "single":
+            exemplar = "主要经验做法如下：\n1. 【聚力自主研发】。摆脱技术依附，聚焦核心底层原理攻坚，打破国外垄断局面。\n2. 【弘扬工匠精神】。甘坐冷板凳，历经长周期成千上万次反复校验测试，攻克精度极限。\n3. 【对接战略需求】。紧扣国家重大战略工程场景，推进科技研发与实体产业深度融合。"
             fallback_score = round(target_score * 0.825, 1) if pre_info["word_count"] >= 150 else round(target_score * 0.6, 1)
             radar = {
                 "内容采点覆盖度": round(fallback_score * 0.55, 1),
@@ -266,6 +271,7 @@ class ShenlunEvaluator:
             }
             grade = "二类卷" if fallback_score >= target_score * 0.75 else "三类卷"
         elif req.question_type == "doc":
+            exemplar = "关于推进产业高质量发展的倡议书\n\n广大企业及从业者：\n为全面落实新发展理念，特发出如下倡议：\n一、坚定转型决心，加快技术设备迭代改造；\n二、健全长效机制，加大专业技能人才培训；\n三、优化协作生态，推动上下游产业链协同联动。\n\n推进委员会\n2026年9月"
             fallback_score = round(target_score * 0.8, 1) if pre_info["word_count"] >= 300 else round(target_score * 0.58, 1)
             radar = {
                 "内容要点覆盖": round(fallback_score * 0.60, 1),
@@ -280,6 +286,7 @@ class ShenlunEvaluator:
             }
             grade = "二类卷" if fallback_score >= target_score * 0.75 else "三类卷"
         else:
+            exemplar = f"《以绿色发展绘就中国式现代化生态底色》\n\n大鹏之动，非一羽之轻；骐骥之速，非一足之力。面对新时代的高质量发展要求，我们必须协同推进降碳、减污、扩绿、增长 [来自记忆库: 生态文明]，以高品质生态环境支撑高质量发展。\n\n筑牢生态屏障，必须坚持理念先行，推动生产方式绿色转型。以新旧动能转换为契机，坚决关停落后产能、大力发展清洁能源，推动传统制造业智能化改造。\n\n涵养绿色动能，必须强化制度保障，健全生态治理长效机制。针对基层治理痛点，健全多元化财政保障体系，破除“唯台账论”的浮夸之风 [来自记忆库: 基层减负]，让生态考核真正化为长效机制。"
             fallback_score = 31.5 if pre_info["word_count"] >= 900 else 24.0
             radar = {"立意与总分论点": 11.0, "结构与段落布局": 7.5, "论据与论证深度": 9.0, "语言与公文规范": 4.0}
             perspectives = {
@@ -294,6 +301,8 @@ class ShenlunEvaluator:
             "copy_ratio": pre_info["copy_ratio"],
             "copy_redline_exceeded": pre_info["copy_redline_exceeded"],
             "score": fallback_score,
+            "target_score": float(target_score),
+            "word_limit": req.word_limit,
             "grade": grade,
             "radar_scores": radar,
             "chroma_spans": [s.model_dump() for s in all_spans],
