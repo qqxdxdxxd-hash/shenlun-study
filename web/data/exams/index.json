@@ -1,256 +1,919 @@
 [
   {
-    "id": "gk2024_provincial",
-    "exam_name": "2024年国家公务员考试申论真题（副省级）",
+    "id": "gk2025_law",
+    "exam_name": "2025年国家公务员考试《申论》真题（行政执法卷）",
+    "year": 2025,
+    "category": "国考",
+    "tier": "行政执法卷",
+    "char_count": 7227,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2025_law_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "概括A市积极促进高科技企业和新兴产业发展的主...（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过250字"
+      },
+      {
+        "id": "gk2025_law_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "“S市总工会工作的优化（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过250字"
+      },
+      {
+        "id": "gk2025_law_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "为使夜市管理工作更加规范（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过500字"
+      },
+      {
+        "id": "gk2025_law_q4",
+        "q_index": 4,
+        "type": "doc",
+        "question_title": "的指导组完成现场指导后（公文题）",
+        "target_score": 20,
+        "char_limit": "字数不超过450字"
+      },
+      {
+        "id": "gk2025_law_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "对“给定资料5”中提到的“为群众办好事”“让...（议论文）",
+        "target_score": 35,
+        "char_limit": "字数1000—1200字"
+      }
+    ]
+  },
+  {
+    "id": "gk2025_city",
+    "exam_name": "2025年国家公务员考试《申论》真题（地市级）",
+    "year": 2025,
+    "category": "国考",
+    "tier": "地市级",
+    "char_count": 7278,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2025_city_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "谈谈宣化城市传统葡萄园的“生态实践智慧”体现...（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过200字"
+      },
+      {
+        "id": "gk2025_city_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "虑远科技与新杭市埠西区政府合力治水的事例（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2025_city_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "请根据\"给定资料3\"（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过450字"
+      },
+      {
+        "id": "gk2025_city_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "准备提交一份“关于助推‘元科普’（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过500字"
+      },
+      {
+        "id": "gk2025_city_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "事物间的“互补”关系不是简单的拼合（议论文）",
+        "target_score": 35,
+        "char_limit": "字数1000—1200字"
+      }
+    ]
+  },
+  {
+    "id": "gk2025_prov",
+    "exam_name": "2025年国家公务员考试《申论》真题（副省级）",
+    "year": 2025,
+    "category": "国考",
+    "tier": "副省级",
+    "char_count": 7391,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2025_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "了三条“黄河”（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过350字"
+      },
+      {
+        "id": "gk2025_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "谈一谈你对划线句子“只有慢慢发展（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过300字"
+      },
+      {
+        "id": "gk2025_prov_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "今州粮仓计划在本园区入口处设立宣传展板（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gk2025_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "如果你是青溪县数据局工作人员（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gk2025_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "事物的劣势在特定的条件下可以转化为优势（议论文）",
+        "target_score": 35,
+        "char_limit": "字数1000—1200字"
+      }
+    ]
+  },
+  {
+    "id": "gk2024_law",
+    "exam_name": "2024年国家公务员考试《申论》真题（行政执法卷）",
     "year": 2024,
     "category": "国考",
-    "tier": "副省级/省级",
-    "char_count": 810,
+    "tier": "行政执法卷",
+    "char_count": 7933,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2024_law_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "“乡村需要的不仅仅是艺术家（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过250 字"
+      },
+      {
+        "id": "gk2024_law_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "隆金公司虽然做的是配件（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300 字"
+      },
+      {
+        "id": "gk2024_law_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "如果你是“给定材料3”中有关部门的工作人员（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400 字"
+      },
+      {
+        "id": "gk2024_law_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "对退休人员再就业面临的问题进行梳理（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过400 字"
+      },
+      {
+        "id": "gk2024_law_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "围绕行政执法工作中的“力”“理”“利”进行深...（议论文）",
+        "target_score": 35,
+        "char_limit": "字数1000～1200 字"
+      }
+    ]
+  },
+  {
+    "id": "gk2024_city",
+    "exam_name": "2024年国家公务员考试《申论》真题（地市级）",
+    "year": 2024,
+    "category": "国考",
+    "tier": "地市级",
+    "char_count": 7239,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2024_city_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "“乡村需要的不仅仅是艺术家（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过250 字"
+      },
+      {
+        "id": "gk2024_city_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "隆金公司虽然做的是配件（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300 字"
+      },
+      {
+        "id": "gk2024_city_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "Y 市拟在总结江平县做法的基础上（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过450 字"
+      },
+      {
+        "id": "gk2024_city_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "梳理S 市公共文化空间建设和运营中存在的问题（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过450 字"
+      },
+      {
+        "id": "gk2024_city_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "“投入自己的领域（议论文）",
+        "target_score": 35,
+        "char_limit": "字数1000～1200 字"
+      }
+    ]
+  },
+  {
+    "id": "gk2024_prov",
+    "exam_name": "2024年国家公务员考试《申论》真题（副省级）",
+    "year": 2024,
+    "category": "国考",
+    "tier": "副省级",
+    "char_count": 7647,
     "question_count": 5,
     "questions_summary": [
       {
         "id": "gk2024_prov_q1",
         "q_index": 1,
         "type": "single",
-        "question_title": "H光电集团自主创新突破经验（单一题）",
-        "target_score": 15,
-        "char_limit": "不超过250字"
+        "question_title": "“耀然灯饰”的发展（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过200 字"
       },
       {
         "id": "gk2024_prov_q2",
         "q_index": 2,
         "type": "single",
-        "question_title": "某市“高效办成一件事”改革举措（单一题）",
-        "target_score": 15,
-        "char_limit": "不超过300字"
+        "question_title": "新民乐走红引发了网民的诸多议论（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过400 字"
       },
       {
         "id": "gk2024_prov_q3",
         "q_index": 3,
-        "type": "doc",
-        "question_title": "云栖县“土特产”产业振兴工作简报（公文题）",
-        "target_score": 20,
-        "char_limit": "不超过400字"
+        "type": "single",
+        "question_title": "小李感觉自己陷入了“两难”境地（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过350 字"
       },
       {
         "id": "gk2024_prov_q4",
         "q_index": 4,
-        "type": "single",
-        "question_title": "海洋经济“向海图强”高质量发展分析（综合分析）",
-        "target_score": 15,
-        "char_limit": "不超过300字"
+        "type": "doc",
+        "question_title": "C 市高标准农田建设过程中的一些情况（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过500 字"
       },
       {
         "id": "gk2024_prov_q5",
         "q_index": 5,
         "type": "essay",
-        "question_title": "大作文：事必有法 然后可成（议论文）",
+        "question_title": "“我们要用积极的态度对旧事物的价值进行最大挖...（议论文）",
         "target_score": 35,
-        "char_limit": "1000～1200字"
+        "char_limit": "字数1000～1200 字"
       }
     ]
   },
   {
-    "id": "gk2023_provincial",
-    "exam_name": "2023年国家公务员考试申论真题（副省级）",
+    "id": "gk2023_law",
+    "exam_name": "2023年国家公务员考试《申论》真题（行政执法卷）",
     "year": 2023,
     "category": "国考",
-    "tier": "副省级/省级",
-    "char_count": 525,
+    "tier": "行政执法卷",
+    "char_count": 7212,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2023_law_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "GEP 反映了生态系统产生的直接、间接或潜在...（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过200 字"
+      },
+      {
+        "id": "gk2023_law_q2",
+        "q_index": 2,
+        "type": "doc",
+        "question_title": "H 市计划召开关于促进本市“无人经济”新业态...（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过450 字"
+      },
+      {
+        "id": "gk2023_law_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "D 市语言文字规范化联合整治工作组拟向上级汇...（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过450 字"
+      },
+      {
+        "id": "gk2023_law_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "有关部门正在征集知识产权服务优秀案例（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300 字"
+      },
+      {
+        "id": "gk2023_law_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "深入思考“给定资料5”中这位学者文章的有关内...（议论文）",
+        "target_score": 35,
+        "char_limit": "字数1000-1200 字"
+      }
+    ]
+  },
+  {
+    "id": "gk2023_city",
+    "exam_name": "2023年国家公务员考试《申论》真题（地市级）",
+    "year": 2023,
+    "category": "国考",
+    "tier": "地市级",
+    "char_count": 7596,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2023_city_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "GEP 反映了生态系统产生的直接、间接或潜在...（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过200 字"
+      },
+      {
+        "id": "gk2023_city_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "有关部门正在征集知识产权服务优秀案例（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300 字"
+      },
+      {
+        "id": "gk2023_city_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "请根据“给定资料3”（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过400 字"
+      },
+      {
+        "id": "gk2023_city_q4",
+        "q_index": 4,
+        "type": "doc",
+        "question_title": "《金融报》“金融向善”专栏拟报道M 市F 银...（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过500 字"
+      },
+      {
+        "id": "gk2023_city_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "深入思考“给定资料5”中这位学者文章的有关内...（议论文）",
+        "target_score": 35,
+        "char_limit": "字数1000-1200 字"
+      }
+    ]
+  },
+  {
+    "id": "gk2023_prov",
+    "exam_name": "2023年国家公务员考试《申论》真题（副省级）",
+    "year": 2023,
+    "category": "国考",
+    "tier": "副省级",
+    "char_count": 7874,
     "question_count": 5,
     "questions_summary": [
       {
         "id": "gk2023_prov_q1",
         "q_index": 1,
         "type": "single",
-        "question_title": "智慧物流枢纽建设经验概括（单一题）",
-        "target_score": 15,
-        "char_limit": "不超过250字"
+        "question_title": "青年画家以玉陵湖大桥作画并题名为《巧》（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过250 字"
       },
       {
         "id": "gk2023_prov_q2",
         "q_index": 2,
         "type": "single",
-        "question_title": "青年农创客返乡下乡动能分析（综合分析）",
+        "question_title": "根据“给定资料2”（单一题）",
         "target_score": 15,
-        "char_limit": "不超过300字"
+        "char_limit": "不超过250 字"
       },
       {
         "id": "gk2023_prov_q3",
         "q_index": 3,
-        "type": "doc",
-        "question_title": "文旅街区历史文化保护与利用经验交流材料（公文题）",
+        "type": "single",
+        "question_title": "请根据“给定资料3”（单一题）",
         "target_score": 20,
-        "char_limit": "不超过450字"
+        "char_limit": "不超过400 字"
       },
       {
         "id": "gk2023_prov_q4",
         "q_index": 4,
-        "type": "single",
-        "question_title": "破除地方壁垒构建统一大市场（单一题）",
-        "target_score": 15,
-        "char_limit": "不超过300字"
+        "type": "doc",
+        "question_title": "调研组拟向乐原市政府汇报调研情况（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过500 字"
       },
       {
         "id": "gk2023_prov_q5",
         "q_index": 5,
         "type": "essay",
-        "question_title": "大作文：以流动汇聚蓬勃生机（议论文）",
+        "question_title": "大河奔流不息（议论文）",
         "target_score": 35,
-        "char_limit": "1000～1200字"
+        "char_limit": "字数1000-1200 字"
       }
     ]
   },
   {
-    "id": "gk2022_provincial",
-    "exam_name": "2022年国家公务员考试申论真题（省级）",
+    "id": "gk2022_law",
+    "exam_name": "2022年国家公务员考试《申论》真题（行政执法卷）",
     "year": 2022,
     "category": "国考",
-    "tier": "省级/副省级",
-    "char_count": 2132,
+    "tier": "行政执法卷",
+    "char_count": 7378,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2022_law_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "N 市积极落实惠企政策的有关情况（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过250 字"
+      },
+      {
+        "id": "gk2022_law_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "谈谈“现在撤掉的是‘眼中的柜台’（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300 字"
+      },
+      {
+        "id": "gk2022_law_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "J 市税务局积极优化税收服务（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过500 字"
+      },
+      {
+        "id": "gk2022_law_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "有关部门拟召开一场以“严执法（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过500 字"
+      },
+      {
+        "id": "gk2022_law_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "《反食品浪费法》实施后（议论文）",
+        "target_score": 30,
+        "char_limit": "字数800-1000 字"
+      }
+    ]
+  },
+  {
+    "id": "gk2022_city",
+    "exam_name": "2022年国家公务员考试《申论》真题（地市级）",
+    "year": 2022,
+    "category": "国考",
+    "tier": "地市级",
+    "char_count": 7775,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2022_city_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "交通旅游融合发展的几个案例（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过 350 字"
+      },
+      {
+        "id": "gk2022_city_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "根据“给定资料 2”调研组的调查走访情况（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过 450 字"
+      },
+      {
+        "id": "gk2022_city_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "F 市教育局准备根据“给定资料 3”中任校长...（公文题）",
+        "target_score": 15,
+        "char_limit": "不超过 250 字"
+      },
+      {
+        "id": "gk2022_city_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "M 公司的黄总对公司的发展前景充满信心（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过 350 字"
+      },
+      {
+        "id": "gk2022_city_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "万物在融合中发展变化（议论文）",
+        "target_score": 35,
+        "char_limit": "字数 1000~1200 字"
+      }
+    ]
+  },
+  {
+    "id": "gk2022_prov",
+    "exam_name": "2022年国家公务员考试《申论》真题（副省级）",
+    "year": 2022,
+    "category": "国考",
+    "tier": "副省级",
+    "char_count": 7460,
     "question_count": 5,
     "questions_summary": [
       {
         "id": "gk2022_prov_q1",
         "q_index": 1,
         "type": "single",
-        "question_title": "B公司科技创新启示（单一题）",
+        "question_title": "谈谈W 公司的案例为企业科技创新提供了哪些启...（单一题）",
         "target_score": 10,
-        "char_limit": "不超过200字"
+        "char_limit": "不超过200 字"
       },
       {
         "id": "gk2022_prov_q2",
         "q_index": 2,
         "type": "single",
-        "question_title": "G省粮食产业发展问题与对策（单一题）",
+        "question_title": "谈谈G 省在推进粮食产业发展中遇到了哪些问题（单一题）",
         "target_score": 15,
-        "char_limit": "不超过300字"
+        "char_limit": "不超过300 字"
       },
       {
         "id": "gk2022_prov_q3",
         "q_index": 3,
         "type": "doc",
-        "question_title": "临诗特色乡村旅游推介材料（公文题）",
+        "question_title": "为进一步开发乡村旅游产业（公文题）",
         "target_score": 20,
-        "char_limit": "不超过500字"
+        "char_limit": "不超过500 字"
       },
       {
         "id": "gk2022_prov_q4",
         "q_index": 4,
         "type": "single",
-        "question_title": "“未来学校”更高教育境界阐释（综合分析）",
+        "question_title": "谈谈为什么说“未来学校”是“在更高的教育境界...（单一题）",
         "target_score": 20,
-        "char_limit": "不超过400字"
+        "char_limit": "不超过400 字"
       },
       {
         "id": "gk2022_prov_q5",
         "q_index": 5,
         "type": "essay",
-        "question_title": "大作文：今天的思维与未来的收获（议论文）",
+        "question_title": "“今天的思维和播种（议论文）",
         "target_score": 35,
-        "char_limit": "1000～1200字"
+        "char_limit": "字数\n1000-1200 字"
       }
     ]
   },
   {
-    "id": "gk2021_provincial",
-    "exam_name": "2021年国家公务员考试申论真题（省级）",
+    "id": "gk2021_city",
+    "exam_name": "2021年国家公务员考试《申论》真题（地市级）",
     "year": 2021,
     "category": "国考",
-    "tier": "省级/副省级",
-    "char_count": 959,
+    "tier": "地市级",
+    "char_count": 7327,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2021_city_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "风林村在实施“村寨银行”项目后（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过250 字"
+      },
+      {
+        "id": "gk2021_city_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "“我们不仅仅是为乡村群众唱几场戏（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300 字"
+      },
+      {
+        "id": "gk2021_city_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "H 市近期准备召开“社区治理与服务经验交流座...（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过450 字"
+      },
+      {
+        "id": "gk2021_city_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "根据“给定资料4”（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过450 字"
+      },
+      {
+        "id": "gk2021_city_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "“物无妄然（议论文）",
+        "target_score": 35,
+        "char_limit": "字数1000—1200 字"
+      }
+    ]
+  },
+  {
+    "id": "gk2021_prov",
+    "exam_name": "2021年国家公务员考试《申论》真题（副省级）",
+    "year": 2021,
+    "category": "国考",
+    "tier": "副省级",
+    "char_count": 7700,
     "question_count": 5,
     "questions_summary": [
       {
         "id": "gk2021_prov_q1",
         "q_index": 1,
         "type": "single",
-        "question_title": "小谷村“有形与无形”内涵理解（综合分析）",
+        "question_title": "“这些努力和奋斗所换来的（单一题）",
         "target_score": 15,
-        "char_limit": "不超过300字"
+        "char_limit": "不超过300 字"
       },
       {
         "id": "gk2021_prov_q2",
         "q_index": 2,
         "type": "single",
-        "question_title": "S市“局区合一”改革概括（归纳概括）",
+        "question_title": "S 市进行了“局区合一”改革（单一题）",
         "target_score": 10,
-        "char_limit": "不超过250字"
+        "char_limit": "不超过250 字"
       },
       {
         "id": "gk2021_prov_q3",
         "q_index": 3,
-        "type": "doc",
-        "question_title": "基层协商民主经验汇报提纲（公文题）",
+        "type": "single",
+        "question_title": "根据“给定资料3”（单一题）",
         "target_score": 20,
-        "char_limit": "不超过400字"
+        "char_limit": "字数不超过400 字"
       },
       {
         "id": "gk2021_prov_q4",
         "q_index": 4,
-        "type": "single",
-        "question_title": "F县“借石成玉”发展智慧分析（综合分析）",
+        "type": "doc",
+        "question_title": "根据“给定材料4”（公文题）",
         "target_score": 20,
-        "char_limit": "不超过350字"
+        "char_limit": "不超过500 字"
       },
       {
         "id": "gk2021_prov_q5",
         "q_index": 5,
         "type": "essay",
-        "question_title": "大作文：论新时代发展中的“变与不变”（议论文）",
+        "question_title": "“夜色难免黑凉（议论文）",
         "target_score": 35,
-        "char_limit": "1000～1200字"
+        "char_limit": "字数1000～1200 字"
       }
     ]
   },
   {
-    "id": "gk2020_provincial",
-    "exam_name": "2020年国家公务员考试申论真题（省级）",
+    "id": "gk2020_city",
+    "exam_name": "2020年国家公务员考试《申论》真题（地市级）",
     "year": 2020,
     "category": "国考",
-    "tier": "省级/副省级",
-    "char_count": 843,
+    "tier": "地市级",
+    "char_count": 7930,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2020_city_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "谈谈老马是怎样“当好基层这根‘绣花针’”的（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过200 字"
+      },
+      {
+        "id": "gk2020_city_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "乡干部小雷在窦家梁村易地扶贫搬迁过程中遇到的...（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过300 字"
+      },
+      {
+        "id": "gk2020_city_q3",
+        "q_index": 3,
+        "type": "doc",
+        "question_title": "邻区有关部门准备到锦林区学习考察（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过500 字"
+      },
+      {
+        "id": "gk2020_city_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "如果你是沙洲市市场服务中心工作人员（单一题）",
+        "target_score": 25,
+        "char_limit": "不超过500 字"
+      },
+      {
+        "id": "gk2020_city_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "近期，S 省开展乡村治理先进典型评选工作（议论文）",
+        "target_score": 30,
+        "char_limit": "字数800～1000 字"
+      }
+    ]
+  },
+  {
+    "id": "gk2020_prov",
+    "exam_name": "2020年国家公务员考试《申论》真题（副省级）",
+    "year": 2020,
+    "category": "国考",
+    "tier": "副省级",
+    "char_count": 7659,
     "question_count": 5,
     "questions_summary": [
       {
         "id": "gk2020_prov_q1",
         "q_index": 1,
         "type": "single",
-        "question_title": "海德集团大国重器攻关经验概括（单一题）",
-        "target_score": 15,
-        "char_limit": "不超过250字"
+        "question_title": "概括L 省在人才的政治引领方面的主要举措（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过200 字"
       },
       {
         "id": "gk2020_prov_q2",
         "q_index": 2,
         "type": "single",
-        "question_title": "东水村生态转型蝶变路径（单一题）",
+        "question_title": "M 农场的案例为新时代青年创业提供了哪些启示（单一题）",
         "target_score": 15,
-        "char_limit": "不超过300字"
+        "char_limit": "不超过300 字"
       },
       {
         "id": "gk2020_prov_q3",
         "q_index": 3,
-        "type": "doc",
-        "question_title": "城市精细化治理工作经验简报（公文题）",
+        "type": "single",
+        "question_title": "请根据“给定资料3”提供的调查日志内容（单一题）",
         "target_score": 20,
-        "char_limit": "不超过450字"
+        "char_limit": "不超过500 字"
       },
       {
         "id": "gk2020_prov_q4",
         "q_index": 4,
         "type": "single",
-        "question_title": "传统产业数字化转型分析（综合分析）",
-        "target_score": 15,
-        "char_limit": "不超过300字"
+        "question_title": "调研结束后（单一题）",
+        "target_score": 25,
+        "char_limit": "不超过500 字"
       },
       {
         "id": "gk2020_prov_q5",
         "q_index": 5,
         "type": "essay",
-        "question_title": "大作文：安民之道在于察疾苦惠民生（议论文）",
-        "target_score": 35,
-        "char_limit": "1000～1200字"
+        "question_title": "请根据“给定资料5”（议论文）",
+        "target_score": 30,
+        "char_limit": "字数800～1000 字"
+      }
+    ]
+  },
+  {
+    "id": "gk2019_city",
+    "exam_name": "2019年国家公务员考试《申论》真题（地市级）",
+    "year": 2019,
+    "category": "国考",
+    "tier": "地市级",
+    "char_count": 6410,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2019_city_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "概括小张家乡出现的新变化（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过200 字"
+      },
+      {
+        "id": "gk2019_city_q2",
+        "q_index": 2,
+        "type": "doc",
+        "question_title": "省里召开扶贫工作座谈会（公文题）",
+        "target_score": 20,
+        "char_limit": "不超过400 字"
+      },
+      {
+        "id": "gk2019_city_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "分析小吴发生了哪些变化（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过200 字"
+      },
+      {
+        "id": "gk2019_city_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "的座谈会上（单一题）",
+        "target_score": 15,
+        "char_limit": "不超过200 字"
+      },
+      {
+        "id": "gk2019_city_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "“跟着时代的大潮往前走（议论文）",
+        "target_score": 40,
+        "char_limit": "字数1000～1200 字"
+      }
+    ]
+  },
+  {
+    "id": "gk2019_prov",
+    "exam_name": "2019年国家公务员考试《申论》真题（副省级）",
+    "year": 2019,
+    "category": "国考",
+    "tier": "副省级",
+    "char_count": 6699,
+    "question_count": 5,
+    "questions_summary": [
+      {
+        "id": "gk2019_prov_q1",
+        "q_index": 1,
+        "type": "single",
+        "question_title": "根据“指定资料1”（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过150 字"
+      },
+      {
+        "id": "gk2019_prov_q2",
+        "q_index": 2,
+        "type": "single",
+        "question_title": "请根据“给定资料2”中的调研记录（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过400字"
+      },
+      {
+        "id": "gk2019_prov_q3",
+        "q_index": 3,
+        "type": "single",
+        "question_title": "不超过500 字（单一题）",
+        "target_score": 20,
+        "char_limit": "不超过600 字"
+      },
+      {
+        "id": "gk2019_prov_q4",
+        "q_index": 4,
+        "type": "single",
+        "question_title": "谈谈你对“作为精神资源的乡村文化”的理解（单一题）",
+        "target_score": 10,
+        "char_limit": "不超过250 字"
+      },
+      {
+        "id": "gk2019_prov_q5",
+        "q_index": 5,
+        "type": "essay",
+        "question_title": "结尾写道：“城市文明和乡村文明（议论文）",
+        "target_score": 40,
+        "char_limit": "字数1000～1200 字"
       }
     ]
   },

@@ -294,8 +294,15 @@ class GuokaoPdfParser:
         return papers
 
 if __name__ == "__main__":
-    parser = GuokaoPdfParser(Path("D:/BaiduNetdiskDownload/国考申论PDF"))
+    import json
+    source_dir = Path("D:/BaiduNetdiskDownload/国考申论PDF")
+    parser = GuokaoPdfParser(source_dir)
     papers = parser.parse_all()
     print(f"Parsed {len(papers)} papers successfully!")
     for p in papers:
         print(f"  {p['id']:<14} | {p['year']} {p['tier']:<6} | mat: {len(p['materials_text']):<5} | qs: {len(p['questions'])} | {p['exam_name']}")
+    
+    out_file = Path(__file__).parent.parent / "data" / "guokao_real_papers.json"
+    out_file.parent.mkdir(parents=True, exist_ok=True)
+    out_file.write_text(json.dumps(papers, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"✓ Cached to {out_file} ({out_file.stat().st_size / 1024:.2f} KB)")
