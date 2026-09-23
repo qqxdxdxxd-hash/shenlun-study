@@ -1,5 +1,7 @@
 # Git worktrees
 .worktrees/
+/dist/
+/.sites-runtime/
 
 # Python
 __pycache__/
