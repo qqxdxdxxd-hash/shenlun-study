@@ -1,0 +1,5 @@
+{
+  "buildCommand": "node scripts/build-static-site.mjs",
+  "outputDirectory": "./dist",
+  "nodeVersion": "22.17.1"
+}
