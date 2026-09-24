@@ -64,6 +64,14 @@ const mockSubmissions = [
     userAnswer: "各位领导，现将我村调研情况汇报如下...",
     wordCount: 420,
     createdAt: 1710300000000
+  },
+  {
+    id: "sub_1005_v1_legacy", // 兼容更早期极简数据：无 questionTitle，仅有 topic，无 examTitle
+    questionType: "essay",
+    topic: "论青年干部之扎根基层",
+    userAnswer: "基层是广阔天地...",
+    wordCount: 1000,
+    createdAt: 1710400000000
   }
 ];
 
@@ -75,27 +83,39 @@ const mockReports = [
     target_score: 25,
     grade: "一类文",
     copy_ratio: 0.08
+  },
+  {
+    id: "rep_2005",
+    submissionId: "sub_1005_v1_legacy",
+    score: 28.0,
+    target_score: 35,
+    grade: "二类文",
+    copy_ratio: 0.10
   }
 ];
 
 // Test 1: 元数据富集与兼容旧版本数据合并
 console.log("-> 验证 Test 1: 元数据富集与旧数据合并");
 const enriched = QuestionHistoryHelper.enrichSubmissions(mockSubmissions, mockReports);
-assert.strictEqual(enriched.length, 4, "应当返回 4 条富集数据");
+assert.strictEqual(enriched.length, 5, "应当返回 5 条富集数据");
 const legacyItem = enriched.find(s => s.id === "sub_1004_legacy");
 assert.strictEqual(legacyItem.score, 20.0, "应当成功从 reports 中回填实得分数");
 assert.strictEqual(legacyItem.targetScore, 25, "应当成功从 reports 中回填满分值");
 assert.strictEqual(legacyItem.scoringRate, 80, "得分率应当正确计算为 80%");
+const v1LegacyItem = enriched.find(s => s.id === "sub_1005_v1_legacy");
+assert.strictEqual(v1LegacyItem.questionTitle, "论青年干部之扎根基层", "应当平滑回退使用 topic 作为题目");
+assert.strictEqual(v1LegacyItem.examTitle, "自定义题目", "缺失 examTitle 时应当提供安全默认值");
+assert.strictEqual(v1LegacyItem.scoringRate, 80, "得分率应当正确计算");
 console.log("  ✅ Test 1 通过：富集逻辑正确，完美兼容旧数据");
 
 // Test 2: 宏观做题统计看板核算
 console.log("-> 验证 Test 2: 宏观做题统计看板核算");
 const stats = QuestionHistoryHelper.calculateStats(enriched);
-assert.strictEqual(stats.totalCount, 4, "累计答卷应为 4");
-assert.strictEqual(stats.essayCount, 1, "大作文应为 1");
+assert.strictEqual(stats.totalCount, 5, "累计答卷应为 5");
+assert.strictEqual(stats.essayCount, 2, "大作文应为 2");
 assert.strictEqual(stats.singleCount, 2, "单一题应为 2");
 assert.strictEqual(stats.docCount, 1, "公文题应为 1");
-assert.strictEqual(stats.totalWords, 1512, "总字数应为 1512 字");
+assert.strictEqual(stats.totalWords, 2512, "总字数应为 2512 字");
 assert.strictEqual(typeof stats.avgScoringRate, 'number', "平均得分率应为数值");
 assert.ok(stats.avgScoringRate > 75 && stats.avgScoringRate < 85, "平均得分率应在合理区间");
 console.log("  ✅ Test 2 通过：宏观统计指标计算精准");
@@ -108,6 +128,9 @@ assert.strictEqual(singleOnly.length, 2, "筛选单一题应返回 2 条");
 const searched = QuestionHistoryHelper.filterItems(enriched, { keyword: "融资难" });
 assert.strictEqual(searched.length, 2, "按题目关键词搜索应返回 2 条");
 
+const searchedLegacyTopic = QuestionHistoryHelper.filterItems(enriched, { keyword: "扎根基层" });
+assert.strictEqual(searchedLegacyTopic.length, 1, "按旧版本 topic 检索应成功召回");
+
 const searchedExam = QuestionHistoryHelper.filterItems(enriched, { examId: "gk2023_provincial" });
 assert.strictEqual(searchedExam.length, 1, "按真题试卷筛选应返回 1 条");
 console.log("  ✅ Test 3 通过：多维筛选准确无误");
@@ -115,10 +138,10 @@ console.log("  ✅ Test 3 通过：多维筛选准确无误");
 // Test 4: 排序功能
 console.log("-> 验证 Test 4: 排序功能");
 const sortedByDateDesc = QuestionHistoryHelper.sortItems(enriched, "date_desc");
-assert.strictEqual(sortedByDateDesc[0].id, "sub_1004_legacy", "按时间降序最新的一条应在首位");
+assert.strictEqual(sortedByDateDesc[0].id, "sub_1005_v1_legacy", "按时间降序最新的一条应在首位");
 
 const sortedByScoreDesc = QuestionHistoryHelper.sortItems(enriched, "score_desc");
-assert.strictEqual(sortedByScoreDesc[0].id, "sub_1003", "按绝对得分降序最高分 28.0 应在首位");
+assert.strictEqual(sortedByScoreDesc[0].score, 28.0, "按绝对得分降序最高分 28.0 应在首位");
 
 const sortedByRateDesc = QuestionHistoryHelper.sortItems(enriched, "rate_desc");
 assert.strictEqual(sortedByRateDesc[0].id, "sub_1002", "按得分率降序 92.5% (18.5/20) 应在首位");

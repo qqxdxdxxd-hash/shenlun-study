@@ -36,8 +36,14 @@
           scoringRate = Math.round((effectiveScore / effectiveTarget) * 100);
         }
 
+        const defaultTitle = sub.questionType === 'essay' ? '大作文真题作答' : (sub.questionType === 'doc' ? '公文贯彻执行作答' : '单一题作答');
+        const effectiveQuestionTitle = sub.questionTitle || sub.topic || defaultTitle;
+        const effectiveExamTitle = sub.examTitle || '自定义题目';
+
         return {
           ...sub,
+          questionTitle: effectiveQuestionTitle,
+          examTitle: effectiveExamTitle,
           score: effectiveScore,
           targetScore: effectiveTarget,
           grade: effectiveGrade,
