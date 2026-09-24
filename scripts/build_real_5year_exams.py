@@ -63,6 +63,7 @@ def build_real_exams(output_dir: Path, default_kb_file: Path):
                 "prompt_text": q.get("prompt_text", ""),
                 "prompt_reqs": q.get("prompt_reqs", ""),
                 "target_score": q.get("target_score", 20),
+                "char_limit": q.get("char_limit", ""),
                 "materials": materials_text,
                 "scoring_criteria": q.get("scoring_criteria", ""),
                 "reference_answer": q.get("reference_answer", "")
@@ -98,6 +99,7 @@ def build_real_exams(output_dir: Path, default_kb_file: Path):
                 "prompt_text": q.get("prompt_text", ""),
                 "prompt_reqs": q.get("prompt_reqs", ""),
                 "target_score": q.get("target_score", 20),
+                "char_limit": q.get("char_limit", ""),
                 "materials": materials_text,
                 "scoring_criteria": q.get("scoring_criteria", ""),
                 "reference_answer": q.get("reference_answer", "")
