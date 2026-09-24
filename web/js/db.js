@@ -155,6 +155,55 @@ class ClientDB {
       req.onerror = () => reject(req.error);
     });
   }
+
+  /**
+   * 级联删除作答记录及其关联的批改报告与短板记录
+   */
+  async deleteSubmissionWithCascade(submissionId) {
+    const db = await this.init();
+    return new Promise((resolve, reject) => {
+      try {
+        const tx = db.transaction(['submissions', 'reports', 'dossier'], 'readwrite');
+        const subStore = tx.objectStore('submissions');
+        const repStore = tx.objectStore('reports');
+        const dosStore = tx.objectStore('dossier');
+
+        // 1. 删除作答主体记录
+        subStore.delete(submissionId);
+
+        // 2. 级联删除关联的色谱批改报告
+        if (repStore.indexNames.contains('submissionId')) {
+          const repIndex = repStore.index('submissionId');
+          const repReq = repIndex.openCursor(IDBKeyRange.only(submissionId));
+          repReq.onsuccess = (e) => {
+            const cursor = e.target.result;
+            if (cursor) {
+              cursor.delete();
+              cursor.continue();
+            }
+          };
+        }
+
+        // 3. 级联删除短板档案中该次提交的缺陷切片
+        if (dosStore.indexNames.contains('submissionId')) {
+          const dosIndex = dosStore.index('submissionId');
+          const dosReq = dosIndex.openCursor(IDBKeyRange.only(submissionId));
+          dosReq.onsuccess = (e) => {
+            const cursor = e.target.result;
+            if (cursor) {
+              cursor.delete();
+              cursor.continue();
+            }
+          };
+        }
+
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
 }
 
 // 导出全局单例

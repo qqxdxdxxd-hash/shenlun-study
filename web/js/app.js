@@ -235,6 +235,12 @@ async function initApp() {
   renderPublicKBList();
   await renderDossierList();
   await renderDossierWarningOnReviewPage();
+  if (typeof renderHistoryList === 'function') {
+    await renderHistoryList();
+  }
+  if (typeof updateQuestionHistoryBadge === 'function') {
+    await updateQuestionHistoryBadge();
+  }
 
   // 4. 绑定色谱 Popover 与范文划词入库
   window.ChromaRenderer.bindPopovers('chroma-text-container', 'span-popover');
@@ -252,10 +258,14 @@ function switchTab(tabId) {
   document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
   
-  const tabIdx = ['review', 'memory', 'kb', 'dossier', 'workshop'].indexOf(tabId);
+  const tabs = ['review', 'history', 'memory', 'kb', 'dossier', 'workshop'];
+  const tabIdx = tabs.indexOf(tabId);
   if (tabIdx >= 0) {
     document.querySelectorAll('.tab-item')[tabIdx].classList.add('active');
     document.getElementById('tab-' + tabId).classList.add('active');
+  }
+  if (tabId === 'history' && typeof renderHistoryList === 'function') {
+    renderHistoryList();
   }
 }
 
@@ -528,6 +538,11 @@ ${window.ChromaRenderer.escapeHtml(currentActiveMaterialText)}
 
   // 联动刷新作答页短板警报
   renderDossierWarningOnReviewPage(q.type);
+
+  // 联动更新本题历史徽章
+  if (typeof updateQuestionHistoryBadge === 'function') {
+    await updateQuestionHistoryBadge();
+  }
 }
 
 // 展开/收起官方标准采分底稿
@@ -724,15 +739,23 @@ async function runFullReview() {
     const result = await window.ApiClient.submitReview(payload);
     renderReviewResult(userText, result, qType, targetScore);
 
-    // 持久化到客户端 IndexedDB
+    // 持久化到客户端 IndexedDB (补齐丰富元数据快照)
     const subId = `sub_${Date.now()}`;
+    const effectiveTargetScore = result.target_score !== undefined ? Number(result.target_score) : targetScore;
     await window.clientDB.put('submissions', {
       id: subId,
       questionType: qType,
       questionTitle: topic,
+      examId: currentPaper ? currentPaper.id : null,
+      examTitle: currentPaper ? currentPaper.exam_name : (topic || '自定义作答'),
+      questionId: currentQuestion ? currentQuestion.id : null,
       materials: materials,
       userAnswer: userText,
       wordCount: userText.length,
+      score: result.score,
+      targetScore: effectiveTargetScore,
+      grade: result.grade,
+      copyRatio: result.copy_ratio,
       createdAt: Date.now()
     });
     await window.clientDB.put('reports', {
@@ -746,6 +769,14 @@ async function runFullReview() {
     await recordDossierDefects(subId, qType, topic, userText, result);
     await renderDossierList();
     await renderDossierWarningOnReviewPage(qType);
+
+    // 实时更新做题历史与本题历史小组件
+    if (typeof renderHistoryList === 'function') {
+      await renderHistoryList();
+    }
+    if (typeof updateQuestionHistoryBadge === 'function') {
+      await updateQuestionHistoryBadge();
+    }
   } catch (err) {
     console.error("批改异常:", err);
     const chromaEl = document.getElementById('chroma-text-container');
@@ -1349,7 +1380,7 @@ function toggleDossierExpand(dimKey) {
   renderDossierList();
 }
 
-// 从短板溯源跳转回原卷批改报告
+// 从短板溯源或历史记录跳转回原卷批改报告
 async function jumpToSubmissionReport(submissionId) {
   const db = window.clientDB;
   const submissions = await db.getAll('submissions') || [];
@@ -1365,11 +1396,34 @@ async function jumpToSubmissionReport(submissionId) {
   // 切换到 review Tab
   switchTab('review');
 
-  // 回填题目与文本
+  // 回填题型与题目
   const qTypeEl = document.getElementById('q-type');
   if (qTypeEl && sub.questionType) {
     qTypeEl.value = sub.questionType;
   }
+
+  // 若关联了真题试卷与小题，同步还原试卷选择器与小题高亮
+  if (sub.examId) {
+    const selector = document.getElementById('exam-selector');
+    if (selector && selector.value !== sub.examId) {
+      selector.value = sub.examId;
+      await onExamSelectChange();
+    }
+    if (sub.questionId && typeof selectSubQuestion === 'function') {
+      await selectSubQuestion(sub.questionId);
+    }
+  } else if (sub.materials) {
+    currentActiveMaterialText = sub.materials;
+    const matPanel = document.getElementById('materials-panel');
+    if (matPanel) {
+      matPanel.innerHTML = `
+        <div style="font-size: 13.5px; line-height: 2.0; white-space: pre-wrap; color: #cbd5e1; padding: 8px 12px; background: rgba(15, 23, 42, 0.4); border-radius: 6px;">
+${window.ChromaRenderer ? window.ChromaRenderer.escapeHtml(sub.materials) : sub.materials}
+        </div>
+      `;
+    }
+  }
+
   const titleEl = document.getElementById('question-title-input');
   if (titleEl && sub.questionTitle) titleEl.value = sub.questionTitle;
   const textEl = document.getElementById('user-answer-input');
@@ -1379,7 +1433,7 @@ async function jumpToSubmissionReport(submissionId) {
   }
 
   // 渲染当次报告
-  renderReviewResult(sub.userAnswer, rep);
+  renderReviewResult(sub.userAnswer, rep, sub.questionType, sub.targetScore);
 }
 
 // 渲染短板档案面板
@@ -1904,5 +1958,383 @@ window.runFullReview = runFullReview;
 window.selectSubQuestion = selectSubQuestion;
 window.toggleScoringCriteria = toggleScoringCriteria;
 window.selectExamForStudy = selectExamForStudy;
+
+// 做题历史与二练复盘管理方法全局暴露
+window.switchTab = switchTab;
+window.setHistoryTypeFilter = setHistoryTypeFilter;
+window.onHistorySearchInput = onHistorySearchInput;
+window.onHistorySortChange = onHistorySortChange;
+window.renderHistoryList = renderHistoryList;
+window.reDrillFromSubmission = reDrillFromSubmission;
+window.deleteSubmissionRecord = deleteSubmissionRecord;
+window.jumpToSubmissionReport = jumpToSubmissionReport;
+window.updateQuestionHistoryBadge = updateQuestionHistoryBadge;
+window.filterHistoryByCurrentQuestion = filterHistoryByCurrentQuestion;
+
+// ==================== 做题历史与二练复盘管理实现 ====================
+let currentHistoryTypeFilter = 'all';
+let currentHistorySearch = '';
+let currentHistorySort = 'date_desc';
+
+// 切换题型过滤
+function setHistoryTypeFilter(type) {
+  currentHistoryTypeFilter = type;
+  document.querySelectorAll('.filter-type-btn').forEach(btn => {
+    if (btn.dataset.type === type) {
+      btn.classList.add('btn-primary');
+      btn.classList.remove('btn-outline');
+    } else {
+      btn.classList.remove('btn-primary');
+      btn.classList.add('btn-outline');
+    }
+  });
+  renderHistoryList();
+}
+
+function onHistorySearchInput() {
+  const el = document.getElementById('history-search-input');
+  currentHistorySearch = el ? el.value : '';
+  renderHistoryList();
+}
+
+function onHistorySortChange() {
+  const el = document.getElementById('history-sort-select');
+  currentHistorySort = el ? el.value : 'date_desc';
+  renderHistoryList();
+}
+
+// 核心渲染做题历史列表
+async function renderHistoryList() {
+  const container = document.getElementById('history-list-container');
+  if (!container) return;
+
+  const db = window.clientDB;
+  const submissions = await db.getAll('submissions') || [];
+  const reports = await db.getAll('reports') || [];
+
+  // 利用 QuestionHistoryHelper 纯逻辑富集与计算
+  const enriched = window.QuestionHistoryHelper ? window.QuestionHistoryHelper.enrichSubmissions(submissions, reports) : submissions;
+
+  // 1. 刷新宏观统计卡片
+  if (window.QuestionHistoryHelper) {
+    const stats = window.QuestionHistoryHelper.calculateStats(enriched);
+    const totalEl = document.getElementById('stat-total-count');
+    if (totalEl) totalEl.innerText = stats.totalCount;
+    const distEl = document.getElementById('stat-type-dist');
+    if (distEl) distEl.innerText = `大作:${stats.essayCount} | 公文:${stats.docCount} | 单一:${stats.singleCount}`;
+    const rateEl = document.getElementById('stat-avg-rate');
+    if (rateEl) rateEl.innerText = `${stats.avgScoringRate}%`;
+    const wordsEl = document.getElementById('stat-total-words');
+    if (wordsEl) wordsEl.innerText = `${stats.totalWords.toLocaleString()} 字`;
+  }
+
+  // 2. 筛选与排序
+  let filtered = window.QuestionHistoryHelper ? window.QuestionHistoryHelper.filterItems(enriched, {
+    questionType: currentHistoryTypeFilter,
+    keyword: currentHistorySearch
+  }) : enriched;
+
+  let sorted = window.QuestionHistoryHelper ? window.QuestionHistoryHelper.sortItems(filtered, currentHistorySort) : filtered;
+
+  if (sorted.length === 0) {
+    container.innerHTML = `
+      <div style="padding: 40px 20px; text-align: center; color: var(--text-muted); background: rgba(15, 23, 42, 0.4); border-radius: 8px; border: 1px dashed var(--card-border);">
+        <div style="font-size: 32px; margin-bottom: 8px;">📜</div>
+        <div style="font-size: 14px; color: #cbd5e1;">暂无匹配的做题作答记录</div>
+        <div style="font-size: 12px; margin-top: 6px;">在【纸面作答与色谱批改】页面完成一次真实批改后，答卷将自动归档至此。</div>
+      </div>
+    `;
+    return;
+  }
+
+  // 3. 生成卡片 HTML
+  const typeMap = {
+    essay: { label: "大作文", color: "#38bdf8" },
+    doc: { label: "公文题", color: "#818cf8" },
+    single: { label: "单一题", color: "#4ade80" }
+  };
+
+  container.innerHTML = sorted.map(item => {
+    const typeInfo = typeMap[item.questionType] || { label: item.questionType || "申论", color: "#94a3b8" };
+    const dateStr = window.QuestionHistoryHelper ? window.QuestionHistoryHelper.formatDate(item.createdAt) : new Date(item.createdAt).toLocaleString();
+    const scoreDisplay = item.score !== null ? `${item.score} / ${item.targetScore || '--'}分` : '批改处理中';
+    const rateDisplay = item.scoringRate !== null ? `(${item.scoringRate}%)` : '';
+    const examBadge = item.examTitle ? `🏛️ ${item.examTitle}` : '自定义题目';
+    const previewSnippet = item.userAnswer ? (item.userAnswer.slice(0, 160) + (item.userAnswer.length > 160 ? '...' : '')) : '无作答文本';
+
+    return `
+      <div class="history-item-card" id="hist-card-${item.id}">
+        <div class="history-item-header">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span style="background: rgba(56,189,248,0.12); color: ${typeInfo.color}; border: 1px solid rgba(56,189,248,0.3); font-size:11px; padding:1px 6px; border-radius:4px; font-weight:700;">${typeInfo.label}</span>
+              <span class="history-item-title">${window.ChromaRenderer ? window.ChromaRenderer.escapeHtml(item.questionTitle) : item.questionTitle}</span>
+            </div>
+            <div class="history-item-meta">
+              <span>${examBadge}</span>
+              <span>•</span>
+              <span>🕒 ${dateStr}</span>
+              <span>•</span>
+              <span>📝 ${item.wordCount || (item.userAnswer ? item.userAnswer.length : 0)} 字</span>
+              <span>•</span>
+              <span>抄袭率: ${(item.copyRatio * 100).toFixed(1)}%</span>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div class="score-badge-highlight">
+              <span>🏆 ${scoreDisplay}</span>
+              <span style="font-size:11px; font-weight:normal; opacity:0.85;">${rateDisplay}</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">${item.grade || ''}</div>
+          </div>
+        </div>
+
+        <div class="history-item-snippet">${window.ChromaRenderer ? window.ChromaRenderer.escapeHtml(previewSnippet) : previewSnippet}</div>
+
+        <div class="history-item-actions">
+          <button class="btn btn-outline btn-sm" style="font-size:11.5px; padding:3px 10px;" onclick="jumpToSubmissionReport('${item.id}')">🔍 查看批改色谱底稿</button>
+          <button class="btn btn-primary btn-sm" style="font-size:11.5px; padding:3px 10px;" onclick="reDrillFromSubmission('${item.id}')">🔄 基于本题二练重写</button>
+          <button class="btn btn-outline btn-sm" style="font-size:11.5px; padding:3px 8px; color:#f87171; border-color:rgba(239,68,68,0.3);" onclick="deleteSubmissionRecord('${item.id}')">🗑️ 删除</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// 基于历史答卷发起二练重构
+async function reDrillFromSubmission(submissionId) {
+  const db = window.clientDB;
+  const submissions = await db.getAll('submissions') || [];
+  const sub = submissions.find(s => s.id === submissionId);
+  if (!sub) {
+    alert("未找到该答卷");
+    return;
+  }
+
+  // 1. 切换回 review Tab
+  switchTab('review');
+
+  // 2. 还原题型
+  const qTypeEl = document.getElementById('q-type');
+  if (qTypeEl && sub.questionType) {
+    qTypeEl.value = sub.questionType;
+    if (typeof changeQuestionType === 'function') changeQuestionType();
+  }
+
+  // 3. 还原试卷或题目关联
+  if (sub.examId) {
+    const examSelector = document.getElementById('exam-selector');
+    if (examSelector) {
+      examSelector.value = sub.examId;
+      await onExamSelectChange();
+    }
+    if (sub.questionId && typeof selectSubQuestion === 'function') {
+      await selectSubQuestion(sub.questionId);
+    }
+  } else {
+    // 自定义题目
+    if (!isCustomPrompt) toggleCustomPromptMode();
+    const titleEl = document.getElementById('question-title-input');
+    if (titleEl) titleEl.value = sub.questionTitle;
+    const matEl = document.getElementById('custom-materials-input');
+    if (matEl && sub.materials) matEl.value = sub.materials;
+  }
+
+  // 4. 清空作答输入框，准备进行全新二练
+  const textEl = document.getElementById('user-answer-input');
+  if (textEl) {
+    textEl.value = '';
+    textEl.focus();
+    updateWordCount();
+  }
+
+  // 5. 提示用户已进入二练模式
+  alert(`🎯 已就绪：进入【${sub.questionTitle}】二次重构练习！\n原题干与给定资料已还原，作答框已清空，请结合上轮批改教训开始二练。`);
+}
+
+// 级联删除单条作答记录
+async function deleteSubmissionRecord(submissionId) {
+  if (!confirm("⚠️ 确定要删除该条做题记录吗？\n将同步清理对应的批改报告。该操作不可撤销。")) {
+    return;
+  }
+  try {
+    if (window.clientDB.deleteSubmissionWithCascade) {
+      await window.clientDB.deleteSubmissionWithCascade(submissionId);
+    } else {
+      await window.clientDB.delete('submissions', submissionId);
+    }
+    await renderHistoryList();
+    await renderDossierList();
+    if (typeof updateQuestionHistoryBadge === 'function') {
+      await updateQuestionHistoryBadge();
+    }
+  } catch (err) {
+    alert("删除失败: " + err.message);
+  }
+}
+
+// 更新做题区顶部“本题已练 N 次”徽章
+async function updateQuestionHistoryBadge() {
+  const badge = document.getElementById('question-history-badge');
+  if (!badge) return;
+
+  if (!currentQuestion && !isCustomPrompt) {
+    badge.style.display = 'none';
+    return;
+  }
+
+  const db = window.clientDB;
+  const submissions = await db.getAll('submissions') || [];
+  const qId = currentQuestion ? currentQuestion.id : null;
+  const qTitle = currentQuestion ? currentQuestion.question_title : (document.getElementById('question-title-input') ? document.getElementById('question-title-input').value : '');
+
+  const matched = submissions.filter(s => (qId && s.questionId === qId) || (qTitle && s.questionTitle === qTitle));
+
+  if (matched.length > 0) {
+    const scores = matched.map(m => m.score).filter(s => typeof s === 'number');
+    const maxScore = scores.length > 0 ? Math.max(...scores) : null;
+    badge.style.display = 'inline-block';
+    badge.innerText = `📜 本题已练 ${matched.length} 次${maxScore !== null ? ` (最高 ${maxScore}分)` : ''}`;
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function filterHistoryByCurrentQuestion() {
+  const qTitle = currentQuestion ? currentQuestion.question_title : '';
+  switchTab('history');
+  const searchInput = document.getElementById('history-search-input');
+  if (searchInput && qTitle) {
+    searchInput.value = qTitle;
+    onHistorySearchInput();
+  }
+}
+
+// ============================================================================
+// 考友留言与 GitHub Issues 反馈交互控制器
+// ============================================================================
+let currentFeedbackType = 'feature';
+
+function openFeedbackModal() {
+  const modal = document.getElementById('feedback-modal');
+  if (modal) {
+    modal.classList.add('active');
+    const titleInput = document.getElementById('feedback-title');
+    if (titleInput) titleInput.focus();
+  }
+}
+
+function closeFeedbackModal() {
+  const modal = document.getElementById('feedback-modal');
+  if (modal) {
+    modal.classList.remove('active');
+  }
+}
+
+function selectFeedbackType(type) {
+  currentFeedbackType = (type === 'bug') ? 'bug' : 'feature';
+  const pills = document.querySelectorAll('#feedback-type-group .feedback-type-pill');
+  pills.forEach(pill => {
+    pill.classList.toggle('active', pill.dataset.type === currentFeedbackType);
+  });
+}
+
+function getCurrentAppContext() {
+  const examSelector = document.getElementById('exam-selector');
+  const selectedExamText = examSelector && examSelector.selectedOptions && examSelector.selectedOptions[0]
+    ? examSelector.selectedOptions[0].text
+    : '未知试卷';
+  const qType = document.getElementById('q-type') ? document.getElementById('q-type').value : 'essay';
+  const qTypeMap = { essay: '大作文', doc: '公文题', single: '单一题' };
+  const qTitle = currentQuestion ? currentQuestion.question_title : (document.getElementById('question-title-input') ? document.getElementById('question-title-input').value : '');
+
+  return {
+    examTitle: qTitle ? `${selectedExamText} (${qTitle})` : selectedExamText,
+    questionType: qTypeMap[qType] || qType,
+    appVersion: '2.0.0',
+    platform: typeof navigator !== 'undefined' ? navigator.platform : '未知',
+    userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '未知'
+  };
+}
+
+function getFeedbackPayload() {
+  const title = (document.getElementById('feedback-title') ? document.getElementById('feedback-title').value : '').trim();
+  const content = (document.getElementById('feedback-content') ? document.getElementById('feedback-content').value : '').trim();
+  const contact = (document.getElementById('feedback-contact') ? document.getElementById('feedback-contact').value : '').trim();
+  const context = getCurrentAppContext();
+
+  return {
+    type: currentFeedbackType,
+    title,
+    content,
+    contact,
+    context
+  };
+}
+
+function submitFeedbackToGitHub() {
+  const payload = getFeedbackPayload();
+  if (!payload.title && !payload.content) {
+    alert('请至少填写简要标题或详细描述后再提交！');
+    return;
+  }
+
+  const helper = window.FeedbackHelper;
+  if (!helper) {
+    alert('留言模块未加载完成，请刷新页面重试');
+    return;
+  }
+
+  const issueUrl = helper.buildIssueUrl(payload);
+  window.open(issueUrl, '_blank');
+  closeFeedbackModal();
+}
+
+function copyFeedbackToClipboard() {
+  const payload = getFeedbackPayload();
+  const helper = window.FeedbackHelper;
+  if (!helper) {
+    alert('留言模块未加载完成，请刷新页面重试');
+    return;
+  }
+
+  const markdown = helper.formatMarkdownBody(payload);
+  const copyText = `${helper.getTitlePrefix(payload.type)}${payload.title || '考友反馈'}\n\n${markdown}`;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(copyText).then(() => {
+      const btn = document.getElementById('btn-copy-feedback');
+      if (btn) {
+        const oldText = btn.innerHTML;
+        btn.innerHTML = '<span>✅ 已复制到剪贴板！</span>';
+        setTimeout(() => {
+          btn.innerHTML = oldText;
+        }, 2500);
+      }
+    }).catch(err => {
+      alert('复制失败，请手动选择复制：' + err);
+    });
+  } else {
+    // 降级方案
+    const textarea = document.createElement('textarea');
+    textarea.value = copyText;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      const btn = document.getElementById('btn-copy-feedback');
+      if (btn) {
+        const oldText = btn.innerHTML;
+        btn.innerHTML = '<span>✅ 已复制到剪贴板！</span>';
+        setTimeout(() => {
+          btn.innerHTML = oldText;
+        }, 2500);
+      }
+    } catch (e) {
+      alert('复制到剪切板失败，请手动复制：\n' + copyText);
+    }
+    document.body.removeChild(textarea);
+  }
+}
 
 document.addEventListener('DOMContentLoaded', initApp);

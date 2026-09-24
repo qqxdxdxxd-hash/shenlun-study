@@ -27,6 +27,9 @@
         <button class="btn btn-outline" onclick="window.BackupManager.exportFullBackup()">
           <span>💾 导出全量备份</span>
         </button>
+        <button class="btn-feedback-trigger" onclick="openFeedbackModal()" title="向作者留言或反馈问题">
+          <span>💬 留言 / 反馈</span>
+        </button>
         <button class="btn btn-primary" onclick="openSettingModal()">
           <span>⚙️ 模型配置 (BYOK)</span>
         </button>
@@ -36,6 +39,7 @@
     <!-- 导航 Tabs -->
     <div class="tab-bar">
       <div class="tab-item active" onclick="switchTab('review')">✏️ 纸面作答与色谱批改</div>
+      <div class="tab-item" onclick="switchTab('history')">📜 作答历史与二练复盘</div>
       <div class="tab-item" onclick="switchTab('memory')">📖 个人申论记忆库 (SM-2)</div>
       <div class="tab-item" onclick="switchTab('kb')">🏛️ 官方真题与知识库</div>
       <div class="tab-item" onclick="switchTab('dossier')">🎯 作答短板档案</div>
@@ -98,7 +102,10 @@
             <!-- 题本小题直达与官方采分底稿展开 -->
             <div id="paper-questions-container" style="margin-bottom: 10px;">
               <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 5px; display:flex; justify-content:space-between; align-items:center;">
-                <span>🎯 试卷各题快速直达（自动联动资料、题型与采分点）：</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span>🎯 试卷各题快速直达（自动联动资料、题型与采分点）：</span>
+                  <span id="question-history-badge" style="display:none; cursor:pointer; font-size:11px; color:#38bdf8; background:rgba(56,189,248,0.12); padding:1px 6px; border-radius:4px; border:1px solid rgba(56,189,248,0.3);" onclick="filterHistoryByCurrentQuestion()">📜 本题已练 0 次</span>
+                </div>
                 <button type="button" class="btn btn-outline" style="padding: 1px 8px; font-size: 10.5px; border-color: rgba(56,189,248,0.4); color: #38bdf8;" onclick="toggleScoringCriteria()">
                   <span id="scoring-toggle-text">🔍 查看官方采分底稿</span>
                 </button>
@@ -345,7 +352,68 @@
       </div>
     </div>
 
-    <!-- TAB 2: 个人申论记忆库 (SM-2) -->
+    <!-- TAB 2: 📜 作答历史与二练复盘 -->
+    <div id="tab-history" class="tab-panel">
+      <div class="card">
+        <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span>📜 做题历史档案与二练复盘台</span>
+            <span style="font-size:12px; color:var(--text-muted); font-weight:normal;">(100% 留存浏览器本地)</span>
+          </div>
+          <button class="btn btn-outline" style="padding:3px 10px; font-size:12px;" onclick="renderHistoryList()">🔄 刷新列表</button>
+        </div>
+
+        <!-- 1. 宏观做题成效统计网格 -->
+        <div class="history-stats-grid" id="history-stats-container">
+          <div class="history-stat-card">
+            <div class="history-stat-val" id="stat-total-count" style="color: #38bdf8;">0</div>
+            <div class="history-stat-lbl">累计完成答卷</div>
+          </div>
+          <div class="history-stat-card">
+            <div class="history-stat-val" id="stat-type-dist" style="font-size: 14px; line-height: 28px; color: #f8fafc;">
+              大作:0 | 公文:0 | 单一:0
+            </div>
+            <div class="history-stat-lbl">各题型练题分布</div>
+          </div>
+          <div class="history-stat-card">
+            <div class="history-stat-val" id="stat-avg-rate" style="color: #4ade80;">0%</div>
+            <div class="history-stat-lbl">综合平均得分率</div>
+          </div>
+          <div class="history-stat-card">
+            <div class="history-stat-val" id="stat-total-words" style="color: #facc15;">0 字</div>
+            <div class="history-stat-lbl">实战手写敲入总字数</div>
+          </div>
+        </div>
+
+        <!-- 2. 多维筛选与检索工具栏 -->
+        <div class="history-toolbar">
+          <div class="history-filter-group">
+            <button class="btn btn-sm btn-primary filter-type-btn" data-type="all" onclick="setHistoryTypeFilter('all')">🌐 全部题型</button>
+            <button class="btn btn-sm btn-outline filter-type-btn" data-type="essay" onclick="setHistoryTypeFilter('essay')">✍️ 大作文</button>
+            <button class="btn btn-sm btn-outline filter-type-btn" data-type="doc" onclick="setHistoryTypeFilter('doc')">📜 贯彻公文</button>
+            <button class="btn btn-sm btn-outline filter-type-btn" data-type="single" onclick="setHistoryTypeFilter('single')">🎯 单一采分题</button>
+          </div>
+
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <input type="text" class="form-input" id="history-search-input" placeholder="🔍 搜索试卷、题目标题或作答内容..." style="width: 260px; padding: 4px 10px; font-size: 12px;" oninput="onHistorySearchInput()">
+            <select class="form-select" id="history-sort-select" style="width: 140px; padding: 4px 8px; font-size: 12px;" onchange="onHistorySortChange()">
+              <option value="date_desc">🕒 作答时间 (最新)</option>
+              <option value="date_asc">🕒 作答时间 (最早)</option>
+              <option value="score_desc">🏆 实得分 (最高)</option>
+              <option value="rate_desc">📈 得分率 (最高)</option>
+              <option value="words_desc">📝 字数 (最多)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3. 答卷历史卡片列表 -->
+        <div id="history-list-container" style="display:flex; flex-direction:column; gap:12px;">
+          <!-- 动态由 app.js 渲染 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 个人申论记忆库 (SM-2) -->
     <div id="tab-memory" class="tab-panel">
       <div class="card">
         <div class="card-title">
@@ -543,6 +611,59 @@
     </div>
   </div>
 
+  <!-- 模态框：考友留言与 GitHub Issues 反馈中心 -->
+  <div class="modal-overlay" id="feedback-modal">
+    <div class="modal" style="width: 580px;">
+      <div class="modal-header">
+        <div class="modal-title">💬 考友留言与问题反馈</div>
+        <div class="modal-close" onclick="closeFeedbackModal()">✕</div>
+      </div>
+
+      <div style="background: rgba(56, 189, 248, 0.06); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #93c5fd; margin-bottom: 14px; line-height: 1.5;">
+        🏛️ <strong>开源社区直通</strong>：本系统采用纯前端本地沙箱，留言统一沉淀至官方 GitHub Issues。作者与所有考友均可查看并交流。
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">反馈类型</label>
+        <div class="feedback-type-pills" id="feedback-type-group">
+          <div class="feedback-type-pill active" data-type="feature" onclick="selectFeedbackType('feature')">💡 功能建议</div>
+          <div class="feedback-type-pill" data-type="bug" onclick="selectFeedbackType('bug')">🐞 缺陷报错</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">简要标题</label>
+        <input type="text" class="form-input" id="feedback-title" placeholder="例如：希望在真题模考时支持全屏专注作答模式">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">详细描述</label>
+        <textarea class="form-textarea" id="feedback-content" style="min-height: 110px;" placeholder="请详细描述您的建议或遇到的具体问题表现..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">联系方式（选填，方便沟通进展）</label>
+        <input type="text" class="form-input" id="feedback-contact" placeholder="微信 / 邮箱 / 手机号">
+      </div>
+
+      <div class="feedback-diag-summary">
+        <span>🔍 <strong>诊断附加项</strong>：将自动附带当前练习真题与浏览器版本，辅助快速定位。</span>
+      </div>
+
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+        <button class="btn btn-outline" type="button" onclick="copyFeedbackToClipboard()" id="btn-copy-feedback" title="若无 GitHub 账号，可复制文本直接发送给作者">
+          <span>📋 复制结构化文本 (无账号通道)</span>
+        </button>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline" type="button" onclick="closeFeedbackModal()">取消</button>
+          <button class="btn btn-primary" type="button" onclick="submitFeedbackToGitHub()">
+            <span>🚀 提交到 GitHub Issue</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 浮动提示 Popover -->
   <div id="span-popover"></div>
 
@@ -551,6 +672,8 @@
 
   <!-- 客户端核心算法与无状态数据层 -->
   <script src="js/db.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/feedback.js"></script>
   <script src="js/sm2.js"></script>
   <script src="js/retrieval.js"></script>
   <script src="js/local_scanner.js"></script>
