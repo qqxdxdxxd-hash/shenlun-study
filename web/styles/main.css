@@ -452,7 +452,8 @@ main {
   justify-content: center;
   align-items: center;
 }
-.modal-overlay.show { display: flex; }
+.modal-overlay.show,
+.modal-overlay.active { display: flex; }
 .modal {
   background: var(--card-bg);
   border: 1px solid var(--card-border);

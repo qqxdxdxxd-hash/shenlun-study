@@ -1971,6 +1971,13 @@ window.jumpToSubmissionReport = jumpToSubmissionReport;
 window.updateQuestionHistoryBadge = updateQuestionHistoryBadge;
 window.filterHistoryByCurrentQuestion = filterHistoryByCurrentQuestion;
 
+// 留言与反馈系统全局暴露
+window.openFeedbackModal = openFeedbackModal;
+window.closeFeedbackModal = closeFeedbackModal;
+window.selectFeedbackType = selectFeedbackType;
+window.submitFeedbackToGitHub = submitFeedbackToGitHub;
+window.copyFeedbackToClipboard = copyFeedbackToClipboard;
+
 // ==================== 做题历史与二练复盘管理实现 ====================
 let currentHistoryTypeFilter = 'all';
 let currentHistorySearch = '';
@@ -2218,15 +2225,19 @@ let currentFeedbackType = 'feature';
 function openFeedbackModal() {
   const modal = document.getElementById('feedback-modal');
   if (modal) {
+    modal.classList.add('show');
     modal.classList.add('active');
     const titleInput = document.getElementById('feedback-title');
-    if (titleInput) titleInput.focus();
+    if (titleInput) {
+      setTimeout(() => titleInput.focus(), 50);
+    }
   }
 }
 
 function closeFeedbackModal() {
   const modal = document.getElementById('feedback-modal');
   if (modal) {
+    modal.classList.remove('show');
     modal.classList.remove('active');
   }
 }

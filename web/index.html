@@ -612,7 +612,7 @@
   </div>
 
   <!-- 模态框：考友留言与 GitHub Issues 反馈中心 -->
-  <div class="modal-overlay" id="feedback-modal">
+  <div class="modal-overlay" id="feedback-modal" onclick="if (event.target === this) closeFeedbackModal()">
     <div class="modal" style="width: 580px;">
       <div class="modal-header">
         <div class="modal-title">💬 考友留言与问题反馈</div>
