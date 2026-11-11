@@ -605,10 +605,11 @@ function toggleCustomPromptMode() {
   }
 }
 
-// 字数计算
+// 字数计算（统一按去空白实际格子字符数计，与 preScan 及考官统计完全对齐）
 function updateWordCount() {
-  const text = document.getElementById('user-essay-input').value.trim();
-  document.getElementById('word-counter').innerText = text.length;
+  const raw = document.getElementById('user-essay-input').value || '';
+  const cleanCount = raw.replace(/\s+/g, '').length;
+  document.getElementById('word-counter').innerText = cleanCount;
 }
 
 // 核心批改提交
@@ -758,7 +759,7 @@ async function runFullReview() {
       questionId: currentQuestion ? currentQuestion.id : null,
       materials: materials,
       userAnswer: userText,
-      wordCount: userText.length,
+      wordCount: result.word_count || userText.replace(/\s+/g, '').length,
       score: result.score,
       targetScore: effectiveTargetScore,
       grade: result.grade,
