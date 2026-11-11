@@ -59,6 +59,17 @@ assert.strictEqual(q1Json.target_score, 10);
 assert(q1Json.materials.includes("热效率突破50%"));
 console.log("✓ 验证通过：小题平铺分片向下兼容性检验完整");
 
+// 4.5 验证 2024 上海 B 卷第4题具备版权中立立意采分基准及 800-1000 字界限
+const sh2024bPath = path.join(__dirname, '../data/exams/sk_sh_2024_b_q4.json');
+assert(fs.existsSync(sh2024bPath), "2024上海B卷第4题分片必须存在");
+const sh2024b = JSON.parse(fs.readFileSync(sh2024bPath, 'utf-8'));
+assert.strictEqual(sh2024b.target_score, 50);
+assert.strictEqual(sh2024b.min_words, 800);
+assert.strictEqual(sh2024b.max_words, 1000);
+assert(sh2024b.scoring_criteria && sh2024b.scoring_criteria.includes("领跑新时代高质量发展"), "上海B卷大作文必须具备材料核心立意基准");
+assert(!/粉笔|华图|中公|张传响/.test(sh2024b.scoring_criteria), "采分底稿必须保持严格版权中立");
+console.log("✓ 验证通过：2024上海B卷大作文立意底稿与字数红线检验完整");
+
 // 5. 验证大模型评审 Prompt 成功编排 Ground Truth 采分细则
 (async () => {
   let capturedUserPrompt = "";

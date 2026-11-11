@@ -62,4 +62,13 @@ assert(essayPrompt.includes("800") && essayPrompt.includes("1000"), "大作文�
 assert(essayPrompt.includes("领跑新时代高质量发展"), "大作文重写指令必须锁定核心主题词");
 assert(essayPrompt.includes("15字") || essayPrompt.includes("15 字"), "必须明确限制连续照抄材料原文不超过15字");
 
+// 8. 测试微练习拒收原句照抄凑词，并支持 formal_term 精准提炼提示
+const echoFail = LocalDrillEngine.verifyDrill("colloquial_to_formal", "中华民族的伟大复兴需一步一个脚印", "中华民族的伟大复兴需一步一个脚印机制");
+assert.strictEqual(echoFail.passed, false, "微练习不得通过简单在原句末尾拼接一个关键词蒙混过关");
+
+const drillsWithHint = LocalDrillEngine.generateDrills([
+  { quote: "一步一个脚印", type: "colloquial_flaw", formal_term: "稳扎稳打推进" }
+]);
+assert(drillsWithHint[0].hint.includes("稳扎稳打推进"), "若批改返回 formal_term，微练习提示应展示规范替换方向");
+
 console.log("✓ LocalDrillEngine & LocalMARAudit 算法测试通过！");

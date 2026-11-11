@@ -58,3 +58,11 @@ jobs:
           node web/tests/test_local_pdf.js
           node web/tests/test_api_client.js
           node web/tests/test_real_exam_subquestions.js
+          node web/tests/test_chroma_renderer.js
+          node web/tests/test_retrieval.js
+          node web/tests/test_exemplar_formatter.js
+          node web/tests/test_question_type_perspectives.js
+          node web/tests/test_rubrics.js
+          node web/tests/test_single_question_fixes.js
+          node web/tests/test_question_history.js
+          node web/tests/test_feedback.js

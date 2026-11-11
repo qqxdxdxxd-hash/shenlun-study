@@ -20,12 +20,18 @@ class DrillGenerator:
 
         for idx, item in enumerate(colloquial_spans[:3], 1):
             flaw = item.get("quote") or item.get("comment") or "大白话口语表达"
+            formal_term = item.get("formal_term")
+            hint = (
+                f"建议规范政务表达方向：【{formal_term}】"
+                if formal_term
+                else "提示：围绕机制、保障、动员或权责等维度提炼大词。"
+            )
             drills.append({
                 "id": f"drill_{idx}",
                 "type": "colloquial_to_formal",
                 "flaw_text": flaw,
                 "question": f"请将你作答中出现的口语表述‘{flaw}’改写为规范政务动宾短语。",
-                "hint": "提示：围绕机制、保障、动员或权责等维度提炼大词。"
+                "hint": hint
             })
         return drills
 
@@ -40,6 +46,15 @@ class DrillGenerator:
                 "passed": False,
                 "score": 0,
                 "feedback": "作答不能为空，请输入改写后的政务大词。"
+            }
+
+        clean_flaw = "".join((flaw_text or "").split())
+        clean_input = "".join(user_clean.split())
+        if len(clean_flaw) >= 6 and clean_flaw[:6] in clean_input:
+            return {
+                "passed": False,
+                "score": 55,
+                "feedback": "⚠️ 请用规范政务动宾短语彻底重塑，不要直接照抄原口语长句。"
             }
 
         # 检查政务高频大词命中

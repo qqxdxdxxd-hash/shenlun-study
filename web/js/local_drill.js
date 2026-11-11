@@ -136,12 +136,15 @@ class LocalDrillEngine {
 
     colloquialQuotes.slice(0, 3).forEach((item, idx) => {
       const flaw = item.quote || item.comment || "大白话口语表达";
+      const hint = item.formal_term
+        ? `建议规范政务表达方向：【${item.formal_term}】`
+        : "提示：围绕机制、保障、动员或权责等维度提炼大词。";
       drills.push({
         id: `drill_${idx + 1}`,
         type: "colloquial_to_formal",
         flaw_text: flaw,
         question: `请将你作答中出现的口语表述‘${flaw}’改写为规范政务动宾短语。`,
-        hint: "提示：围绕机制、保障、动员或权责等维度提炼大词。"
+        hint
       });
     });
 
@@ -161,12 +164,22 @@ class LocalDrillEngine {
       };
     }
 
+    const cleanFlaw = (flawText || "").replace(/\s+/g, "");
+    const cleanInput = userClean.replace(/\s+/g, "");
+    if (cleanFlaw.length >= 6 && cleanInput.includes(cleanFlaw.slice(0, 6))) {
+      return {
+        passed: false,
+        score: 55,
+        feedback: "⚠️ 请用规范政务动宾短语彻底重塑，不要直接照抄原口语长句。"
+      };
+    }
+
     // 核心政务高频大词表
     const formalKeywords = [
       "保障", "机制", "健全", "完善", "匮乏", "权责", "统筹", "协同", "推进",
       "内生动力", "长效机制", "精细化", "制度约束", "引导", "落实", "规范",
       "短板", "瓶颈", "滞后", "拓宽", "优化", "赋能", "强化", "构建", "夯实",
-      "提升", "深化", "盘活", "激活", "动能", "靶向", "闭环", "防范", "化解"
+      "提升", "深化", "盘活", "激活", "动能", "靶向", "闭环", "防范", "化解", "稳步"
     ];
 
     const hitWords = formalKeywords.filter(w => userClean.includes(w));
