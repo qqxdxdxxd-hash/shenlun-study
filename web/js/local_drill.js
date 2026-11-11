@@ -174,10 +174,79 @@ class LocalDrillEngine {
   }
 }
 
+class ExemplarFormatter {
+  static stripMemoryTags(text) {
+    return (text || '')
+      .replace(/\s*[\[【]来自记忆库\s*[:：]\s*[^\]】]+[\]】]/g, '')
+      .replace(/[ \t]+\n/g, '\n')
+      .trim();
+  }
+
+  static escapeHtml(text) {
+    return (text || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  static renderExemplarHtml(text) {
+    const escaped = this.escapeHtml(text || '');
+    const withBadges = escaped.replace(
+      /[\[【]来自记忆库\s*[:：]\s*([^\]】]+)[\]】]/g,
+      '<span class="memory-badge" title="仅UI展示，复制纯净范文时自动过滤">🧠 记忆库：$1</span>'
+    );
+    return withBadges.replace(/\n/g, '<br>');
+  }
+
+  static extractCoreTheme(questionTitle) {
+    const t = (questionTitle || '').trim();
+    const m = t.match(/[“"《]([^”"》]{2,24})[”"》]/);
+    return m ? m[1] : t.replace(/^(?:大作文[：:]\s*|第\d+题[（(][^）)]+[）)][：:]\s*|【问题[一二三四五]】\s*)/, '').slice(0, 24);
+  }
+
+  static auditExemplar(exemplarText, materials, questionTitle, minWords, maxWords, scanner) {
+    const cleanText = this.stripMemoryTags(exemplarText);
+    const cleanCharCount = cleanText.replace(/\s+/g, '').length;
+    const minW = minWords || 800;
+    const maxW = maxWords || 1100;
+    const withinLimit = cleanCharCount >= minW && cleanCharCount <= maxW;
+
+    const lines = cleanText.split('\n').map(l => l.trim()).filter(Boolean);
+    const title = lines[0] || '';
+    const theme = this.extractCoreTheme(questionTitle);
+    const titleHasTheme = theme ? title.includes(theme) : true;
+
+    let copyRatio = 0;
+    let copySpansCount = 0;
+    if (scanner && typeof scanner.detectCopyRedline === 'function' && materials) {
+      const scanRes = scanner.detectCopyRedline(cleanText, materials, 15);
+      copyRatio = scanRes.copyRatio || 0;
+      copySpansCount = (scanRes.spans || []).length;
+    }
+
+    return {
+      cleanText,
+      cleanCharCount,
+      minWords: minW,
+      maxWords: maxW,
+      withinLimit,
+      overBy: cleanCharCount > maxW ? cleanCharCount - maxW : 0,
+      shortBy: cleanCharCount < minW ? minW - cleanCharCount : 0,
+      theme,
+      titleHasTheme,
+      copyRatio,
+      copySpansCount
+    };
+  }
+}
+
 if (typeof window !== 'undefined') {
   window.LocalMARAudit = LocalMARAudit;
   window.LocalDrillEngine = LocalDrillEngine;
+  window.ExemplarFormatter = ExemplarFormatter;
 }
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { LocalMARAudit, LocalDrillEngine };
+  module.exports = { LocalMARAudit, LocalDrillEngine, ExemplarFormatter };
 }

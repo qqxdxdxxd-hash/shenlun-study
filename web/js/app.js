@@ -987,8 +987,51 @@ function renderReviewResult(userText, res, passedQType, passedTargetScore) {
   auditHtml += `</div>`;
   document.getElementById('memory-audit-container').innerHTML = auditHtml;
 
-  // 示范范文
-  document.getElementById('exemplar-content').innerText = res.rewritten_exemplar || "示范生成完毕";
+  // 示范范文（剥离记忆标签供一键纯净复制，渲染不可选中徽章并输出本地质检门禁）
+  const rawExemplar = res.rewritten_exemplar || "示范生成完毕";
+  const exemplarEl = document.getElementById('exemplar-content');
+  const badgesEl = document.getElementById('exemplar-audit-badges');
+  if (window.ExemplarFormatter) {
+    currentCleanExemplarText = window.ExemplarFormatter.stripMemoryTags(rawExemplar);
+    if (exemplarEl) {
+      exemplarEl.innerHTML = window.ExemplarFormatter.renderExemplarHtml(rawExemplar);
+    }
+    if (badgesEl) {
+      const reqScope = `${currentQuestion ? (currentQuestion.prompt_text || '') : ''} ${currentQuestion ? (currentQuestion.prompt_reqs || '') : ''} ${currentQuestion ? (currentQuestion.char_limit || '') : ''}`;
+      const fallbackLimits = window.QuestionTypeRubrics ? window.QuestionTypeRubrics.parseWordLimits(reqScope, qType) : { minWords: 800, maxWords: 1100 };
+      const minW = res.word_limit_min || fallbackLimits.minWords;
+      const maxW = res.word_limit || fallbackLimits.maxWords;
+      const matText = currentActiveMaterialText || (currentPaper ? (currentPaper.materials_text || currentPaper.materials || '') : '');
+      const qTopic = currentQuestion ? (currentQuestion.prompt_text || currentQuestion.question_title) : (document.getElementById('prompt-text')?.innerText || '');
+      const auditRes = window.ExemplarFormatter.auditExemplar(
+        rawExemplar,
+        matText,
+        qTopic,
+        minW,
+        maxW,
+        window.LocalChromaScanner
+      );
+      const wordColor = auditRes.withinLimit ? '#4ade80' : '#f87171';
+      const wordStatus = auditRes.withinLimit
+        ? `✓ 符合 ${auditRes.minWords}~${auditRes.maxWords} 字`
+        : (auditRes.overBy > 0 ? `⚠️ 超上限 ${auditRes.overBy} 字` : `⚠️ 少于下限 ${auditRes.shortBy} 字`);
+      const copyPct = (auditRes.copyRatio * 100).toFixed(1);
+      const copyColor = auditRes.copySpansCount === 0 ? '#4ade80' : (auditRes.copyRatio <= 0.15 ? '#facc15' : '#f87171');
+      let badgesHtml = `
+        <span style="font-size:11px; padding:2px 8px; border-radius:4px; border:1px solid ${wordColor}; color:${wordColor}; background:rgba(15,23,42,0.7);">📝 纯净字数 ${auditRes.cleanCharCount} 字 (${wordStatus})</span>
+        <span style="font-size:11px; padding:2px 8px; border-radius:4px; border:1px solid ${copyColor}; color:${copyColor}; background:rgba(15,23,42,0.7);">🔁 范文15字连续重合 ${copyPct}% (${auditRes.copySpansCount}处)</span>
+      `;
+      if (qType === 'essay' && auditRes.theme) {
+        const themeColor = auditRes.titleHasTheme ? '#4ade80' : '#facc15';
+        const themeStatus = auditRes.titleHasTheme ? `✓ 标题紧扣“${auditRes.theme}”` : `⚠️ 标题未完整嵌入“${auditRes.theme}”`;
+        badgesHtml += `<span style="font-size:11px; padding:2px 8px; border-radius:4px; border:1px solid ${themeColor}; color:${themeColor}; background:rgba(15,23,42,0.7);">🎯 ${window.ChromaRenderer ? window.ChromaRenderer.escapeHtml(themeStatus) : themeStatus}</span>`;
+      }
+      badgesEl.innerHTML = badgesHtml;
+    }
+  } else {
+    currentCleanExemplarText = rawExemplar;
+    if (exemplarEl) exemplarEl.innerText = rawExemplar;
+  }
 
   // 微练习
   if (res.remediation_drills && res.remediation_drills.length) {
@@ -1053,6 +1096,41 @@ async function rateCard(id, rating) {
 
 let currentReviewSpans = [];
 let currentReviewText = "";
+let currentCleanExemplarText = "";
+
+function copyCleanExemplar() {
+  const rawEl = document.getElementById('exemplar-content');
+  const fallbackText = rawEl ? rawEl.innerText : '';
+  const textToCopy = currentCleanExemplarText || (window.ExemplarFormatter ? window.ExemplarFormatter.stripMemoryTags(fallbackText) : fallbackText);
+  if (!textToCopy) {
+    alert('暂无可复制的范文内容！');
+    return;
+  }
+  const btn = document.getElementById('btn-copy-exemplar');
+  const markCopied = () => {
+    if (!btn) return;
+    const oldHtml = btn.innerHTML;
+    btn.innerHTML = '✅ 已复制纯净范文';
+    setTimeout(() => { btn.innerHTML = oldHtml; }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textToCopy).then(markCopied).catch(() => {
+      alert('复制失败，请手动选中正文复制。');
+    });
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = textToCopy;
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      markCopied();
+    } catch (e) {
+      alert('复制失败，请手动复制：\n' + textToCopy);
+    }
+    document.body.removeChild(ta);
+  }
+}
 
 // ================= 作答短板档案 (Universal Weakness Dossier) =================
 
@@ -1966,6 +2044,7 @@ window.runFullReview = runFullReview;
 window.selectSubQuestion = selectSubQuestion;
 window.toggleScoringCriteria = toggleScoringCriteria;
 window.selectExamForStudy = selectExamForStudy;
+window.copyCleanExemplar = copyCleanExemplar;
 
 // 做题历史与二练复盘管理方法全局暴露
 window.switchTab = switchTab;

@@ -362,6 +362,8 @@ main {
   vertical-align: middle;
   font-weight: 600;
   margin: 0 3px;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* 记忆库审计看板 */

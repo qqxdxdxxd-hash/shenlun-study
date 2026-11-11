@@ -320,10 +320,14 @@
 
             <!-- 限制性一类文示范重塑 (带卡片徽章) -->
             <div style="margin-top: 16px;">
-              <div class="form-label" style="display:flex; justify-content:space-between;">
+              <div class="form-label" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                 <span>✨ 考场一类文点石成金重塑 (基于你的记忆库素材重构)</span>
-                <span style="color:#4ade80;">100% 考场可复现</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="color:#4ade80;">100% 考场可复现</span>
+                  <button type="button" class="btn btn-outline" style="padding:2px 10px; font-size:11px;" onclick="copyCleanExemplar()" id="btn-copy-exemplar" title="自动剥离记忆库标注标签，复制纯净考场正文">📋 复制纯净范文</button>
+                </div>
               </div>
+              <div id="exemplar-audit-badges" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;"></div>
               <div style="background:#090d16; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 6px; padding: 14px; font-size: 13.5px; line-height: 1.8;" id="exemplar-content">
                 示范一类文将在批改完成后自动呈现，并标注所调用的记忆库卡片徽章。
               </div>
