@@ -32,6 +32,7 @@ class ChromaSpan(BaseModel):
     style: str        # solid | wavy | background | strikethrough | blink_border
     label: str
     comment: str
+    formal_term: Optional[str] = None
 
 class PreScanResponse(BaseModel):
     word_count: int

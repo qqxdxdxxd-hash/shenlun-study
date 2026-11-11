@@ -345,6 +345,7 @@ main {
 .c-formal { text-decoration: underline wavy var(--warning); color: #fef08a; }
 .c-leak { border: 1px dashed var(--danger); color: #fca5a5; padding: 0 4px; border-radius: 3px; }
 .c-fake { text-decoration: line-through var(--purple); color: #d8b4fe; }
+.c-colloquial { text-decoration: underline dotted var(--purple); background: rgba(192, 132, 252, 0.12); color: #e9d5ff; }
 .c-story { background: var(--gray-leak-bg); color: #94a3b8; }
 .c-redline { background: rgba(234, 179, 8, 0.25); border: 1px dashed #f59e0b; color: #fde047; }
 

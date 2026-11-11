@@ -103,7 +103,8 @@ class ChromaScanner:
                     color=item.get("color", "green"),
                     style=item.get("style", "solid"),
                     label=item.get("label", ""),
-                    comment=item.get("comment", "")
+                    comment=item.get("comment", ""),
+                    formal_term=item.get("formal_term")
                 ))
                 continue
 
@@ -123,7 +124,8 @@ class ChromaScanner:
                     color=item.get("color", "green"),
                     style=item.get("style", "solid"),
                     label=item.get("label", ""),
-                    comment=item.get("comment", "")
+                    comment=item.get("comment", ""),
+                    formal_term=item.get("formal_term")
                 ))
                 continue
 
@@ -155,7 +157,8 @@ class ChromaScanner:
                                     color=item.get("color", "green"),
                                     style=item.get("style", "solid"),
                                     label=item.get("label", ""),
-                                    comment=item.get("comment", "")
+                                    comment=item.get("comment", ""),
+                                    formal_term=item.get("formal_term")
                                 ))
                                 matched = True
                                 break

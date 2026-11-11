@@ -126,7 +126,8 @@ class LocalChromaScanner {
           color: item.color || "green",
           style: item.style || "solid",
           label: item.label || "",
-          comment: item.comment || ""
+          comment: item.comment || "",
+          formal_term: item.formal_term || null
         });
         continue;
       }
@@ -144,7 +145,8 @@ class LocalChromaScanner {
           color: item.color || "green",
           style: item.style || "solid",
           label: item.label || "",
-          comment: item.comment || ""
+          comment: item.comment || "",
+          formal_term: item.formal_term || null
         });
         continue;
       }
@@ -173,7 +175,8 @@ class LocalChromaScanner {
                   color: item.color || "green",
                   style: item.style || "solid",
                   label: item.label || "",
-                  comment: item.comment || ""
+                  comment: item.comment || "",
+                  formal_term: item.formal_term || null
                 });
                 matched = true;
                 break;

@@ -964,7 +964,7 @@ function renderReviewResult(userText, res, passedQType, passedTargetScore) {
               </div>
             </div>
             <div style="color: #94a3b8; font-style: italic; margin-bottom: 6px; border-left: 2px solid rgba(255,255,255,0.15); padding-left: 8px;">“${window.ChromaRenderer.escapeHtml(snippet.slice(0, 80))}${snippet.length > 80 ? '...' : ''}”</div>
-            <div style="color: #e2e8f0; line-height: 1.6;"><strong style="color:#38bdf8;">判定与归因</strong>：${window.ChromaRenderer.escapeHtml(s.comment)}</div>
+            <div style="color: #e2e8f0; line-height: 1.6;"><strong style="color:#38bdf8;">判定与归因</strong>：${window.ChromaRenderer.escapeHtml(s.comment)}${s.formal_term ? ` <span style="color:#fde047;">👉 建议规范表述：【${window.ChromaRenderer.escapeHtml(s.formal_term)}】</span>` : ''}</div>
           </div>
         `;
       }).join('');
