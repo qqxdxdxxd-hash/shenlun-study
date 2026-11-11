@@ -3,6 +3,27 @@
  * 严格对标国考、省考及事业单位申论真实阅卷标准
  */
 
+function _pickDimReason(res, dimKey, ctx = {}) {
+  const reasons = res && res.radar_reasons;
+  if (reasons && typeof reasons === 'object') {
+    if (reasons[dimKey]) return reasons[dimKey];
+    for (const [k, v] of Object.entries(reasons)) {
+      if (v && (k.includes(dimKey.slice(0, 2)) || dimKey.includes(k.slice(0, 2)))) {
+        return v;
+      }
+    }
+  }
+  return null;
+}
+
+function _getDimRate(res, ctx = {}, defaultTarget = 35) {
+  if (ctx && ctx.dimScore !== undefined && ctx.dimMax) {
+    return ctx.dimScore / ctx.dimMax;
+  }
+  const target = (ctx && ctx.targetScore) || (res && res.target_score) || defaultTarget;
+  return ((res && res.score) || 0) / Math.max(target, 1);
+}
+
 const QUESTION_TYPE_RUBRICS = {
   essay: {
     qType: "essay",
@@ -18,41 +39,75 @@ const QUESTION_TYPE_RUBRICS = {
         key: "立意与总分论点",
         ratio: 12 / 35,
         defaultMax: 12,
-        getDesc: (res) => (res.grade?.includes("四类") || res.score < 20)
-          ? "总论点或分论点不完整（未满足1+3骨架），或偏离材料核心主旨"
-          : "立意源于材料，首段末句亮明总论点，三分论点醒目且递进"
+        getDesc: (res, ctx) => {
+          const reason = _pickDimReason(res, "立意与总分论点", ctx);
+          if (reason) return reason;
+          const rate = _getDimRate(res, ctx, 35);
+          if (res.grade?.includes("四类") || rate < 0.6) {
+            return "总论点或分论点不完整（未满足1+3骨架），或偏离材料与题干核心主题词";
+          }
+          if (res.grade?.includes("三类") || rate < 0.8) {
+            return "总论点基本切题，但核心主题词锚定或三分论点覆盖尚不够精准完整";
+          }
+          return "立意源于材料，紧扣题干核心主题词，首段末句亮明总论点，三分论点醒目递进";
+        }
       },
       {
         key: "结构与段落布局",
         ratio: 8 / 35,
         defaultMax: 8,
-        getDesc: (res) => (res.grade?.includes("四类"))
-          ? "分论点不足三个或正文论证段未达标杆要求，结构残缺"
-          : "五段大五段匀称，段落字数控制合理，首尾呼应紧密"
+        getDesc: (res, ctx) => {
+          const reason = _pickDimReason(res, "结构与段落布局", ctx);
+          if (reason) return reason;
+          const rate = _getDimRate(res, ctx, 35);
+          if (res.grade?.includes("四类") || rate < 0.6) {
+            return "分论点不足三个或正文论证段未达标杆要求，结构残缺";
+          }
+          if (res.grade?.includes("三类") || rate < 0.8) {
+            return "骨架略欠完整或字数/段落匀称度未达标准区间，结构尚需打磨";
+          }
+          return "五段大五段匀称，段落字数控制合理，首尾呼应紧密";
+        }
       },
       {
         key: "论据与论证深度",
         ratio: 10 / 35,
         defaultMax: 10,
-        getDesc: (res) => (res.copy_redline_exceeded || res.copy_ratio > 0.15)
-          ? "存在大段照抄材料原句现象，论证沦为事实搬运缺乏深度制度剖析"
-          : "道理论证与事例论证结合紧密，具备事后深度因果分析"
+        getDesc: (res, ctx) => {
+          const reason = _pickDimReason(res, "论据与论证深度", ctx);
+          if (reason) return reason;
+          if (res.copy_redline_exceeded || res.copy_ratio > 0.15) {
+            return "存在大段照抄材料原句现象，论证沦为事实搬运缺乏深度制度剖析";
+          }
+          const rate = _getDimRate(res, ctx, 35);
+          if (res.grade?.includes("四类") || res.grade?.includes("三类") || rate < 0.7) {
+            return "事例叙述与事实转述偏多，缺乏深入制度剖析与因果机理推演";
+          }
+          return "道理论证与事例论证结合紧密，具备事后深度因果分析";
+        }
       },
       {
         key: "语言与公文规范",
         ratio: 5 / 35,
         defaultMax: 5,
-        getDesc: (res) => res.chroma_spans?.some(s => s.type === 'colloquial_flaw')
-          ? "存在口语化聊天大白话，需强化政务动宾大词提炼与短句对仗"
-          : "公文语体规范严谨，短句对仗工整，用词庄重洗练"
+        getDesc: (res, ctx) => {
+          const reason = _pickDimReason(res, "语言与公文规范", ctx);
+          if (reason) return reason;
+          const rate = _getDimRate(res, ctx, 35);
+          if (res.chroma_spans?.some(s => s.type === 'colloquial_flaw' || s.type === 'subjective_fabrication') || rate < 0.7) {
+            return "存在口语化聊天大白话或语汇不够凝练，需强化政务动宾大词提炼与短句对仗";
+          }
+          return "公文语体规范严谨，短句对仗工整，用词庄重洗练";
+        }
       }
     ],
     evaluateStructureStatus: (structScore, maxScore, grade) => {
       if (grade?.includes("四类")) return "结构残缺";
-      const ratio = structScore !== null && maxScore ? (structScore / maxScore) : 0.8;
-      if (ratio >= 0.8) return "结构严整";
+      const ratio = structScore !== null && maxScore ? (structScore / maxScore) : (grade?.includes("三类") ? 0.65 : 0.8);
+      if (grade?.includes("三类") && ratio < 0.8) return "结构偏弱";
+      if (ratio >= 0.8 && !grade?.includes("三类")) return "结构严整";
       if (ratio >= 0.6) return "结构尚可";
-      return "结构松散";
+      return "结构偏弱";
     }
   },
 
@@ -70,33 +125,33 @@ const QUESTION_TYPE_RUBRICS = {
         key: "内容采点覆盖度",
         ratio: 0.55,
         defaultMax: 11,
-        getDesc: (res) => (res.grade?.includes("四类") || res.score < (res.target_score || 20) * 0.5)
+        getDesc: (res, ctx) => _pickDimReason(res, "内容采点覆盖度", ctx) || ((res.grade?.includes("四类") || _getDimRate(res, ctx, 20) < 0.5)
           ? "严重偏离题目要素，官方底稿核心要点大面积遗漏，采点命中率极低"
-          : "全面覆盖给定资料核心得分点，精准命中官方采分底稿原词与要点"
+          : "全面覆盖给定资料核心得分点，精准命中官方采分底稿原词与要点")
       },
       {
         key: "分类逻辑与条理",
         ratio: 0.20,
         defaultMax: 4,
-        getDesc: (res) => res.grade?.includes("四类")
+        getDesc: (res, ctx) => _pickDimReason(res, "分类逻辑与条理", ctx) || (res.grade?.includes("四类")
           ? "未分条列项，无宏观总括句，要点混杂杂乱无章"
-          : "具备宏观总括句，微观1.2.3.序号清晰，同类项合并合理无交叉重叠"
+          : "具备宏观总括句，微观1.2.3.序号清晰，同类项合并合理无交叉重叠")
       },
       {
         key: "提炼概括度",
         ratio: 0.15,
         defaultMax: 3,
-        getDesc: (res) => res.chroma_spans?.some(s => s.type === 'story_narrative_leak')
+        getDesc: (res, ctx) => _pickDimReason(res, "提炼概括度", ctx) || (res.chroma_spans?.some(s => s.type === 'story_narrative_leak')
           ? "存在抄录案例情节、人名与数据现象，缺乏规范动宾前置词凝练"
-          : "前置动宾短语工整醒目，成功剔除案例冗余水分，语言凝练密度高"
+          : "前置动宾短语工整醒目，成功剔除案例冗余水分，语言凝练密度高")
       },
       {
         key: "表达与字数规范",
         ratio: 0.10,
         defaultMax: 2,
-        getDesc: (res) => res.chroma_spans?.some(s => s.type === 'colloquial_flaw')
+        getDesc: (res, ctx) => _pickDimReason(res, "表达与字数规范", ctx) || (res.chroma_spans?.some(s => s.type === 'colloquial_flaw')
           ? "存在大白话或主观臆造推论，字数未达最佳饱满区间"
-          : "字数紧凑控制在规定格子90%~100%，无错别字，表述客观规范"
+          : "字数紧凑控制在规定格子90%~100%，无错别字，表述客观规范")
       }
     ],
     evaluateStructureStatus: (structScore, maxScore, grade) => {
@@ -122,33 +177,33 @@ const QUESTION_TYPE_RUBRICS = {
         key: "内容要点覆盖",
         ratio: 0.60,
         defaultMax: 12,
-        getDesc: (res) => (res.grade?.includes("四类") || res.score < (res.target_score || 20) * 0.5)
+        getDesc: (res, ctx) => _pickDimReason(res, "内容要点覆盖", ctx) || ((res.grade?.includes("四类") || _getDimRate(res, ctx, 20) < 0.5)
           ? "遗漏核心任务要点，未紧扣材料提炼措施或经验，内容充实度不足"
-          : "严格依托材料提炼背景、措施、做法等要点，内容要点全面扎实"
+          : "严格依托材料提炼背景、措施、做法等要点，内容要点全面扎实")
       },
       {
         key: "格式规范三件套",
         ratio: 0.15,
         defaultMax: 3,
-        getDesc: (res) => (res.title_issues && res.title_issues.length > 0)
+        getDesc: (res, ctx) => _pickDimReason(res, "格式规范三件套", ctx) || ((res.title_issues && res.title_issues.length > 0)
           ? "标题存在书名号或缺少文种/事由，或称谓与落款缺失不合规"
-          : "标题居中规范，主送单位顶格冒号，落款单位与日期合规完备"
+          : "标题居中规范，主送单位顶格冒号，落款单位与日期合规完备")
       },
       {
         key: "行文结构与层次",
         ratio: 0.15,
         defaultMax: 3,
-        getDesc: (res) => res.grade?.includes("四类")
+        getDesc: (res, ctx) => _pickDimReason(res, "行文结构与层次", ctx) || (res.grade?.includes("四类")
           ? "缺少发文缘由或结尾结语，主体段落缺乏层次过渡"
-          : "开头发文缘由交代清晰，主体分条列项推进，结尾收束号召有力"
+          : "开头发文缘由交代清晰，主体分条列项推进，结尾收束号召有力")
       },
       {
         key: "公文语体与口吻",
         ratio: 0.10,
         defaultMax: 2,
-        getDesc: (res) => res.chroma_spans?.some(s => s.type === 'colloquial_flaw')
+        getDesc: (res, ctx) => _pickDimReason(res, "公文语体与口吻", ctx) || (res.chroma_spans?.some(s => s.type === 'colloquial_flaw')
           ? "语言口语化偏重，文种特定口吻（宣传号召/请示汇报）不够精准"
-          : "公文语体庄重大方，契合特定发文机关身份与受众场景口吻"
+          : "公文语体庄重大方，契合特定发文机关身份与受众场景口吻")
       }
     ],
     evaluateStructureStatus: (structScore, maxScore, grade) => {

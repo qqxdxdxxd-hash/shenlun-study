@@ -836,37 +836,7 @@ function renderReviewResult(userText, res, passedQType, passedTargetScore) {
     scoreLblEl.innerText = `综合评定分 (得分率: ${rate}%)`;
   }
 
-  // 动态更新顶部指标卡第3项（结构/条理/格式）
-  const structLblEl = document.getElementById('structure-lbl');
-  if (structLblEl && window.QuestionTypeRubrics) {
-    structLblEl.innerText = window.QuestionTypeRubrics.getStructureCardLabel(qType);
-  }
-  const structVal = document.getElementById('structure-val');
-  if (structVal) {
-    let structScore = null;
-    const radar = res.radar_scores || {};
-    if (qType === 'single') {
-      structScore = radar['分类逻辑与条理'] ?? radar['分类逻辑'] ?? radar['条理'] ?? null;
-    } else if (qType === 'doc') {
-      structScore = radar['格式规范三件套'] ?? radar['格式规范'] ?? radar['格式分'] ?? null;
-    } else {
-      structScore = radar['结构与段落布局'] ?? radar['结构布局'] ?? null;
-    }
-    if (window.QuestionTypeRubrics) {
-      structVal.innerText = window.QuestionTypeRubrics.getStructureStatus(qType, structScore, null, res.grade);
-    } else {
-      structVal.innerText = res.grade?.includes('四类') ? '结构残缺' : (structScore >= 7 ? '结构严整' : '结构规范');
-    }
-  }
-  document.getElementById('copy-ratio-val').innerText = `${(res.copy_ratio * 100).toFixed(1)}% (${res.copy_redline_exceeded ? '⚠️超标' : '安全'})`;
-
-  // 渲染多维色谱文本
-  const html = window.ChromaRenderer.render(userText, res.chroma_spans);
-  const container = document.getElementById('chroma-text-container');
-  container.innerHTML = html;
-  window.ChromaRenderer.bindPopovers('chroma-text-container', 'span-popover');
-
-  // 1. 渲染四维量化得分明细表与扣分依据 (#score-breakdown-tbody)
+  // 先计算当前题型四维结构，供顶部结构指标卡与明细表共用真实满分
   const radar = res.radar_scores || {};
   let dimensions = [];
   if (window.QuestionTypeRubrics) {
@@ -880,6 +850,40 @@ function renderReviewResult(userText, res, passedQType, passedTargetScore) {
     ];
   }
 
+  // 动态更新顶部指标卡第3项（结构/条理/格式）
+  const structLblEl = document.getElementById('structure-lbl');
+  if (structLblEl && window.QuestionTypeRubrics) {
+    structLblEl.innerText = window.QuestionTypeRubrics.getStructureCardLabel(qType);
+  }
+  const structVal = document.getElementById('structure-val');
+  if (structVal) {
+    let structScore = null;
+    let structMax = null;
+    if (qType === 'single') {
+      structScore = radar['分类逻辑与条理'] ?? radar['分类逻辑'] ?? radar['条理'] ?? null;
+      structMax = dimensions.find(d => d.key === '分类逻辑与条理')?.max ?? null;
+    } else if (qType === 'doc') {
+      structScore = radar['格式规范三件套'] ?? radar['格式规范'] ?? radar['格式分'] ?? null;
+      structMax = dimensions.find(d => d.key === '格式规范三件套')?.max ?? null;
+    } else {
+      structScore = radar['结构与段落布局'] ?? radar['结构布局'] ?? null;
+      structMax = dimensions.find(d => d.key === '结构与段落布局')?.max ?? null;
+    }
+    if (window.QuestionTypeRubrics) {
+      structVal.innerText = window.QuestionTypeRubrics.getStructureStatus(qType, structScore, structMax, res.grade);
+    } else {
+      structVal.innerText = res.grade?.includes('四类') ? '结构残缺' : (structScore >= 7 ? '结构严整' : '结构规范');
+    }
+  }
+  document.getElementById('copy-ratio-val').innerText = `${(res.copy_ratio * 100).toFixed(1)}% (${res.copy_redline_exceeded ? '⚠️超标' : '安全'})`;
+
+  // 渲染多维色谱文本
+  const html = window.ChromaRenderer.render(userText, res.chroma_spans);
+  const container = document.getElementById('chroma-text-container');
+  container.innerHTML = html;
+  window.ChromaRenderer.bindPopovers('chroma-text-container', 'span-popover');
+
+  // 1. 渲染四维量化得分明细表与扣分依据 (#score-breakdown-tbody)
   let tbodyHtml = '';
   dimensions.forEach(d => {
     let scoreVal = undefined;
@@ -897,7 +901,7 @@ function renderReviewResult(userText, res, passedQType, passedTargetScore) {
       scoreVal = Math.round(d.max * (res.score / effectiveTargetScore) * 10) / 10;
     }
     const color = scoreVal >= d.max * 0.8 ? '#4ade80' : (scoreVal >= d.max * 0.6 ? '#facc15' : '#f87171');
-    const desc = typeof d.getDesc === 'function' ? d.getDesc(res) : (d.desc || '按考规量化评定');
+    const desc = typeof d.getDesc === 'function' ? d.getDesc(res, { dimMax: d.max, dimScore: scoreVal, targetScore: effectiveTargetScore }) : (d.desc || '按考规量化评定');
     tbodyHtml += `
       <tr style="border-bottom: 1px solid var(--card-border);">
         <td style="padding: 8px 10px; font-weight: 600; color: #f8fafc;">${d.key}</td>
