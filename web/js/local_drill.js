@@ -67,7 +67,7 @@ class LocalMARAudit {
   /**
    * 题型解耦的标杆示范重写指引生成器
    */
-  static buildMARPrompt(userAnswer, questionTitle, recalledMemories = [], questionType = 'essay') {
+  static buildMARPrompt(userAnswer, questionTitle, recalledMemories = [], questionType = 'essay', options = {}) {
     if (questionType === 'single') {
       return `
 ## 【标杆示范重写指引】：
@@ -83,10 +83,18 @@ class LocalMARAudit {
 `;
     }
 
-    // essay 场景：仅作为参考素材提示，不采用霸道强制命令
+    // essay 场景：动态字数区间 + 主题词全锚定 + 15字防照抄红线 + 真实记忆化用
+    const minW = (options && options.minWords) ? Number(options.minWords) : 900;
+    const maxW = (options && options.maxWords) ? Number(options.maxWords) : 1100;
+    const targetLow = Math.max(minW, Math.round(maxW * 0.88));
+    const targetHigh = Math.min(maxW, Math.round(maxW * 0.96));
+    const theme = (typeof ExemplarFormatter !== 'undefined')
+      ? ExemplarFormatter.extractCoreTheme(questionTitle)
+      : (questionTitle || '').trim();
+
     const memBlock = [];
     if (recalledMemories && recalledMemories.length > 0) {
-      memBlock.push("## 【考生个人已背诵素材库（撰写大作文时可供参考化用）】：");
+      memBlock.push("## 【考生个人已背诵素材库（仅在与段落语义契合时化用，严禁空挂伪标注）】：");
       recalledMemories.forEach((m, idx) => {
         memBlock.push(`${idx + 1}. 《${m.title}》：${m.content}`);
       });
@@ -96,7 +104,11 @@ class LocalMARAudit {
     return `
 ${memStr}
 ## 【大作文标杆示范重写指引】：
-请基于考生原始立意与上述参考素材，撰写考场标杆示范议论文。
+1. **严格字数红线（绝对硬约束）**：重塑后的纯正文总字数（含标题与标点，不含任何 [来自记忆库: ...] 标注）必须严格控制在 **${minW}~${maxW} 字** 之间（最佳目标 **${targetLow}~${targetHigh} 字**），绝对禁止超过 ${maxW} 字上限！
+2. **核心主题词全锚定**：题干核心主题为【${theme}】。重写范文的**标题、首段尾句总论点以及正文三个分论点段首句**必须自然嵌入该核心主题词（或完整核心短语），不得被原稿偏置措辞带离题干；
+3. **开头三步完整**：开头段必须包含“点题（引述/案例/背景）→ 解题（深入阐释主题词内涵与时代意义）→ 亮明含三大支柱的总论点”；
+4. **材料深度改写禁止照抄**：对给定资料中的案例与政策表述进行缩写提纯与政务化转述，**禁止出现连续超过 15 字照抄材料原文的句子**；
+5. **结尾完整收拢**：结尾段简练归纳前文三大分论点并回扣核心主题词；记忆库卡片仅在真正化用该卡片核心表述的句末标注 \`[来自记忆库: 卡片名]\`（无真正化用则不标注）。
 `;
   }
 }

@@ -50,4 +50,16 @@ assert(!singlePrompt.includes("大五段"), "严禁包含硬编码大五段结�
 assert(!singlePrompt.includes("[来自记忆库"), "严禁强制标注记忆库标签");
 assert(!singlePrompt.includes("32+ 分标杆"), "严禁硬编码大作文32分标杆");
 
+// 7. 测试大作文 MAR Prompt 动态注入字数区间、核心主题词锚定与降重禁令，且不影响 single 题型
+const essayPrompt = LocalMARAudit.buildMARPrompt(
+  "草稿文本",
+  "以“领跑新时代高质量发展”为主题写一篇文章",
+  memories,
+  "essay",
+  { minWords: 800, maxWords: 1000 }
+);
+assert(essayPrompt.includes("800") && essayPrompt.includes("1000"), "大作文重写指令必须传入真实字数上下限");
+assert(essayPrompt.includes("领跑新时代高质量发展"), "大作文重写指令必须锁定核心主题词");
+assert(essayPrompt.includes("15字") || essayPrompt.includes("15 字"), "必须明确限制连续照抄材料原文不超过15字");
+
 console.log("✓ LocalDrillEngine & LocalMARAudit 算法测试通过！");

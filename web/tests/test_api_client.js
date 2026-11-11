@@ -99,5 +99,59 @@ console.log("=== 开始执行 ApiClient 纯前端集成测试 ===");
   assert(drillRes.score >= 90);
   console.log("✓ ApiClient.verifyDrill 纯前端微练习秒判通过");
 
+  // 5. 验证 50 分制大作文动态满分定档换算、字数区间注入、multi_agent skill 引导与 radar_reasons 透传
+  let captured50UserPrompt = "";
+  global.fetch = async (url, opts) => {
+    if (url.includes('/chat/completions')) {
+      const body = JSON.parse(opts.body);
+      captured50UserPrompt = body.messages.find(m => m.role === 'user')?.content || '';
+      return {
+        ok: true,
+        json: async () => ({
+          choices: [{
+            message: {
+              content: JSON.stringify({
+                target_score: 50,
+                word_limit: 1000,
+                word_limit_min: 800,
+                score: 34.5,
+                grade: "三类文",
+                radar_scores: { "立意与总分论点": 12.0, "结构与段落布局": 8.0, "论据与论证深度": 10.0, "语言与公文规范": 4.5 },
+                radar_reasons: { "结构与段落布局": "缺少第三个分论点，全文字数不足" },
+                quotes_evaluation: [],
+                perspectives: { examiner: "三类文", structure_expert: "结构残缺", style_expert: "尚可" },
+                rewritten_exemplar: "领跑新时代高质量发展……"
+              })
+            }
+          }]
+        })
+      };
+    }
+    return { ok: false, status: 404 };
+  };
+
+  const review50 = await ApiClient.submitReview({
+    api_key: "sk-test-key",
+    base_url: "https://api.deepseek.com/v1",
+    model_id: "deepseek-chat",
+    user_answer: userText,
+    materials: materials,
+    question_title: "第4题（essay）：以“领跑新时代高质量发展”为主题写一篇文章",
+    question_type: "essay",
+    target_score: 50,
+    word_limit: 1000,
+    word_limit_min: 800,
+    skill_id: "multi_agent_essay",
+    recalled_memories: []
+  });
+
+  assert(captured50UserPrompt.includes("50 分") || captured50UserPrompt.includes("50分"), "Prompt 必须体现50分制动态分档");
+  assert(captured50UserPrompt.includes("42.5"), "Prompt 必须换算50分制一类文分数线(>=85%)");
+  assert(captured50UserPrompt.includes("800") && captured50UserPrompt.includes("1000"), "Prompt 必须注入800~1000字硬区间");
+  assert(captured50UserPrompt.includes("多视角联合仲裁") || captured50UserPrompt.includes("multi_agent"), "Prompt 必须响应 multi_agent_essay skill_id");
+  assert.strictEqual(review50.word_limit_min, 800);
+  assert.strictEqual(review50.radar_reasons["结构与段落布局"], "缺少第三个分论点，全文字数不足");
+  console.log("✓ ApiClient 50分制动态分档、字数区间与 radar_reasons 链路通过");
+
   console.log("🎉 ApiClient 全部纯前端集成测试 100% 通过！");
 })();

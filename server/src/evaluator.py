@@ -87,10 +87,32 @@ class ShenlunEvaluator:
         system_prompt = skill.assemble_system_prompt()
 
         mar_instruction = MemoryAugmentedRewriter.build_mar_prompt(
-            req.user_answer, req.question_title, req.recalled_memories, question_type=req.question_type
+            req.user_answer,
+            req.question_title,
+            req.recalled_memories,
+            question_type=req.question_type,
+            word_limit_min=req.word_limit_min,
+            word_limit=req.word_limit,
         )
 
         target_score = req.target_score or (35 if req.question_type == "essay" else (25 if req.question_type == "doc" else 20))
+        t1_min = round(target_score * 0.85 * 2) / 2
+        t2_min = round(target_score * 0.70 * 2) / 2
+        t3_min = round(target_score * 0.55 * 2) / 2
+        dynamic_tier_guide = f"""
+## 【本题动态满分分档基准（严禁套用其他满分制分数线）】：
+本题总满分为 **{target_score} 分**，所有得分与评语基准分必须严格按 {target_score} 分制计算：
+- 一类文：{t1_min}~{target_score} 分；
+- 二类文：{t2_min}~{t1_min - 0.5:.1f} 分；
+- 三类文：{t3_min}~{t2_min - 0.5:.1f} 分；
+- 四类文：≤{t3_min - 0.5:.1f} 分。"""
+
+        criteria_section = ""
+        if req.scoring_criteria:
+            criteria_section = f"""
+## 【官方客观标准采分底稿与判分细则 (Ground Truth)】：
+{req.scoring_criteria}
+"""
         if req.question_type == "single":
             type_rule = """
 ## 【单一题（归纳概括/对策/理解）客观采点与五维诊断铁律】：
@@ -124,45 +146,56 @@ class ShenlunEvaluator:
         else:
             type_rule = """
 ## 【申论材料大作文大五段规范阅卷铁律】：
-1. 立意源于材料，总分论点鲜明递进，采用标准大五段（1+3）或层层递进骨架；
-2. 重点审查：①立意与总分论点（约占35%）；②结构与段落布局（大五段匀称度，约占25%）；③论据与论证深度（因果制度深度分析，约占30%）；④语言与公文规范（政务动宾大词密度，约占10%）。
+1. 立意源于材料且紧扣题干核心主题词，总分论点鲜明递进，采用标准大五段（1+3）或层层递进骨架；
+2. 重点审查：①立意与总分论点（约占35%）；②结构与段落布局（大五段匀称度与字数区间达标度，约占25%）；③论据与论证深度（因果制度深度分析，约占30%）；④语言与公文规范（政务动宾大词密度，约占10%）。
 """
-            radar_example = '{"立意与总分论点": 11.0, "结构与段落布局": 7.5, "论据与论证深度": 9.0, "语言与公文规范": 4.0}'
+            p1 = round(target_score * (12 / 35), 1)
+            p2 = round(target_score * (8 / 35), 1)
+            p3 = round(target_score * (10 / 35), 1)
+            p4 = max(0.5, round(target_score - p1 - p2 - p3, 1))
+            radar_example = f'{{"立意与总分论点": {p1}, "结构与段落布局": {p2}, "论据与论证深度": {p3}, "语言与公文规范": {p4}}}'
             perspectives_example = """  "perspectives": {
     "examiner": "考场考官前10秒第一眼定档：首段尾句总论点、字数卡位与第一眼档位初判...",
     "structure_expert": "大五段骨架与对策论证诊断：诊断大五段‘1+3’架构、论据深度、因果分析与案例是否脱节...",
     "style_expert": "政务文风与语汇质检诊断：诊断大白话口语瑕疵、政务动宾大词密度、公文严肃语体规范..."
   }"""
 
+        effective_word_min = req.word_limit_min or (180 if req.question_type == "single" else (320 if req.question_type == "doc" else 800))
+        effective_word_max = req.word_limit or (250 if req.question_type == "single" else (450 if req.question_type == "doc" else 1000))
+
         user_prompt = f"""
 待评审申论作答：
-【题目/要求】：{req.question_title}（满分 {target_score} 分）
+【题目/要求】：{req.question_title}（满分 {target_score} 分，字数要求：{effective_word_min}~{effective_word_max} 字）
 【给定材料】：
 {req.materials}
 
 【考生实际作答】：
 {req.user_answer}
 
-【前置客观指标】：实测字数 {pre_info['word_count']} 字；材料抄袭率 {pre_info['copy_ratio']*100:.1f}%；标题问题：{pre_info['title_issues']}。
+【前置客观指标】：实测字数 {pre_info['word_count']} 字（要求范围 {effective_word_min}~{effective_word_max} 字）；材料抄袭率 {pre_info['copy_ratio']*100:.1f}%；标题问题：{pre_info['title_issues']}。
+
+{dynamic_tier_guide}
 
 {type_rule}
-
+{criteria_section}
 {mar_instruction}
 
 请以极其严格的官方阅卷考官标准进行评审，并严格按照以下 JSON 格式返回，严禁任何额外格式废话：
 ```json
 {{
   "target_score": {target_score},
-  "word_limit": {req.word_limit or (250 if req.question_type == 'single' else (400 if req.question_type == 'doc' else 1000))},
+  "word_limit_min": {effective_word_min},
+  "word_limit": {effective_word_max},
   "score": {target_score * 0.85:.1f},
   "grade": "二类文",
   "radar_scores": {radar_example},
+  "radar_reasons": {{"维度名": "1句客观得分或扣分归因（与考官评语一致）"}},
   "quotes_evaluation": [
     {{"quote": "准确的句子原文", "type": "main_thesis", "color": "green", "style": "solid", "label": "核心要点/论点", "comment": "准确踩中要点或亮明观点"}},
-    {{"quote": "口语化句子原文", "type": "colloquial_flaw", "color": "purple", "style": "strikethrough", "label": "大白话", "comment": "口语化表达缺少政务大词"}}
+    {{"quote": "口语化句子原文", "type": "colloquial_flaw", "color": "purple", "style": "dotted", "label": "口语大白话", "comment": "口语化表达缺少政务大词"}}
   ],
 {perspectives_example},
-  "rewritten_exemplar": "基于考生原文结合其规范重构的考场标杆示范..."
+  "rewritten_exemplar": "严格控制在 {effective_word_min}~{effective_word_max} 字以内的考场标杆示范..."
 }}
 ```
 """
@@ -208,6 +241,7 @@ class ShenlunEvaluator:
 
             extracted_target_score = float(parsed.get("target_score") or target_score)
             extracted_word_limit = parsed.get("word_limit") or req.word_limit
+            extracted_word_limit_min = parsed.get("word_limit_min") or req.word_limit_min
             return {
                 "word_count": pre_info["word_count"],
                 "copy_ratio": pre_info["copy_ratio"],
@@ -215,8 +249,10 @@ class ShenlunEvaluator:
                 "score": parsed.get("score", 30.0),
                 "target_score": extracted_target_score,
                 "word_limit": extracted_word_limit,
+                "word_limit_min": extracted_word_limit_min,
                 "grade": parsed.get("grade", "二类文"),
                 "radar_scores": parsed.get("radar_scores", {}),
+                "radar_reasons": parsed.get("radar_reasons"),
                 "chroma_spans": [s.model_dump() for s in all_spans],
                 "perspectives": parsed.get("perspectives", {}),
                 "memory_audit": memory_audit,
@@ -323,6 +359,7 @@ class ShenlunEvaluator:
             "score": fallback_score,
             "target_score": float(target_score),
             "word_limit": req.word_limit,
+            "word_limit_min": req.word_limit_min,
             "grade": grade,
             "radar_scores": radar,
             "chroma_spans": [s.model_dump() for s in all_spans],

@@ -40,3 +40,19 @@ def test_mar_rewriter_does_not_inject_hardcoded_instructions_for_single():
     assert "[来自记忆库" not in single_prompt
     assert "新质生产力" not in single_prompt
 
+
+def test_essay_mar_prompt_enforces_word_range_and_theme():
+    mems = [MemoryItemPayload(id="1", title="新质生产力", content="创新主导", category="时政", tag="热词")]
+    essay_prompt = MemoryAugmentedRewriter.build_mar_prompt(
+        "考生作答...",
+        "以“领跑新时代高质量发展”为主题写一篇文章",
+        mems,
+        question_type="essay",
+        word_limit_min=800,
+        word_limit=1000,
+    )
+    assert "800" in essay_prompt and "1000" in essay_prompt
+    assert "领跑新时代高质量发展" in essay_prompt
+    assert "15字" in essay_prompt or "15 字" in essay_prompt
+
+

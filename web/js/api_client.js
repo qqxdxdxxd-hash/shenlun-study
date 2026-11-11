@@ -9,12 +9,12 @@ const DEFAULT_OFFICIAL_SKILLS = {
     id: "shenlun-essay-expert",
     name: "申论与综合应用能力材料大作文大五段规范阅卷专家",
     prompt: `你是一位拥有20年公考阅卷经验的官方申论主阅卷人。请对考生的申论材料大作文进行客观、严厉、穿透式的四维色谱量化评审。
-评分原则：
-1. 一类文（30~35分）：立意完全切合材料，“1+3”大五段骨架清晰，总分论点首段与段首醒目；
-2. 二类文（25~29分）：立意正确，分论点欠缺或论证欠深入；
-3. 三类文（19~24分）：立意勉强，模板套路严重；
-4. 四类文（18分以下）：严重跑题或字数严重不足。
-硬性扣分：标题含书名号扣1~2分；字数不足每50字扣1分；材料直接摘抄超20%倒扣分。`
+评分原则（按当次题目满分比例动态分档）：
+1. 一类文（≥85%满分，如35分制30~35 / 50分制42.5~50）：立意完全切合材料且紧扣核心主题词，“1+3”大五段骨架清晰，含务实对策，总分论点首段尾句与段首醒目；
+2. 二类文（70%~84%满分，如35分制24.5~29.5 / 50分制35~42）：立意正确，分论点欠缺或论证欠深入；
+3. 三类文（55%~69%满分，如35分制19.5~24 / 50分制27.5~34.5）：立意勉强，骨架残缺或模板套路严重；
+4. 四类文（≤54%满分）：严重跑题或字数严重不足。
+硬性扣分：标题含书名号扣1~2分；字数不足下限每50字扣1分；材料直接摘抄超20%倒扣分。`
   },
   doc: {
     id: "shenlun-official-doc",
@@ -186,21 +186,45 @@ class ApiClient {
       memoryAudit = LocalMARAudit.auditMemoryActivation(payload.user_answer, payload.recalled_memories || []);
     }
 
-    // 3. 获取官方中立阅卷规范 System Prompt
+    // 3. 获取官方中立阅卷规范 System Prompt (支持按 skill_id 路由并保留题型匹配兜底)
     const qType = payload.question_type || 'essay';
     let systemPrompt = DEFAULT_OFFICIAL_SKILLS[qType]?.prompt || DEFAULT_OFFICIAL_SKILLS.essay.prompt;
+    const requestedSkillId = payload.skill_id || '';
 
     try {
       const skillsRes = await fetch('data/skills/skills.json');
       if (skillsRes.ok) {
         const skillsData = await skillsRes.json();
-        const matched = Object.values(skillsData).find(s => s.question_type === qType);
+        const skillAliasMap = {
+          default_essay_expert: 'shenlun-essay-expert',
+          default_examiner_speed: 'shenlun-essay-expert',
+          multi_agent_essay: 'shenlun-essay-expert',
+          default_doc_expert: 'shenlun-official-doc',
+          default_doc_format: 'shenlun-official-doc',
+          multi_agent_doc: 'shenlun-official-doc',
+          default_single_expert: 'shenlun-single-expert',
+          default_mece_expert: 'shenlun-single-expert',
+          multi_agent_single: 'shenlun-single-expert'
+        };
+        const mappedId = skillAliasMap[requestedSkillId] || requestedSkillId;
+        const matched = skillsData[mappedId] || Object.values(skillsData).find(s => s.question_type === qType);
         if (matched && matched.prompt) {
           systemPrompt = matched.prompt;
         }
       }
     } catch (e) {
       // 保持内置规范
+    }
+
+    if (payload.custom_skill_prompt) {
+      systemPrompt = payload.custom_skill_prompt;
+    }
+
+    let skillModeGuide = "";
+    if (requestedSkillId.startsWith('multi_agent')) {
+      skillModeGuide = `\n## 【多视角联合仲裁模式 (${requestedSkillId})】：\n请依次独立完成【考场前10秒扫描定档】、【骨架与对策论证深度】、【政务文风与大词密度】三重专家审查并联合仲裁得分，确保四维分值、radar_reasons 与考官评语前后完全自洽。`;
+    } else if (requestedSkillId === 'default_examiner_speed') {
+      skillModeGuide = `\n## 【考场前10秒盲审模式】：\n重点检验标题核心主题词、首段尾句总论点与各论证段首句分论点的第一眼可见度。`;
     }
 
     // 4. 组装题型量规与评卷 User Prompt
@@ -210,7 +234,8 @@ class ApiClient {
         payload.user_answer,
         payload.question_title,
         qType === 'single' ? [] : (payload.recalled_memories || []),
-        qType
+        qType,
+        { minWords: payload.word_limit_min, maxWords: payload.word_limit }
       );
     }
 
@@ -228,8 +253,20 @@ ${payload.scoring_criteria}
     }
 
     const targetScore = payload.target_score || (qType === 'essay' ? 35 : (qType === 'doc' ? 25 : 20));
+    const t1Min = Math.round(targetScore * 0.85 * 2) / 2;
+    const t2Min = Math.round(targetScore * 0.70 * 2) / 2;
+    const t3Min = Math.round(targetScore * 0.55 * 2) / 2;
+    const dynamicTierGuide = `
+## 【本题动态满分分档基准（严禁套用其他满分制分数线）】：
+本题总满分为 **${targetScore} 分**，所有得分与评语基准分必须严格按 ${targetScore} 分制计算：
+- 一类文：${t1Min}~${targetScore} 分；
+- 二类文：${t2Min}~${(t1Min - 0.5).toFixed(1)} 分；
+- 三类文：${t3Min}~${(t2Min - 0.5).toFixed(1)} 分；
+- 四类文：≤${(t3Min - 0.5).toFixed(1)} 分。`;
+
     let typeSpecificRule = "";
     let radarExample = "";
+    let radarReasonsExample = "";
     let perspectivesExample = "";
 
     if (qType === 'single') {
@@ -243,6 +280,7 @@ ${payload.scoring_criteria}
       const p3 = Math.round(targetScore * 0.15 * 10) / 10;
       const p4 = Math.max(0.5, Math.round((targetScore - p1 - p2 - p3) * 10) / 10);
       radarExample = `{"内容采点覆盖度": ${p1}, "分类逻辑与条理": ${p2}, "提炼概括度": ${p3}, "表达与字数规范": ${p4}}`;
+      radarReasonsExample = `{"内容采点覆盖度": "说明命中与遗漏的核心采分要点", "分类逻辑与条理": "说明总括句与条理归纳情况", "提炼概括度": "说明前置动宾短语提炼度", "表达与字数规范": "说明字数与语汇合规度"}`;
       perspectivesExample = `  "perspectives": {
     "examiner": "考场考官前10秒第一眼定档：审题要素是否切中、字数与排版条理初判...",
     "structure_expert": "要素归纳与分类逻辑诊断：诊断八大要素提取全面性、总分结构、MECE分类是否交叉重复、前置动宾大词是否工整醒目...",
@@ -259,6 +297,7 @@ ${payload.scoring_criteria}
       const p3 = Math.round(targetScore * 0.15 * 10) / 10;
       const p4 = Math.max(0.5, Math.round((targetScore - p1 - p2 - p3) * 10) / 10);
       radarExample = `{"内容要点覆盖": ${p1}, "格式规范三件套": ${p2}, "行文结构与层次": ${p3}, "公文语体与口吻": ${p4}}`;
+      radarReasonsExample = `{"内容要点覆盖": "说明材料核心要点覆盖情况", "格式规范三件套": "说明标题/称谓/落款完整度", "行文结构与层次": "说明行文逻辑层次", "公文语体与口吻": "说明机关场景语气匹配度"}`;
       perspectivesExample = `  "perspectives": {
     "examiner": "考场考官前10秒第一眼定档：文种类型核定、格式三件套完整度、初扫档位与卷面排布...",
     "structure_expert": "格式规范与行文逻辑诊断：核验标题/主送称谓/落款三件套格式合规性；诊断‘发文缘由-主体分条-结语号召’行文脉络...",
@@ -267,14 +306,16 @@ ${payload.scoring_criteria}
     } else {
       typeSpecificRule = `
 ## 【申论材料大作文大五段规范阅卷铁律】：
-1. 立意源于材料，总分论点鲜明递进，采用标准大五段（1+3）或层层递进骨架；
-2. 重点审查：①立意与总分论点（约占35%）；②结构与段落布局（大五段匀称度，约占25%）；③论据与论证深度（因果制度深度分析，约占30%）；④语言与公文规范（政务动宾大词密度，约占10%）。
+1. 立意源于材料且紧扣题干核心主题词，总分论点鲜明递进，采用标准大五段（1+3）或层层递进骨架；
+2. 重点审查：①立意与总分论点（约占35%）；②结构与段落布局（大五段匀称度与字数区间达标度，约占25%）；③论据与论证深度（因果制度深度分析，约占30%）；④语言与公文规范（政务动宾大词密度，约占10%）。
+3. 严禁出现四维评语与总档位/考官判语自相矛盾：若考生仅有“1+2”结构或缺少对策段，必须在 radar_reasons 中如实扣分说明。
 `;
       const p1 = Math.round(targetScore * (12 / 35) * 10) / 10;
       const p2 = Math.round(targetScore * (8 / 35) * 10) / 10;
       const p3 = Math.round(targetScore * (10 / 35) * 10) / 10;
       const p4 = Math.max(0.5, Math.round((targetScore - p1 - p2 - p3) * 10) / 10);
       radarExample = `{"立意与总分论点": ${p1}, "结构与段落布局": ${p2}, "论据与论证深度": ${p3}, "语言与公文规范": ${p4}}`;
+      radarReasonsExample = `{"立意与总分论点": "如实说明主题词扣题与总分论点亮明情况", "结构与段落布局": "如实说明1+3结构完整度、字数达标度与匀称度", "论据与论证深度": "如实说明事例事后深析与因果论证深度", "语言与公文规范": "如实说明口语瑕疵与政务大词规范度"}`;
       perspectivesExample = `  "perspectives": {
     "examiner": "考场考官前10秒第一眼定档：首段尾句总论点、字数卡位与第一眼档位初判...",
     "structure_expert": "大五段骨架与对策论证诊断：诊断大五段‘1+3’架构、论据深度、因果分析与案例是否脱节...",
@@ -282,9 +323,12 @@ ${payload.scoring_criteria}
   }`;
     }
 
+    const effectiveWordMin = payload.word_limit_min || (qType === 'single' ? 180 : (qType === 'doc' ? 320 : 800));
+    const effectiveWordMax = payload.word_limit || (qType === 'single' ? 250 : (qType === 'doc' ? 450 : 1000));
+
     const userPrompt = `
 待评审申论试卷：
-【题目】：${payload.question_title || '申论作答'}（满分 ${targetScore} 分）
+【题目】：${payload.question_title || '申论作答'}（满分 ${targetScore} 分，作答字数要求：${effectiveWordMin}~${effectiveWordMax} 字）
 【题型】：${qType}
 【给定资料】：
 ${payload.materials}
@@ -292,10 +336,12 @@ ${payload.materials}
 【考生实际作答】：
 ${payload.user_answer}
 
-【前置客观指标】：实测字数 ${preInfo.word_count} 字；材料摘抄率 ${(preInfo.copy_ratio * 100).toFixed(1)}%；标题合规问题：${preInfo.title_issues.length > 0 ? preInfo.title_issues.join('；') : '无'}。
+【前置客观指标】：实测纯字数 ${preInfo.word_count} 字（题目规定范围 ${effectiveWordMin}~${effectiveWordMax} 字）；材料摘抄率 ${(preInfo.copy_ratio * 100).toFixed(1)}%；标题合规问题：${preInfo.title_issues.length > 0 ? preInfo.title_issues.join('；') : '无'}。
+
+${dynamicTierGuide}
 
 ${typeSpecificRule}
-
+${skillModeGuide}
 ${criteriaSection}
 
 ${marPromptStr}
@@ -304,16 +350,19 @@ ${marPromptStr}
 \`\`\`json
 {
   "target_score": ${targetScore},
-  "word_limit": ${payload.word_limit || (qType === 'single' ? 250 : (qType === 'doc' ? 400 : 1000))},
+  "word_limit_min": ${effectiveWordMin},
+  "word_limit": ${effectiveWordMax},
   "score": ${Math.round(targetScore * 0.85 * 10) / 10},
   "grade": "二类文",
   "radar_scores": ${radarExample},
+  "radar_reasons": ${radarReasonsExample},
   "quotes_evaluation": [
     {"quote": "准确的句子原文", "type": "main_thesis", "color": "green", "style": "solid", "label": "核心要点/论点", "comment": "准确踩中要点或亮明观点"},
-    {"quote": "口语化句子原文", "type": "colloquial_flaw", "color": "purple", "style": "strikethrough", "label": "大白话", "comment": "口语化表达缺少政务大词"}
+    {"quote": "口语化句子原文", "type": "colloquial_flaw", "color": "purple", "style": "dotted", "label": "口语大白话", "formal_term": "健全长效保障机制", "comment": "口语化表达缺少政务大词"},
+    {"quote": "无依据臆造语句原文", "type": "subjective_fabrication", "color": "purple", "style": "strikethrough", "label": "主观臆造", "comment": "脱离材料凭空编造事实或结论"}
   ],
 ${perspectivesExample},
-  "rewritten_exemplar": "基于考生原文结合其规范重构的考场标杆示范..."
+  "rewritten_exemplar": "严格控制在 ${effectiveWordMin}~${effectiveWordMax} 字以内的考场一类文标杆示范（首行标题无书名号，结尾完整收拢）..."
 }
 \`\`\`
 `;
@@ -401,6 +450,7 @@ ${perspectivesExample},
 
     const finalTargetScore = parsed.target_score !== undefined ? Number(parsed.target_score) : (payload.target_score || targetScore);
     const finalWordLimit = parsed.word_limit !== undefined ? Number(parsed.word_limit) : (payload.word_limit || null);
+    const finalWordLimitMin = parsed.word_limit_min !== undefined ? Number(parsed.word_limit_min) : (payload.word_limit_min || null);
 
     return {
       word_count: preInfo.word_count,
@@ -410,8 +460,10 @@ ${perspectivesExample},
       score: parsed.score !== undefined ? parsed.score : 30.0,
       target_score: finalTargetScore,
       word_limit: finalWordLimit,
+      word_limit_min: finalWordLimitMin,
       grade: parsed.grade || "二类文",
       radar_scores: parsed.radar_scores || { "立意与总分论点": 10.0, "结构与段落布局": 7.0, "论据与论证深度": 8.0, "语言与公文规范": 4.5 },
+      radar_reasons: parsed.radar_reasons || null,
       chroma_spans: allSpans,
       perspectives: parsed.perspectives || {},
       memory_audit: memoryAudit,
