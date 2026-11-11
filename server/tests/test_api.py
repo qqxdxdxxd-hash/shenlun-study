@@ -108,3 +108,39 @@ def test_review_response_supports_dynamic_target_score_and_word_limit():
     assert resp.model_dump()["target_score"] == 15.0
     assert resp.model_dump()["word_limit"] == 250
 
+
+def test_review_request_and_response_support_word_limit_min():
+    from src.models import ReviewRequest, ReviewResponse
+    req = ReviewRequest(
+        question_type="essay",
+        question_title="领跑新时代高质量发展",
+        materials="材料内容...",
+        user_answer="作答内容...",
+        target_score=50,
+        word_limit=1000,
+        word_limit_min=800,
+    )
+    assert req.word_limit_min == 800
+    assert req.word_limit == 1000
+
+    resp = ReviewResponse(
+        word_count=920,
+        copy_ratio=0.05,
+        copy_redline_exceeded=False,
+        score=40.0,
+        target_score=50.0,
+        word_limit=1000,
+        word_limit_min=800,
+        grade="一类下",
+        radar_scores={"立意与总分论点": 14.0},
+        radar_reasons={"立意与总分论点": "总分论点紧扣主题"},
+        chroma_spans=[],
+        perspectives={},
+        memory_audit={},
+        rewritten_exemplar="示范内容",
+        remediation_drills=[],
+    )
+    assert resp.word_limit_min == 800
+    assert resp.radar_reasons["立意与总分论点"] == "总分论点紧扣主题"
+
+

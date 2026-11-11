@@ -15,6 +15,8 @@ class ReviewRequest(BaseModel):
     user_answer: str
     target_score: Optional[int] = Field(None, description="若前端或题干未指定，由大模型自主识别")
     word_limit: Optional[int] = Field(None, description="若前端未指定，由大模型自主识别")
+    word_limit_min: Optional[int] = Field(None, description="字数下限")
+    scoring_criteria: Optional[str] = Field("", description="客观采分底稿")
     skill_id: str = "shenlun-essay-expert"
     recalled_memories: List[MemoryItemPayload] = []
     # 纯客户端 BYOK 凭据（内存临时透传）
@@ -45,8 +47,10 @@ class ReviewResponse(BaseModel):
     score: float
     target_score: float = 35.0
     word_limit: Optional[int] = None
+    word_limit_min: Optional[int] = None
     grade: str
     radar_scores: Dict[str, float]
+    radar_reasons: Optional[Dict[str, str]] = None
     chroma_spans: List[ChromaSpan]
     perspectives: Dict[str, Any]
     memory_audit: Dict[str, Any]

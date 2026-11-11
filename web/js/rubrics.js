@@ -162,6 +162,33 @@ const QUESTION_TYPE_RUBRICS = {
 };
 
 class QuestionTypeRubrics {
+  static parseWordLimits(text, qType = 'essay') {
+    const clean = (text || '').replace(/\s+/g, '');
+    // 1. 范围格式: 800-1000字 / 1000～1200字 / 1000—1200字
+    const rangeMatch = clean.match(/(\d{3,4})\s*[-~～—–到至]\s*(\d{3,4})\s*字/);
+    if (rangeMatch) {
+      const a = parseInt(rangeMatch[1], 10);
+      const b = parseInt(rangeMatch[2], 10);
+      return { minWords: Math.min(a, b), maxWords: Math.max(a, b) };
+    }
+    // 2. 上限格式: 不超过200字 / 限300字 / 250字以内 / 至多400字
+    const maxMatch = clean.match(/(?:不超过|限|以内|至多|少于)\s*(\d{2,4})\s*字|(\d{2,4})\s*字以内/);
+    if (maxMatch) {
+      const maxW = parseInt(maxMatch[1] || maxMatch[2], 10);
+      return { minWords: Math.round(maxW * 0.8), maxWords: maxW };
+    }
+    // 3. 左右/约格式: 1000字左右
+    const approxMatch = clean.match(/(\d{3,4})\s*字左右/);
+    if (approxMatch) {
+      const mid = parseInt(approxMatch[1], 10);
+      return { minWords: Math.round(mid * 0.9), maxWords: Math.round(mid * 1.1) };
+    }
+    // 4. 题型兜底
+    if (qType === 'single') return { minWords: 180, maxWords: 250 };
+    if (qType === 'doc') return { minWords: 320, maxWords: 450 };
+    return { minWords: 900, maxWords: 1100 };
+  }
+
   static getRubric(qType) {
     return QUESTION_TYPE_RUBRICS[qType] || QUESTION_TYPE_RUBRICS.essay;
   }

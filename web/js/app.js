@@ -624,8 +624,11 @@ async function runFullReview() {
   const skillId = skillSelector ? skillSelector.value : 'shenlun-essay-expert';
   
   let topic = currentQuestion ? currentQuestion.question_title : document.getElementById('prompt-text').innerText;
+  const promptTextClean = currentQuestion && currentQuestion.prompt_text ? currentQuestion.prompt_text.replace(/\s+/g, ' ').trim() : '';
+  const effectiveTopic = (promptTextClean && (!topic || /^第\d+题/.test(topic))) ? `${topic}：${promptTextClean}` : (promptTextClean && !topic.includes(promptTextClean.slice(0, 8)) ? `${topic}（${promptTextClean}）` : topic);
   let targetScore = currentQuestion ? (currentQuestion.target_score || currentQuestion.score) : (qType === 'essay' ? 35 : (qType === 'doc' ? 25 : 20));
   let wordLimit = (currentQuestion && currentQuestion.max_words) || null;
+  let wordLimitMin = (currentQuestion && currentQuestion.min_words) || null;
   let materials = currentActiveMaterialText;
 
   if (!materials) {
@@ -651,15 +654,18 @@ async function runFullReview() {
     }
   }
 
-  // 尝试从题干和要求文本中提取分值与字数限制
-  const combinedReqText = `${topic} ${currentQuestion ? (currentQuestion.prompt_reqs || '') : ''}`;
+  // 尝试从题干和要求文本中提取分值与字数区间限制
+  const combinedReqText = `${effectiveTopic} ${currentQuestion ? (currentQuestion.prompt_reqs || '') : ''} ${currentQuestion ? (currentQuestion.char_limit || '') : ''}`;
   const scoreMatch = combinedReqText.match(/(?:满分|分值|共计?|总分)\s*[:：]?\s*(\d+(?:\.\d+)?)\s*分|[（(]\s*(\d+(?:\.\d+)?)\s*分\s*[)）]/);
   if (scoreMatch && (!isCustomPrompt || !document.getElementById('custom-score-input')?.value)) {
     targetScore = parseFloat(scoreMatch[1] || scoreMatch[2]);
   }
-  const limitMatch = combinedReqText.match(/(?:不超过|限|以内|至多)\s*(\d+)\s*字|(\d+)\s*字以内/);
-  if (limitMatch && (!isCustomPrompt || !document.getElementById('custom-limit-input')?.value)) {
-    wordLimit = parseInt(limitMatch[1] || limitMatch[2], 10);
+  if (window.QuestionTypeRubrics && (!isCustomPrompt || !document.getElementById('custom-limit-input')?.value)) {
+    const parsedLimits = window.QuestionTypeRubrics.parseWordLimits(combinedReqText, qType);
+    wordLimitMin = wordLimitMin || parsedLimits.minWords;
+    wordLimit = wordLimit || parsedLimits.maxWords;
+  } else if (wordLimit && !wordLimitMin) {
+    wordLimitMin = Math.round(wordLimit * 0.8);
   }
 
   const apiKey = (localStorage.getItem('shenlun_api_key') || '').trim();
@@ -689,7 +695,7 @@ async function runFullReview() {
     try {
       const allMemories = await window.clientDB.getAll('memories');
       if (window.MiniRAG && typeof window.MiniRAG.recallTopK === 'function') {
-        recalled = window.MiniRAG.recallTopK(allMemories, topic, userText, 3);
+        recalled = window.MiniRAG.recallTopK(allMemories, isCustomPrompt ? topic : effectiveTopic, userText, 3);
       }
     } catch (e) {
       console.warn("MiniRAG recall error:", e);
@@ -698,11 +704,12 @@ async function runFullReview() {
 
   const payload = {
     question_type: qType,
-    question_title: topic,
+    question_title: isCustomPrompt ? topic : effectiveTopic,
     materials: materials,
     user_answer: userText,
     target_score: targetScore,
     word_limit: wordLimit,
+    word_limit_min: wordLimitMin,
     skill_id: skillId,
     recalled_memories: qType === 'single' ? [] : recalled,
     scoring_criteria: currentQuestion ? (currentQuestion.scoring_criteria || '') : '',

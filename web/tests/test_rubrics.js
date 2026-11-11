@@ -39,4 +39,22 @@ assert.strictEqual(essayDims35.length, 4);
 const sum35 = essayDims35.reduce((acc, d) => acc + d.max, 0);
 assert.strictEqual(sum35, 35);
 
+// 4. 字数区间解析测试
+const r1 = QuestionTypeRubrics.parseWordLimits("总字数800-1000 字。", "essay");
+assert.strictEqual(r1.minWords, 800);
+assert.strictEqual(r1.maxWords, 1000);
+
+const r2 = QuestionTypeRubrics.parseWordLimits("字数1000～1200字，满分40分", "essay");
+assert.strictEqual(r2.minWords, 1000);
+assert.strictEqual(r2.maxWords, 1200);
+
+const r3 = QuestionTypeRubrics.parseWordLimits("不超过200 字", "single");
+assert.strictEqual(r3.minWords, 160);
+assert.strictEqual(r3.maxWords, 200);
+
+const r4 = QuestionTypeRubrics.parseWordLimits("篇幅1000 字左右", "essay");
+assert.strictEqual(r4.minWords, 900);
+assert.strictEqual(r4.maxWords, 1100);
+console.log("✓ parseWordLimits 全部字数区间格式解析通过！");
+
 console.log("✓ QuestionTypeRubrics 核心逻辑全部测试通过！");
